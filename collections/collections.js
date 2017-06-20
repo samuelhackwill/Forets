@@ -1,5 +1,7 @@
 superGlobals = new Meteor.Collection('superGlobals');
 
+Postit = new Mongo.Collection("postits")
+
 ContenusEcran = new Meteor.Collection('contenusEcran');
 
 representations = new Meteor.Collection('representations');
@@ -429,6 +431,18 @@ ambiances.allow({
 
 
 //permissions
+Postit.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+})
+
 loteries.allow({
   insert: function () {
 

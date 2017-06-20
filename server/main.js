@@ -3,6 +3,13 @@
 //   doc.createdAt = new Date();
 // });
 
+glisseContainer = null
+indexPostit = 0
+servColor = "red"
+
+Meteor.publish('allPostits', function(){
+  return Postit.find();
+});
 Meteor.publish('allContenusEcran', function () {
   return ContenusEcran.find();
 });
@@ -32,6 +39,8 @@ Meteor.publish( 'users', function() {
   }
 });
 
+
+
 // ICI TOUS LES EVENEMENTS DE DDP
 if (Meteor.isServer) {
   process.env.HTTP_FORWARDED_COUNT = 1;
@@ -51,6 +60,34 @@ if (Meteor.isServer) {
 
   UserStatus.events.on("connectionLogin", function(fields) { console.log("connectionLogin", fields); });
 
+
+  em.addListener('resetIndex', function(){
+    indexPostit=0
+    console.log("RESET INDEX")
+  })
+
+  em.addListener('addPostit', function(){
+     // Postit.insert(emptyPostit)
+     console.log("TELL CLIENT TO CREATE NEW FRAME AT INDEX ", indexPostit+1)
+     em.emit('newFrame', indexPostit+1)
+     indexPostit++
+  });
+
+  em.addListener('destroyFrame', function(){
+    console.log("DESTROY FRAME NUMBER ", indexPostit-2)
+    em.emit('destroyFrameClient', indexPostit-2)
+  })
+
+  em.addListener('moveNextPostit', function(){
+    console.log("MOVE DAT POSTIT ,", indexPostit)
+    em.emit('movePostit', indexPostit)
+  });
+
+  em.addListener('stopMoveAdmin', function(){
+    console.log("StopMoveServer --em emit")
+    em.emit('stopMoveServer')
+  });
+
   em.addListener('salmclick', function(/* client */) {
     console.log('HELLO', _.toArray(arguments), arguments[0].reponse, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
     // em.setClient({ reponse: arguments[0].reponse });
@@ -61,6 +98,17 @@ if (Meteor.isServer) {
       console.log('emit salmreponse '+reponse, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
       em.emit('salmreponse'+reponse, args);
     }
+  });
+
+    em.addListener('pingServer', function(/* client */) {
+    console.log('pingServer SERVER');
+    em.emit('pingServer', servColor)
+  });
+
+    em.addListener('pingServerShort', function(/* client */) {
+    console.log('pingServer short SERVER color = ', arguments[1]);
+    args = arguments[1]
+    em.emit('pingServerShort', args)
   });
 
 

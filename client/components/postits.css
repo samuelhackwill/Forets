@@ -1,0 +1,33 @@
+/* CSS declarations go here */
+
+html, body {
+  width:100%;
+  height:100%;
+}
+
+body.postit #HUD{
+/*	position: fixed;
+*/	float:right;
+}
+
+body.postit .postit{
+	width:750px;
+	height:1180px;
+	transform: translate(20vw, 1280px);
+	position:absolute;
+/*	background-image: url("/img/DDRplanche-01.png");
+*/	background-repeat: no-repeat;
+	background-size : 100% 100%;
+	border : 1px solid black;
+
+
+	-webkit-transition: all 3.265s linear; /* Changed here */ 
+	-moz-transition: all 3.265s linear;
+	-o-transition: all 3.265s linear;
+	transition: all 3.265s linear;
+}
+/*
+body.postit .postit:hover {
+	background-color: #F5F2EF;
+}
+*/

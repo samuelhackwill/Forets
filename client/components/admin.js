@@ -33,11 +33,15 @@ Template.admin.onRendered(function () {
     console.log(whichEtat)
 
 
-    if(event.data[0]==144 && event.data[1]==49){
+    if(event.data[0]==144 && (event.data[1]==49 || event.data[1]==54 || event.data[1]==58 )){
       console.log("ca_va_peter cote client")
       em.emit("ca_va_peter")
       // donc là il faut instead qu'il appelle une fonction serveur qui fasse claquer un orage chez tous 
       // les clients
+
+      // 49
+      // 54
+      // 58
     }
 
     if(event.data[0]==144 && event.data[1]==45){

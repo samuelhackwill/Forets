@@ -27,17 +27,7 @@ etats = {
   ambiance7:["rain1","7"]
 }
 
-/*
-posanswers =["disponible", "à la maison", "tranquille", "son ok", "concentré"]
-neganswers =["occupé","en ville","pas seul", "mute", "distrait"]
-*/
-
 next = function(){
-  //TODO
-  //attention dans le cas actuel il est impossible d'avoir la div de texte vide. il faudrait avoir une balise
-  //action spécifique pour vider la div
-  //solution envisagée :
-  //au moment de parser data, il rajoute une balise #clear une ligne sur deux par exemple
   console.log('next', compteur, data[compteur]);
   var currentData = data[compteur]
   var type = currentData["type"]
@@ -55,18 +45,31 @@ next = function(){
     }
 
     if((type=="text")&&(params!="")){
-      document.getElementById("srt").innerHTML = params
+      //document.getElementById("srt").innerHTML = params
+        if(params=="***"){
+        // ça c'est pour caler des blancs
+        //document.getElementById("srt").innerHTML = ""
+          $('#srt').append($('<ul/>').html("<small>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
+          $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        }else{
+          $('#srt').append($('<ul/>').html("<small>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
+          $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        }
       // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
       // bon ben c'est ici qu'il faudrait faire un truc
-      if(params=="***"){
-        // ça c'est pour caler des blancs
-        document.getElementById("srt").innerHTML = ""
-      }
     }
   }
 
 action = function(type, params){
   switch(type){
+    case "showServer":
+    showServerCall()
+    break
+
+    case "showForm":
+    showFormCall()
+    break
+
     case "cue":
     cue(params)
     break
@@ -77,10 +80,6 @@ action = function(type, params){
 
     case "addclass":
     addclass(params)
-    break
-
-    case "jacky":
-    jacky(params)
     break
 
     case "setdate":
@@ -95,22 +94,9 @@ action = function(type, params){
     removeclass(params)
     break
 
-    case "addlistelement":
-    addlistelement(params)
-    break
-
-    case "flipbook":
-    console.log(flipbookstatus)
-    flipbook()
-    break
-
     case "autonext":
     autonext(params)
     break
-
-    // case "parking":
-    // parking(params)
-    // break
 
     case "stop":
     interrupt=true
@@ -130,17 +116,6 @@ action = function(type, params){
     newBoutton(params)
     break
 
-    case "img":
-    // IMAGE
-    // trigger pour enclencher un fadeout styled
-    if(alternance){
-      changeImg(params)
-    }else{
-      changeImg(params)
-    }
-    alternance =! alternance
-    break;
-
     case "fullscreen":
     fullscreen();
     break;
@@ -150,6 +125,21 @@ action = function(type, params){
     timer()
     break;
   }
+}
+
+showServerCall = function(){
+  console.log("showServerCall")
+    em.emit('pingServer');
+}
+
+showFormCall = function(){
+  console.log("showFormCall")
+    $("#formulaire").css("display", "initial")
+
+      setTimeout(function(){
+    $("#formulaire").css("opacity", "1")
+  },150)
+      
 }
 
 sound = function(params){
@@ -595,21 +585,6 @@ gotonext = function(params){
   compteur += bonus
   next()
   interrupt=false
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
-  console.log("gotonext, ", params)
   console.log("gotonext, ", params)
 }
 

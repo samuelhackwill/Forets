@@ -28,6 +28,7 @@ Template.jacky.onRendered(function () {
     console.log('srt spectacle jacky rendered');
     console.log('data ?', data);
     console.log('ContenusEcran ?', ContenusEcran.find().fetch());
+       autonext(3000);
     if(data) {
       catchUpWithTheShow();
     }
@@ -36,40 +37,40 @@ Template.jacky.onRendered(function () {
     // rawTextToJson();
   // console.log(Template.instance());
     // zoupageJSON(dataFromDB, data);
-    // autonext(2000);
   });
 
+
   function catchUpWithTheShow(){
-    console.log('catchUpWithTheShow caughtUp?', caughtUp);
-    if(!caughtUp) {
-      caughtUp = true;
-      console.log("checking compteur", compteur, "cookie.compteur", cookies.get('compteur'), modeSpectacle);
-      //si on est en mode spectacle, que l'admin a le pouvoir
-      var isPowerToThePeople = getSuperGlobal('powerToThePeople');
-      if(modeSpectacle && !isPowerToThePeople) {
-        //et si il y a un compteur enregistré
-        var compteurAdmin = getSuperGlobal('compteurAdmin');
-        console.log("checking compteurAdmin", compteurAdmin);
+    // console.log('catchUpWithTheShow caughtUp?', caughtUp);
+    // if(!caughtUp) {
+    //   caughtUp = true;
+    //   // console.log("checking compteur", compteur, "cookie.compteur", cookies.get('compteur'), modeSpectacle);
+    //   //si on est en mode spectacle, que l'admin a le pouvoir
+    //   var isPowerToThePeople = getSuperGlobal('powerToThePeople');
+    //   if(modeSpectacle && !isPowerToThePeople) {
+    //     //et si il y a un compteur enregistré
+    //     var compteurAdmin = getSuperGlobal('compteurAdmin');
+    //     // console.log("checking compteurAdmin", compteurAdmin);
 
-        if(null !== compteurAdmin) compteur = parseInt(compteurAdmin);
-        if(compteur != -1) {
-          //revenir où on était dans le spectacle
-          next();
-        }
+    //     if(null !== compteurAdmin) compteur = parseInt(compteurAdmin);
+    //     if(compteur != -1) {
+    //       //revenir où on était dans le spectacle
+    //       next();
+    //     }
 
-        //ambiance?
-        var whichAmbiance = getSuperGlobal("whichAmbiance", "");
-        if(whichAmbiance != "") { //il y a une ambiance en cours
-          //passons à cette ambiance
-          var newAmbiance = ambiances.findOne({name: whichAmbiance});
-          if(newAmbiance) {
-            console.log("set Ambiance", newAmbiance.value)
-            changeImg(newAmbiance.value)
-          }
-        }
-      }
+    //     //ambiance?
+    //     var whichAmbiance = getSuperGlobal("whichAmbiance", "");
+    //     if(whichAmbiance != "") { //il y a une ambiance en cours
+    //       //passons à cette ambiance
+    //       var newAmbiance = ambiances.findOne({name: whichAmbiance});
+    //       if(newAmbiance) {
+    //         // console.log("set Ambiance", newAmbiance.value)
+    //         changeImg(newAmbiance.value)
+    //       }
+    //     }
+    //   }
       
-    }
+    // }
 
   }
 
@@ -106,6 +107,36 @@ Template.jacky.onRendered(function () {
       // }
 
   }
+
+  em.addListener('pingServer', function(args){
+    console.log("pingServer CLIENT, color = ", args)
+
+
+    if(Roles.userIsInRole(Meteor.user(), "admin")==true) {
+      console.log("toi tu est un admin avoue")
+    document.getElementById("gcontainer").style.backgroundColor = args
+          
+    stopBlink = setTimeout(function(){
+    document.getElementById("gcontainer").style.backgroundColor = "black"
+      },3000)
+
+  }
+  }),
+
+    em.addListener('pingServerShort', function(args){
+    console.log("pingServerShort CLIENT color = ", args)
+
+
+    if(Roles.userIsInRole(Meteor.user(), "admin")==true) {
+      console.log("toi tu est un admin avoue")
+    document.getElementById("gcontainer").style.backgroundColor = args
+          
+    stopBlink = setTimeout(function(){
+    document.getElementById("gcontainer").style.backgroundColor = "black"
+      },1000)
+
+  }
+  }),
 
 
   em.addListener('salmnext', function(what) {
@@ -209,198 +240,17 @@ Template.jacky.onRendered(function () {
       }
     }
   }); 
-  // console.log()
-  // superGlobals.find({});
-    //   {},{fields: {'source':"SourceOne", 'currency': "USD"}}
-    // ));
-
-  //streaming janus
-  var server = null;
-  // if(window.location.protocol === 'http:')
-  //     server = "http://" + window.location.hostname + ":8088/janus";
-  // else
-  //     server = "https://" + window.location.hostname + ":8089/janus";
-
-  // var host = window.location.hostname == "localhost" ? "www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com" : window.location.hostname;
-  // var host = window.location.hostname == "localhost" ? "www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com" : window.location.hostname;
-  var host = "www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com";
-  var server = null;
-  if(window.location.protocol === 'http:')
-      server = "http://" + host + ":8088/janus";
-  else
-      server = "https://" + host + ":8089/janus";
-
-  var janus = null;
-  // var streaming = null;
-  streaming = null;
-  var started = false;
-  var spinner = null;
-
-  var selectedStream = null;
-
-  // Initialize the library (all console debuggers enabled)
-  Janus.init({debug: "all", callback: function() {
-    
-    console.log('Janus initiated.');
-
-    // Use a button to start the demo
-    // $('#start').click(function() {
-    if(started)
-      return;
-    started = true;
-
-    // $(this).attr('disabled', true).unbind('click');
-    // Make sure the browser supports WebRTC
-    if(!Janus.isWebrtcSupported()) {
-      console.log("No WebRTC support... ");
-      return;
-    }
-    console.log('WebRTC is supported.');
-    console.log('Creating Janus Session...');
-    // Create session
-    janus = new Janus({
-      server: server,
-      success: function() {
-        // Attach to streaming plugin
-        janus.attach({
-          plugin: "janus.plugin.streaming",
-          success: function(pluginHandle) {
-            // $('#details').remove();
-            streaming = pluginHandle;
-            Janus.log("Plugin attached! (" + streaming.getPlugin() + ", id=" + streaming.getId() + ")");
-            console.log("Plugin attached! (" + streaming.getPlugin() + ", id=" + streaming.getId() + ")");
-            // Setup streaming session
-            // $('#update-streams').click(updateStreamsList);
-            // updateStreamsList();
-            //janus.destroy();
-              //si le pouvoir est déjà aux mains de l'admin lancons le stream au chargement de la page
-              // var powerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}});
-              // var isPowerToThePeople = (powerToThePeople) ? powerToThePeople.powerToThePeople : true;
-              var isPowerToThePeople = getSuperGlobal("powerToThePeople", false); // par défaut false, admin a le pouvoir -> donc lancer le stream (?)
-              if(!isPowerToThePeople) {
-                console.log("le pouvoir est déjà aux mains de l'admin lancons le stream au chargement de la page");
-                startTheStream();
-              }
-
-          },
-          error: function(error) {
-            Janus.error("  -- Error attaching plugin... ", error);
-            console.log("Error attaching plugin... " + error);
-          },
-          onmessage: function(msg, jsep) {
-            Janus.debug(" ::: Got a message :::");
-            Janus.debug(JSON.stringify(msg));
-            var result = msg["result"];
-            if(result !== null && result !== undefined) {
-              if(result["status"] !== undefined && result["status"] !== null) {
-                var status = result["status"];
-                if(status === 'starting')
-                  console.log("Message : Starting, please wait...");
-                  // $('#status').removeClass('hide').text("Starting, please wait...").show();
-                else if(status === 'started')
-                  console.log("Message : Started");
-                  // $('#status').removeClass('hide').text("Started").show();
-                else if(status === 'stopped')
-                  stopStream();
-              }
-            } else if(msg["error"] !== undefined && msg["error"] !== null) {
-              console.log("Message : "+msg["error"]);
-              stopStream();
-              return;
-            }
-            if(jsep !== undefined && jsep !== null) {
-              Janus.debug("Handling SDP as well...");
-              Janus.debug(jsep);
-              // Answer
-              streaming.createAnswer({
-                jsep: jsep,
-                media: { audioSend: false, videoSend: false },  // We want recvonly audio/video
-                success: function(jsep) {
-                  Janus.debug("Got SDP!");
-                  Janus.debug(jsep);
-                  var body = { "request": "start" };
-                  streaming.send({"message": body, "jsep": jsep});
-                  // $('#watch').html("Stop").removeAttr('disabled').click(stopStream);
-                },
-                error: function(error) {
-                  Janus.error("WebRTC error:", error);
-                  console.log("WebRTC error... " + JSON.stringify(error));
-                }
-              });
-            }
-          },
-          onremotestream: function(stream) {
-            Janus.debug(" ::: Got a remote stream :::");
-            console.log(" ::: Got a remote stream :::");
-            console.log(JSON.stringify(stream));
-            Janus.debug(JSON.stringify(stream));
-            // if($('#remotevideo').length === 0)
-            //   $('#stream').append('<video class="rounded centered hide" id="remotevideo" width=320 height=240 autoplay/>');
-            // Show the stream and hide the spinner when we get a playing event
-            // $("#remotevideo").bind("playing", function () {
-            //   $('#waitingvideo').remove();
-            //   $('#remotevideo').removeClass('hide');
-            //   if(spinner !== null && spinner !== undefined)
-            //     spinner.stop();
-            //   spinner = null;
-            // });
-            // Janus.attachMediaStream($('#remotevideo').get(0), stream);
-            console.log($('#stream-video'), $('#stream-video').get(0));
-            Janus.attachMediaStream($('#stream-video').get(0), stream);
-          },
-          oncleanup: function() {
-            Janus.log(" ::: Got a cleanup notification :::");
-            // $('#waitingvideo').remove();
-            // $('#remotevideo').remove();
-          }
-        });
-      },
-      error: function(error) {
-        Janus.error(error);
-        console.log("ERROR !!! :"+error);
-        // var body = { "request": "stop" };
-        // streaming.send({"message": body});
-        // streaming.hangup();
-        //TODO setTimeout hangup + setTimeout request watch à nouveau? à tester en régie avec lieven
-        // bootbox.alert(error, function() {
-        //   window.location.reload();
-        // });
-        var waitBeforeReload = 10 //secondes;
-        $('#stream-error').append("Il semble que la connection avec le serveur a été perdue. La page va se recharger dans <span>"+waitBeforeReload+" secondes</span>. (<a href=\"javascript:void(0);\" class=\"reload\" title=\"Annuler le rechargement\">Recharger maintenant</a> ou <a href=\"javascript:void(0);\" class=\"cancel\" title=\"Annuler le rechargement\">Annuler</a>)");
-        $('#stream-error a.reload').click(function(){
-          console.log("Manual page reload.");
-          window.location.reload();
-        });
-        $('#stream-error a.cancel').click(function(){
-          console.log("cancelling auto page reload.");
-          clearInterval(intervalReload);
-          $('#stream-error').empty(); //vider l'élément d'erreur
-        });
-        var count = waitBeforeReload;
-        intervalReload = setInterval(function(){
-          $('#stream-error').find('span').text(count == 1 ? count+" seconde" : count+" secondes");
-          count -= 1;
-          if (count === 0){
-            clearInterval(intervalReload); // Stopping the counter when reaching 0.
-            console.log("Stream error reloading");
-            window.location.reload();
-          }
-        }, 1000);
-
-      },
-      destroyed: function() {
-        console.log("destroyed");
-        window.location.reload();
-      }
-    });
-  }});
-
   
   $(document.body).on('keyup', function(e) {
 
     e = e || window.event
+    // console.log(e.target)
 
+    if (e.target.id=="formulaire") {
+      return
+    }
 
+    // console.log(e.originalEvent.path[0].id)
     // KEYCODE 32 IS SPACEBAR
     // KEYCIODE 78 IS "n"
     if(e.keyCode == '32') nextEvent();
@@ -455,66 +305,6 @@ Template.jacky.onRendered(function () {
       $('#imgcontainerFRONT').removeClass('visible');
     }
     alternanceImg =! alternanceImg
-  }
-
-
-  // $("#login").click(function(e) { 
-  //     if (!interval) {
-  //         interval = setInterval(function(){myFunction();}, 2000); 
-  //     }
-  // });
-
-  // $("#logout").click(function(e) { 
-  //     clearInterval(interval); 
-  //     interval = null;
-  // });
-
-  em.addListener('salmstartstream', startTheStream);
-
-  function startTheStream(what) {
-
-    console.log('salm startstream!', what, streaming);
-    if(streaming) {
-      var body = { "request": "watch", id: parseInt(1) };
-      streaming.send({"message": body});
-    }
-
-    if (!streamCheckInterval) {
-        streamCheckInterval = setInterval(function(){checkTheStream();}, 30000); 
-    }
-    // if($('#streamFrame').length == 0) {
-
-    //   $('<iframe>', {
-    //   'src': 'http://www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com/stream/',
-    //    id:  'streamFrame',
-    //    frameborder: 0,
-    //    scrolling: 'no'
-    //   }).appendTo('#stream-ifr');
-
-
-    //   setTimeout(function(){
-    //     console.log('streamFrame', $("#streamFrame").contents().find('#start'));
-    //     var startButton = $("#streamFrame").contents().find('#start');
-    //     if(startButton.length > 0) {
-    //       startButton.trigger('click');
-    //     }
-    //   }, 2000);
-    //   // $('streamFrame').on('load', function(){
-    //   //   console.log('streamFrame loaded');
-    //   // });
-    //   // console.log('streamFrame added');
-    //   // $('streamFrame').attr();
-    //   // console.log('streamFrame src', $('streamFrame').attr('src'));
-    // }
-
-
-
-  }
-
-  function checkTheStream(){
-    console.log('checkTheStream!');
-    if(!Janus.initDone || !streaming) Janus.init();
-    if(null != streaming && !streaming.webrtcStuff.started) startTheStream();
   }
 
 });
@@ -593,8 +383,3 @@ Template.jacky.events({
   }
 
 })
-
-  function balayeurfunc(){
-          $( ".eclair" ).remove();
-          $( ".eclair2" ).remove();
-  }
