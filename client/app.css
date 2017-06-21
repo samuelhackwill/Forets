@@ -47,6 +47,13 @@
     margin-right: 12px;
   }
 
+  .index{
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+  }
+
   #serveur{
     color:blue;
   }
@@ -90,10 +97,10 @@
     height:100%;
     background-color: black;
 
-    -webkit-transition: all 1s;
-    -moz-transition: all 1s;
-    -o-transition: all 1s;
-    transition: all 1s;
+/*    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;*/
   }
 
   .barred{
@@ -158,18 +165,20 @@
   }
 
   #formulaire{
+    font-size: 20px;
     border-style:hidden;
     background-color: darkgrey;
-    width:50%;
-    margin-left:25%;
+    width:75%;
+    margin-top:5px;
+    margin-left:12.5%;
     padding-left: 2.5%;
     display: none;
     opacity: 0;
 
-    -webkit-transition: opacity .3s ease-in-out;
-    -moz-transition: opacity .3s ease-in-out;
-    -o-transition: opacity .3s ease-in-out;
-    transition: opacity .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
   }
 
   #formulaire:focus{
@@ -177,27 +186,27 @@
   }
 
   #bumper{
-    height:30vh;
+    height:17.5vh;
     background-color:inherit;
   }
 
   #srt{
     color: black;
     background-color: darkgrey;
-    width:50%;
-    height:40vh;
+    width:75%;
+    height:65vh;
 
-    font-size:11px;
-
+    font-size:14px;
+/*
     border-color: darkgrey;
     border-width: 1px;
-    border-style: solid;
+    border-style: solid;*/
 
     padding-left: 4px;
 
     overflow: scroll;
 
-    margin-left:25%;
+    margin-left:12.5%;
 
 /*    position: absolute;
     top: 50%;
@@ -212,10 +221,10 @@
     -moz-user-select: none;      
     -ms-user-select: none;      
 
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 
   }
 

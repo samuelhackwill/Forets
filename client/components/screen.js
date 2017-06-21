@@ -1,4 +1,13 @@
-servColor = "red"
+pickedColor = "red"
+
+focusForm = function(onoff){
+    console.log(onoff)
+    if(onoff=='on'){
+        $("#srt").css("opacity", ".3")
+    }else{
+        $("#srt").css("opacity", "1")
+    }
+}
 
 search = function(e, t){
 
@@ -41,11 +50,12 @@ execute = function(what){
 
     switch(whatInstructions[0]){
         case "showServer":
-    		em.emit('pingServerShort', servColor)
+    		em.emit('pingServerShort', pickedColor)
             break;
 
         case "pickColor":
-            servColor=whatInstructions[1]
+            pickedColor=whatInstructions[1]
+            $("#gcontainer").css("background-color", pickedColor)
             break;
 	}
 }

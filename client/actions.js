@@ -49,10 +49,10 @@ next = function(){
         if(params=="***"){
         // ça c'est pour caler des blancs
         //document.getElementById("srt").innerHTML = ""
-          $('#srt').append($('<ul/>').html("<small>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
+          $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
           $('#srt').scrollTop($('#srt')[0].scrollHeight);
         }else{
-          $('#srt').append($('<ul/>').html("<small>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
+          $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
           $('#srt').scrollTop($('#srt')[0].scrollHeight);
         }
       // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
@@ -64,6 +64,10 @@ action = function(type, params){
   switch(type){
     case "showServer":
     showServerCall()
+    break
+
+    case "hideServer":
+    hideServerCall()
     break
 
     case "showForm":
@@ -132,15 +136,35 @@ showServerCall = function(){
     em.emit('pingServer');
 }
 
+hideServerCall = function(){
+  console.log("hideServerStrobe CALL")
+    em.emit('hideServerStrobe')
+}
+
 showFormCall = function(){
   console.log("showFormCall")
     $("#formulaire").css("display", "initial")
 
       setTimeout(function(){
     $("#formulaire").css("opacity", "1")
-  },150)
-      
+  },150)      
 }
+
+focusOnOff = function(clickTarget){
+  if (clickTarget=="formulaire") {
+    $("#srt").css("background-color", "#333")
+    $(".index").css("color", "black")
+    $("#formulaire").css("background-color", "white")
+  }else{
+    $("#srt").css("background-color", "darkgrey")
+    $(".index").css("color", "grey")
+    $("#formulaire").css("background-color", "darkgrey")
+      if ($("#formulaire").val()!=""){
+        $("#formulaire").val("")
+    }
+  }
+}
+
 
 sound = function(params){
   console.log("sound", params);

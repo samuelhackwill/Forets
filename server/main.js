@@ -105,6 +105,11 @@ if (Meteor.isServer) {
     em.emit('pingServer', servColor)
   });
 
+    em.addListener('hideServerStrobe', function(){
+      console.log('someone sent hideserver!');
+      em.emit('allHideServerStrobe')
+    });
+
     em.addListener('pingServerShort', function(/* client */) {
     console.log('pingServer short SERVER color = ', arguments[1]);
     args = arguments[1]
