@@ -293,9 +293,9 @@ Template.admin.onRendered(function () {
     em.setClient({ powerToThePeople: !data });
     em.emit('adminswitchthepower');
     if(data == true) { //power admin
-      em.setClient({ bookmark: 'spectacle' });
-      em.emit('adminForceGoTo');
-      gotobookmark('spectacle');
+      // em.setClient({ bookmark: 'spectacle' });
+      // em.emit('adminForceGoTo');
+      // gotobookmark('spectacle');
     } else if(data == false) { //power retourne aux SALM
       // em.setClient({ bookmark: 'fin-spectacle' });
       // em.emit('adminForceGoTo');
