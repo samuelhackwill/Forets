@@ -63,63 +63,67 @@ if (Meteor.isServer) {
 
   em.addListener('resetIndex', function(){
     indexPostit=0
-    console.log("RESET INDEX")
+    // console.log("RESET INDEX")
   })
 
   em.addListener('addPostit', function(){
      // Postit.insert(emptyPostit)
-     console.log("TELL CLIENT TO CREATE NEW FRAME AT INDEX ", indexPostit+1)
+     // console.log("TELL CLIENT TO CREATE NEW FRAME AT INDEX ", indexPostit+1)
      em.emit('newFrame', indexPostit+1)
      indexPostit++
   });
 
   em.addListener('destroyFrame', function(){
-    console.log("DESTROY FRAME NUMBER ", indexPostit-2)
+    // console.log("DESTROY FRAME NUMBER ", indexPostit-2)
     em.emit('destroyFrameClient', indexPostit-2)
   })
 
   em.addListener('moveNextPostit', function(){
-    console.log("MOVE DAT POSTIT ,", indexPostit)
+    // console.log("MOVE DAT POSTIT ,", indexPostit)
     em.emit('movePostit', indexPostit)
   });
 
   em.addListener('stopMoveAdmin', function(){
-    console.log("StopMoveServer --em emit")
+    // console.log("StopMoveServer --em emit")
     em.emit('stopMoveServer')
   });
 
   em.addListener('salmclick', function(/* client */) {
-    console.log('HELLO', _.toArray(arguments), arguments[0].reponse, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
+    // console.log('HELLO', _.toArray(arguments), arguments[0].reponse, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
     // em.setClient({ reponse: arguments[0].reponse });
     var reponse = arguments[0].reponse;
     var mode = arguments[0].mode;
     var args = {mode: mode}
     if(reponse) {
-      console.log('emit salmreponse '+reponse, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
+      // console.log('emit salmreponse '+reponse, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
       em.emit('salmreponse'+reponse, args);
     }
   });
 
     em.addListener('pingServer', function(/* client */) {
-    console.log('pingServer SERVER');
+    // console.log('pingServer SERVER');
     em.emit('pingServer', servColor)
   });
 
     em.addListener('hideServerStrobe', function(){
-      console.log('someone sent hideserver!');
+      // console.log('someone sent hideserver!');
       em.emit('allHideServerStrobe')
     });
 
     em.addListener('pingServerShort', function(/* client */) {
-    console.log('pingServer short SERVER color = ', arguments[1]);
+    // console.log('pingServer short SERVER color = ', arguments[1]);
     args = arguments[1]
     em.emit('pingServerShort', args)
   });
 
+    em.addListener('waitingClient', function(){
+      console.log("WAITING CLIENT!")
+    });
+
 
 
   em.addListener('adminnext', function(/* client */) {
-    console.log('ADMIN NEXT', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN NEXT', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     var args = arguments[0];
     if(args) {
@@ -127,7 +131,7 @@ if (Meteor.isServer) {
     }
   });
   em.addListener('adminUnStop', function(/* client */) {
-    console.log('ADMIN UNSTOP', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN UNSTOP', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     var args = arguments[0];
     if(args) {
@@ -136,19 +140,19 @@ if (Meteor.isServer) {
   });
 
   em.addListener('ca_va_peter', function(/* client */) {
-    console.log("ca_va_peter cote serveur");
+    // console.log("ca_va_peter cote serveur");
     em.emit('ca_va_peter_client')
   });
 
   em.addListener('new_ambiance', function(params) {
-    console.log("new_ambiance cote serveur ", params);
+    // console.log("new_ambiance cote serveur ", params);
     Meteor.call('setSuperGlobal', {name: 'ambiance', value: params.key});
     em.emit('new_ambiance_client')
 
   });
 
   em.addListener('adminstartstream', function(/* client */) {
-    console.log('ADMIN START STREAM', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN START STREAM', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // set client ça marche pas côté serveur
     var args = arguments[0];
@@ -158,7 +162,7 @@ if (Meteor.isServer) {
   });
 
   em.addListener('adminshowtheone', function(/* client */) {
-    console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -166,7 +170,7 @@ if (Meteor.isServer) {
     // }
   });
   em.addListener('adminhidetheone', function(/* client */) {
-    console.log('ADMIN HIDE THE ONE', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN HIDE THE ONE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -175,7 +179,7 @@ if (Meteor.isServer) {
   });
 
   em.addListener('adminshowtheone-single-training', function(/* client */) {
-    console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -183,7 +187,7 @@ if (Meteor.isServer) {
     // }
   });
   em.addListener('adminshowtheone-multi-training', function(/* client */) {
-    console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -191,7 +195,7 @@ if (Meteor.isServer) {
     // }
   });
   em.addListener('adminhidetheone-training', function(/* client */) {
-    console.log('ADMIN HIDE THE ONE', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN HIDE THE ONE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -201,7 +205,7 @@ if (Meteor.isServer) {
 
 
   em.addListener('adminswitchthepower', function(what) {
-    console.log('ADMIN SWITCH THE POWER', _.toArray(arguments), arguments[0], what, em);
+    // console.log('ADMIN SWITCH THE POWER', _.toArray(arguments), arguments[0], what, em);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -211,7 +215,7 @@ if (Meteor.isServer) {
     // }
   });
   em.addListener('adminrefreshpage', function(/* client */) {
-    console.log('ADMIN REFRESH PAGE', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN REFRESH PAGE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     // var args = arguments[0];
     // if(args) {
@@ -221,7 +225,7 @@ if (Meteor.isServer) {
 
 
   em.addListener('adminForceGoTo', function(/* client */) {
-    console.log('ADMIN FORCE GO TO', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN FORCE GO TO', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     var args = arguments[0];
     if(args) {
@@ -231,7 +235,7 @@ if (Meteor.isServer) {
 
 
   em.addListener('salmAddMeToLottery', function(/* client */) {
-    console.log('SALM REQUEST ADD TO LOTTERY', _.toArray(arguments), arguments[0]);
+    // console.log('SALM REQUEST ADD TO LOTTERY', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     var args = arguments[0];
     if(args) {
@@ -241,7 +245,7 @@ if (Meteor.isServer) {
   });
 
   em.addListener('salmFinishCuppa', function(/* client */) {
-    console.log('SALM FINISH A CUP', _.toArray(arguments), arguments[0]);
+    // console.log('SALM FINISH A CUP', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     var args = arguments[0];
     if(args) {
@@ -252,7 +256,7 @@ if (Meteor.isServer) {
   });
 
   em.addListener('adminDeliverMessages', function(/* client */) {
-    console.log('ADMIN DELIVER MESSAGES', _.toArray(arguments), arguments[0]);
+    // console.log('ADMIN DELIVER MESSAGES', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
     var args = arguments[0];
     if(args) {
@@ -278,7 +282,7 @@ if (Meteor.isServer) {
     },
   });
 
-  console.log('SERVER', this.UserConnections, UserStatus, UserStatus.connections);
+  // console.log('SERVER', this.UserConnections, UserStatus, UserStatus.connections);
 
   // UserStatus.connections.before.upsert(function (userId, selector, modifier, options) {
   //   console.log("before upsert", userId, selector, modifier, options);
@@ -307,16 +311,16 @@ Meteor.methods({
     var data = tryParseJSON(obj.data);
     if(data) {
     
-      console.log(typeof obj.name, obj.name);
-      console.log('valid JSON?'); 
-      console.log(typeof data);
-      console.log(data instanceof Object);
+      // console.log(typeof obj.name, obj.name);
+      // console.log('valid JSON?'); 
+      // console.log(typeof data);
+      // console.log(data instanceof Object);
 
       var contenuEcran = ContenusEcran.findOne({name: obj.name});
-      console.log("contenuEcran existe ?", contenuEcran);
+      // console.log("contenuEcran existe ?", contenuEcran);
       
       if(contenuEcran) {
-        console.log("contenuEcran existe. mise à jour.");
+        // console.log("contenuEcran existe. mise à jour.");
         ContenusEcran.update(contenuEcran._id, { 
           $set: {
             name: obj.name, 
@@ -325,7 +329,7 @@ Meteor.methods({
           }
         }, { filter: false });
       } else {
-        console.log("nouveau contenuEcran. insertion");
+        // console.log("nouveau contenuEcran. insertion");
         // var copie = Object.assign({}, data);
         // console.log('true Object?'); 
         // console.log(typeof copie);
@@ -338,20 +342,20 @@ Meteor.methods({
     }
   },
   setSuperGlobal: function(obj) {
-    console.log('setSuperGlobal', obj);
+    // console.log('setSuperGlobal', obj);
     if(obj.name) {
       switch(obj.name) {
         case 'powerToThePeople':
-          console.log('powerToThePeople', obj.value);
+          // console.log('powerToThePeople', obj.value);
           if(typeof(obj.value) === "boolean") {
-            console.log('powerToThePeople2', obj.value, superGlobals.findOne({ powerToThePeople: { $exists: true}}));
+            // console.log('powerToThePeople2', obj.value, superGlobals.findOne({ powerToThePeople: { $exists: true}}));
             var powerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}});
             if(powerToThePeople) {
-              console.log('powerToThePeople3 mise a jour');
+              // console.log('powerToThePeople3 mise a jour');
               //mise à jour
               superGlobals.update(powerToThePeople._id, { $set: {powerToThePeople: obj.value} }, { filter: false });
             } else {
-              console.log('powerToThePeople3 insert!');
+              // console.log('powerToThePeople3 insert!');
               //création
               superGlobals.insert({powerToThePeople: obj.value}, { filter: false });
 
@@ -361,10 +365,10 @@ Meteor.methods({
           break;
           
         case 'SUPERinterrupt':
-          console.log('SUPERinterrupt', obj.value);
+          // console.log('SUPERinterrupt', obj.value);
           // if(typeof(obj.value) === "boolean") {
           if( Object.prototype.toString.call( obj.value ) === '[object Array]' ) { //check si c'est un array
-            console.log('SUPERinterrupt2', obj.value, superGlobals.findOne({ SUPERinterrupt: { $exists: true}}));
+            // console.log('SUPERinterrupt2', obj.value, superGlobals.findOne({ SUPERinterrupt: { $exists: true}}));
             var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
             if(SUPERinterrupt) {
               console.log('SUPERinterrupt3 mise a jour');

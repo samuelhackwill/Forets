@@ -62,6 +62,10 @@ next = function(){
 
 action = function(type, params){
   switch(type){
+    case "notifyServer":
+    notifyServer();
+    break;
+
     case "showServer":
     showServerCall()
     break
@@ -129,6 +133,10 @@ action = function(type, params){
     timer()
     break;
   }
+}
+
+notifyServer = function(){
+  em.emit('waitingClient');
 }
 
 showServerCall = function(){
@@ -547,6 +555,8 @@ gotobookmark = function(where){
     }
   }
 }
+
+
 
 replaceNext = function(params){
   console.log("replace next ", params)

@@ -108,63 +108,6 @@ Template.jacky.onRendered(function () {
 
   }
 
-  em.addListener('allHideServerStrobe', function(){
-    clearInterval(blinkBlack)
-    clearInterval(blinkColor)
-    document.getElementById("gcontainer").style.backgroundColor = "black"
-  });
-
-  em.addListener('pingServer', function(args){
-    console.log("pingServer CLIENT, color = ", args)
-
-
-    if(Roles.userIsInRole(Meteor.user(), "admin")==true) {
-      console.log("toi tu est un admin avoue")
-          
-    blinkColor = setInterval(function(){
-      console.log("FIRE COLOR")
-        document.getElementById("gcontainer").style.backgroundColor = args
-    }, 150)
-
-        delay = setTimeout(function(){
-          blinkBlack = setInterval(function(){
-            console.log("BACK TO BKGND COLOR")
-            document.getElementById("gcontainer").style.backgroundColor = "black"
-          }, 150)
-      },75)
-
-        // stopBlink = setTimeout(function(){
-        //   clearInterval(blinkBlack)
-        //   clearInterval(blinkColor)
-        //   document.getElementById("gcontainer").style.backgroundColor = "black"
-        // }, 2000)
-
-  }
-  }),
-
-    em.addListener('pingServerShort', function(args){
-    console.log("pingServerShort CLIENT color = ", args)
-
-$("#gcontainer").css({
-        WebkitTransition : 'all 1s ease-in-out',
-        MozTransition    : 'all 1s ease-in-out',
-        MsTransition     : 'all 1s ease-in-out',
-        OTransition      : 'all 1s ease-in-out',
-        transition       : 'all 1s ease-in-out'
-    });
-
-
-    if(Roles.userIsInRole(Meteor.user(), "admin")==true) {
-      console.log("toi tu est un admin avoue")
-    document.getElementById("gcontainer").style.backgroundColor = args
-          
-    stopBlink = setTimeout(function(){
-    document.getElementById("gcontainer").style.backgroundColor = "black"
-      },2000)
-  }
-  }),
-
-
   em.addListener('salmnext', function(what) {
     console.log('salm next!', what);
     // compteur = what.compteur;

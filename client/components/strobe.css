@@ -1,0 +1,20 @@
+ul.admin_menu {
+  list-style-type: none;
+  display: inline-block;
+}
+ul.admin_menu li {
+  float: left;
+}
+ul.admin_menu li:after {
+  content: "/";
+  margin-left: 1em;
+  margin-right: 1em;
+}
+ul.admin_menu li:last-child:after {
+  content: "";
+}
+
+/* videoproj */
+body.strobe #srt {
+  display:none;
+}
