@@ -1,10 +1,3 @@
-// actions - fonctions pour le spectacle textes images questions/reponses etc...
-
-// TO DO
-// balises pour afficher du texte ailleurs que dans SRT (checklist, rubrique fiction)
-// pour les variables globales, virer le var avant
-// loadJSON = function(callback)
-
 compteurquest = -1
 compteur = -1
 // ça c'est pour commencer au 0 du tableau.
@@ -16,6 +9,9 @@ flipbookstatus = false
 clock = null
 
 data = []
+
+leftSteps = ["left1.mp3","left2.mp3","left3.mp3","left4.mp3","left5.mp3","left6.mp3","left7.mp3","left8.mp3"]
+rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","right6.mp3","right7.mp3","right8.mp3"]
 
 etats = {
   ambiance1:["rain1","1"],
@@ -66,8 +62,38 @@ next = function(){
     }
   }
 
+  randonnee = function(foot){
+
+      console.log("which foot? ", foot)
+      getSvg = getNmbr.exec(document.getElementById("MAMAN").style.transform)
+      SvgPos = parseInt(getSvg[0])
+      SvgPos = -15-SvgPos
+
+      switch(foot){
+        case (37):
+        var audio = new Audio("/footsteps/"+rightSteps[Math.floor(Math.random()*rightSteps.length)]);
+        audio.play();
+        break;
+
+        case (39):
+        var audio = new Audio("/footsteps/"+leftSteps[Math.floor(Math.random()*leftSteps.length)]);
+        audio.play();
+        break;
+
+      }
+      console.log(foot)
+
+
+      console.log("translateY("+SvgPos+"px)")
+      document.getElementById("MAMAN").style.transform = "translateY("+SvgPos+"px)"
+  }
+
 action = function(type, params){
   switch(type){
+    case "everyBody":
+    everbyBodyScreen(params);
+    break;
+
     case "startJourney":
     startJourney();
     break;
@@ -145,6 +171,10 @@ action = function(type, params){
   }
 }
 
+everbyBodyScreen = function(color){
+  console.log("everybody "+ color[0] + " nowww yooo")
+}
+
 findIp = function(onNewIP) { //  onNewIp - your listener function for new IPs
   var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for firefox and chrome
   var pc = new myPeerConnection({iceServers: []}),
@@ -180,6 +210,8 @@ startJourney = function(){
   // dans le meilleur des cas c'est là ou tu commences à append les divs du dessosu
   journeyStarted=true
   console.log("start the walking dude")
+  whichKey1="37"
+  whichKey2="39"
 }
 
 

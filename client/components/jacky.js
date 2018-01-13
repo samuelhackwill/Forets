@@ -1,9 +1,17 @@
 //TODO
-// boucle footsteps 
+// AJOUTEURS DE WHITESPACES POUR LE CHEMIN
 
-// aaaah le ptit batard de parseur il vire les whitespace quand il stringify ou quoi
-// du coup faut écrire un programme pour en remettre hahahahahahahahahahahahahaahahahhah fuckme
+// ROUGISSEUR D'ECRAN
 
+// DISPARITION DU CADRE ET TOUT
+
+// BLOQUEUR DE SPRINT && CLOCHE-PIEDS
+
+// OMBRES && NUIT
+
+// INTERRUPT DE LA NUIT
+
+// JACOB EST LA PYRALE DES CHOCO BISSON
 
 var streamCheckInterval;
 var caughtUp = false;
@@ -11,6 +19,9 @@ var intervalReload;
 journeyStarted = false;
 getSvgPos = 0;
 SvgPos =0;
+
+whichKey1='32'
+whichKey2='32'
 
 getNmbr = new RegExp('[0-9]+');
 
@@ -223,12 +234,10 @@ Template.jacky.onRendered(function () {
       }
     }
   }); 
+
+  // window.document.body.addEventListener('keyup', function(){console.log("nique")})
   
-  $(document.body).on('keyup', function(e) {
-
-    e = e || window.event
-    // console.log(e.target)
-
+  bodyEvent = function(e){
     if (e.target.id=="formulaire") {
       return
     }
@@ -236,9 +245,17 @@ Template.jacky.onRendered(function () {
     // console.log(e.originalEvent.path[0].id)
     // KEYCODE 32 IS SPACEBAR
     // KEYCIODE 78 IS "n"
-    if(e.keyCode == '32'){
-    nextEvent();
+    if(e.keyCode == whichKey1 || e.keyCode == whichKey2){
+      console.log("keypressed was ", e.keyCode)
+      nextEvent(e.keyCode);
     }
+  };
+  
+  $(document.body).on('keyup', function(e) {
+    e = e || window.event
+    // console.log(e.target)
+
+    bodyEvent(e)
   });
 
   var alternanceStorm = false;
@@ -294,7 +311,7 @@ Template.jacky.onRendered(function () {
 
 });
 
-var nextEvent = function(){
+var nextEvent = function(foot){
 
   // var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
   var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
@@ -305,13 +322,7 @@ var nextEvent = function(){
     compteur +=1
     next();
     if(journeyStarted){
-      console.log("STEP")
-      getSvg = getNmbr.exec(document.getElementById("MAMAN").style.transform)
-      SvgPos = parseInt(getSvg[0])
-      SvgPos = -15-SvgPos
-
-      console.log("translateY("+SvgPos+"px)")
-      document.getElementById("MAMAN").style.transform = "translateY("+SvgPos+"px)"
+      randonnee(foot)
     }
 
     console.log("keyup, ", compteur)
