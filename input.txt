@@ -1,0 +1,353 @@
+%%% LE JEU DE VOIR OU EST LE SERVEUR
+
+%%% le texte, V0
+-> TEST OK <-
+vous êtes bien arrivé•e•s sur la suite du spectacle de samuel
+félicitations.
+manifestement Jean-Michel vous a bien conseillé
+vous êtes bien connecté•e•s au réseau local
+les informations ne vous parviennent plus depuis le mur sur lequel on projettetait des images
+mais bien de votre ordinateur personnel.
+vous êtes un peu rentré•e•s chez vous quoi.
+bienvenue chez vous,
+bienvenue.
+***
+c'est sympa chez vous tiens
+ah ouais vous avez des favoris sympas aussi!
+et là c'est peut être le moment où vous vous dites
+non mais oh c'est qui ce type qui me souhaite la bienvenue chez moi là
+et qui met ses pieds sur le canapé
+ce type c'est à dire moi
+et du coup je serais un peu gêné :
+connaissant Jean-Michel, il est surement allé assez vite sur un certain nombre de détails
+par exemple je parie qu'il ne vous a pas prévenu que la suite du spectacle c'était moi
+bon c'est pas grave hein
+bon du coup je me présente, c'est samuel, je suis l'assistant de jean-michel
+***
+et sinon faut que je vous parle d'un truc
+là pour le moment 
+ce texte 
+il défile tout seul.
+***
+hop
+hop
+hop
+***
+%%%  pause, puis les suivants hyper vite
+hop
+hop
+hop
+hop
+hop
+***
+%%% faire une pause 
+ i 
+like 
+ to
+move
+ it
+move 
+ it
+ i
+like
+ to
+move
+ it
+move 
+ it
+ i
+like 
+ to
+MOVE IT
+ouais bref
+l'avantage de cette methode
+c'est que je peux vous faire lire des trucs de manière synchronisée
+mais le problème c'est que cette methode de lecture n'est pas adaptée à votre singularité d'être humain
+puisqu'il y en a certains parmi vous qui aiment lire super-vite pour frimer
+d'autres qui aiment prendre le temps de faire des micro-siestes entre deux phrases
+bon hé ben la technologie qu'on utilise en ce moment 
+ne permet pas à votre subjectivité de s'exprimer
+(alors même que vous êtes chez vous quoi)
+donc là, 
+dès que vous êtes prêt
+vous allez pouvoir identifier mentalement la touche du clavier qu'on appelle communément
+"la barre espace"
+et appuyer dessus.
+et encore
+ok
+super
+si vous lisez ces lignes
+c'est que vous maîtrisez cette technologie
+sans cela
+il aurait été impossible d'arriver ici.
+***
+j'ai l'impression que je pourrais presque vous dire à nouveau bienvenue
+bienvenue donc.
+***
+pas mal ce nouvel endroit
+mouais
+c'est une sorte de terrain vague, pas très loin de votre maison, 
+et il y a une sorte de gros levier qui sort du sol
+(la barre espace)
+et quand vous actionez ce levier il y a un petit paquet qui arrive
+(ce texte).
+***
+Cependant on va pas rester ici
+parce qu'il y a encore des questions en suspens
+namely : où est-on?
+et qui suis-je
+pour répondre a ces deux questions il faut que je commence par vous expliquer ce qui est en train de se passer présentement, un peu en détail.
+***
+ce qui se passe donc, c'est que
+vous êtes en train d’accéder à un <span id="serveur">serveur</span> 
+c'est à dire un ordinateur comme le votre
+et la seule différence qu’il y a entre ce qu’on fait maintenant et ce que vous faites quand vous allez sur des vrais sites internet, depuis chez vous
+c’est que le <span id="serveur">serveur</span>, donc la machine qui vous envoie des fichiers
+se situe dans la même salle que vous 
+au lieu d'être, comme c'est d'habitude le cas, dans un pays étranger
+par exemple quand vous tapez une requête sur le moteur de recherche Google,
+vous accedez aux bases de données de Google qui sont hébergées dans des fermes de serveurs dans le monde entier :
+USA, Singapour, Belgique, Finlande, etc.
+bref, et là on est dans une configuration dite de "réseau local"
+la différence, c'est que le <span id="serveur">serveur</span> est installé ici, parmi vous
+alors pour que chacun puisse identifier où il se situe, on va faire un truc
+comme le serveur est dans notre cas un ordinateur avec un écran
+on va faire en sorte que cet écran fasse des trucs étranges
+comme ça vous pourrez repérer de quelle machine il s'agit.
+Il peut se trouver derrière vous, devant vous, sur les côtés, alors vous allez devoir vous tourner un peu dans tout les sens.
+#showServer
+là normalement le serveur devrait envoyer de la lumière un peu stroboscopique
+vous le voyez là?
+***
+c'est donc d'ici que tout provient
+c'est de cette machine que provient le "lieu" où je vous ai accueilli tout à l'heure
+c'est aussi cette machine qui dit "je", en quelque sorte
+dans cette configuration, on appelle votre machine
+un <span id="client">client</span>.
+vous faites des requêtes à ma machine.
+et ma machine vous envoie du code informatique dans tout les sens.
+nous ne sommes même pas connectés à internet
+nous sommes juste connectés entre nous.
+mais on utilise les mêmes outils et protocoles que sur internet en gros
+c’est comme si on avait refait un petit internet.
+#hideServer
+***
+bon alors je crois qu'il faut que je vous souhaite encore la bienvenue
+parce que mine de rien notre perception de l'espace a un peu changé encore
+dans notre terrain vague avec le gros levier qui fait venir les paquets
+on est allés au bout du terrain vague, on s'est penchés en avant pour voir
+d'où venaient les paquets
+et là on découvre une espèce de grosse autoroute et un bâtiment au loin
+(le <span id="server">serveur</span>)
+***
+bon et alors je sais pas si vous avez compris le truc de la lumière rouge qui clignote
+c'est peut-être allé un peu vite
+en gros, soit vous faites partie des gens qui, 
+découvrant la technologie de la barre espace, avez tapé comme un malade sur votre clavier
+et êtes donc arrivé le premier au paragraphe expliquant ce que c'était qu'un <span id="server">serveur</span>.
+vous avez levé la tête au moment où c'était indiqué,
+et appuyant sur la barre espace, vous avez vu la lumière de mon ordinateur se mettre à clignoter.
+***
+Ce qui s'est vraisemblablement passé pour les personnes qui ont un peu plus pris leur temps
+c'est que, progressant plus tranquillement dans le texte,
+vous avez peut-être commencé à voir des flashes de lumière apparaître dans la salle
+de manière complètement inexpliquée
+ce qui vous a peut-être au passage encore ralenti (car vous êtes d'une nature plus contemplative)
+puis arrivant au passage sur le <span id="server">serveur</span>, vous avez pu faire la connexion entre votre lecture et l'étrange phénomène intervenu un peu plus tôt.
+***
+alors c'est intéressant
+en fonction de votre personnalité, vous avez vécu deux situations un peu différentes
+les plus rapides ont probablement ressenti les émotions suivantes :
+surprise, impression de puissance, fluidité.
+les plus contemplatifs ont probablement ressenti tout autre chose :
+suprise également, mais éclatant de manière rétrospective en quelque sorte
+légère confusion, empathie, joie de la découverte scientifique.
+***
+c'est le moment d'apprendre une nouvelle technologie
+yes!
+%%% transition foireuse
+%%% plutôt faire un truc pour les gens qui sont degs de pas avoir été les plus rapides
+après la barre espace,
+j'aimerais vous donner accès a un autre outil
+qui s'appelle un "formulaire"
+en gros c'est une zone dans laquelle vous pouvez cliquer pour y entrer du texte
+une barre de texte quoi
+quand vous appuyez sur la touche "entrée", ça va envoyer ce texte vers le <span id="server">serveur</span>
+qui va ensuite décider ce qu'il doit faire avec ce texte.
+c'est un outil extrèmement puissant
+un des matériaux sur lequel est bâti l'empire de Google.
+***
+je vous met en garde cependant,
+il est impossible d'utiliser les deux technologies en même temps
+c'est à dire que quand vous cliquez dans le formulaire
+(que vous êtes "dans" le formulaire)
+toutes vos pressions sur la barre espace seront cette fois interprétées comme des espaces typographiques
+et non plus comme des pas à effectuer dans le texte.
+(ce qui correspond a votre utilisation actuelle de la barre espace)
+euh j'espère que vous m'avez compris.
+en gros si la technologie de la barre espace semble avoir cessé de fonctionner
+cliquez simplement en dehors du formulaire.
+***
+#showForm
+donc ça va se situer ici &darr;
+si ça vous dis on va faire un petit test pour voir si ça marche
+alors ben vous pouvez cliquer dans le formulaire ci-dessous, y entrer le texte suivant : "showServer", puis appuyer sur la touche entrée. Faites bien attention a respecter les majuscules/minuscules.
+normalement ça a du faire apparaître un flash de lumière comme tout à l'heure.
+n'hésitez pas à réessayer.
+***
+tiens et on pourrait essayer quelque chose aussi
+***
+cyan <span style="background-color:cyan;color:cyan">...</span>
+red <span style="background-color:red;color:red">...</span>
+brown <span style="background-color:brown;color:brown">...</span>
+ivory <span style="background-color:ivory;color:ivory">...</span>
+tan <span style="background-color:tan;color:tan">...</span>
+yellow <span style="background-color:yellow;color:yellow">...</span>
+pink <span style="background-color:pink;color:pink">...</span>
+royalBlue <span style="background-color:royalBlue;color:royalBlue">...</span>
+skyBlue <span style="background-color:skyBlue;color:skyBlue">...</span>
+tomato <span style="background-color:tomato;color:tomato">...</span>
+***
+c'est joli ces couleurs hein?
+imaginez vous êtes un roi. 
+une reine.
+vous habitez une grande île dans le nord
+ou bien le désert
+votre peuple se déplace dans de grands bateaux de bois.
+ou alors il vit majoritairement dans des maisons de brique.
+et vous avez un drapeau
+il représente les valeurs de votre peuple.
+à quoi ressemble-t-il?
+vous pouvez vous servir du terminal pour en définir la couleur de fond :
+cliquez dedans, puis entrez "pickColor" suivi du nom de la couleur de votre choix
+donc ça donnerai par exemple "PickColor rouge" ou "PickColor royalBlue"
+***
+ET MAINTENANT
+si vous tapez "showServer" dans le formulaire, comme tout à l'heure, vous allez voir qu'il va se passer un truc nouveau
+***
+vous pouvez expérimenter un peu, dès que vous voulez passer à la suite vous pouvez appuyer sur la barre espace.
+#stop
+On attend tout le monde.
+***
+#bookmark spectacle
+***
+ok à ce stade
+on est assis en rond dans un terrain vague
+c'est là où je vous ai expliqué quelques principes en rapport avec le serveur, le client, etc.
+on a découvert des outils, on a expérimenté des protocoles.
+et maintenant je vous propose qu'on se mette en route
+on s'éloigne un peu
+c'est un long voyage
+on fait des kilomètres
+on passe des cols
+on traverse des prairies, c'est l'été
+puis on arrive dans un village le long d'une côte
+c'est un beau petit village plein d'activité
+et plein de bruits : 
+un artisan qui actionne un metier à tisser dans une maison
+des enfants qui jouent au foot, 
+la foule qui se presse sur une place de marché à proximité
+pis ouais en fait c'est genre le moyen âge
+et cet endroit où on se trouve là,
+c'est votre village natal, là où vous avez toujours vécu.
+vous y travaillez.
+vous faites du pain
+vous travaillez à la carrière
+vous fabriquez de petites embarcations avec votre famille
+et puis c'est pas vraiment comme si vous aviez choisi votre métier
+au moment où vous êtes nés, on avait besoin que quelqu'un reprenne l'activité familiale
+donc vous l'avez fait
+en ce qui vous concerne
+comme vos parents *SOMETHING SOMETHING* (tenaient la boulangerie / ou etc)
+vous êtes *SOMETHING SOMETHING*
+c'est votre façon de contribuer à l'activité du village.
+vous connaissez très bien chaque autre membre de la communauté.
+Il y a * bucheron(s).
+Il y a * boulanger(s) *(c'est vous!)*
+Il y a * personne(s) qui travaillent à la mine, non loin.
+Il y a également Msr *, l'évèque du
+
+votre quotidien = texte différencié etc
+
+%%% scories scories scories
+
+
+#autonext 3000
+***
+#autonext 3000
+***
+#autonext 3000
+***
+#autonext 3000
+bonjour
+#autonext 3000
+***
+#autonext 3000
+***
+#autonext 3000
+***
+#autonext 3000
+et bienvenue ici même
+#autonext 3000
+***
+#autonext 3000
+***
+#autonext 3000
+***
+#autonext 3000
+alors euh
+#autonext 3000
+je dis "bienvenue"
+#autonext 3500
+mais c'est pas très clair en fait
+#autonext 3000
+je vous souhaite la bienvenue où exactement?
+#autonext 3000
+***
+#autonext 7000
+ça aurait été plus simple si vous étiez assis dans une salle de spectacle et que je faisais un one man show comme on dit
+#autonext 4500
+je vous aurait dit "bienvenue à l'EPSM les loulous" ou un truc comme ça
+#autonext 4000
+histoire de chauffer la salle
+#autonext 3500
+mais là vous êtes devant un ordinateur
+#autonext 4500
+donc en fait le LIEU où vous vous trouvez est quand même assez ambigu
+#autonext 4000
+vous n'êtes pas seulement dans une salle de l'EPSM.
+#autonext 3500
+vous êtes aussi quelque part entre 
+#autonext 2000
+A = votre chaise
+#autonext 2000
+et
+#autonext 4500
+B = un espace abstrait représenté par des trucs sur votre écran
+#autonext 4000
+cet espace n'est pas hyper clair lui-même d'ailleurs
+#autonext 4000
+parce que là le texte qui s'affiche sur votre écran
+#autonext 3500
+n'est pas stocké sur votre disque dur
+#autonext 4000
+donc il ne vient pas de votre propre ordinateur
+#autonext 2000
+il vient d'ailleurs.
+#autonext 4500
+d'un autre lieu (mais d'où bon sang?)
+#autonext 4500
+et qui est cette personne qui dit "je" sur mon écran d'ordinateur?
+#autonext 3500
+seriez-vous en droit de vous demander.
+#autonext 2000
+***
+#autonext 4500
+on va répondre à ces questions fort légitimes dans un moment
+#autonext 3000
+***
+
+bon j'essaie d'amener ça avec tact mais c'est chaud
+enfin quoi, vous avez pas remarqué que les volets de votre maison étaient tout écaillés?
+je vous ai pas dit tout à l'heure parce que je voulais pas vous faire de peine
+mais bon ça serait quand même une bonne idée de les repeindre quoi
