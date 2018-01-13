@@ -52,8 +52,14 @@ next = function(){
           $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
           $('#srt').scrollTop($('#srt')[0].scrollHeight);
         }else{
+          // version le havre
           $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
           $('#srt').scrollTop($('#srt')[0].scrollHeight);
+
+          // version game hédé
+          // $('#srt').append($('<ul/>').html(params))
+          // $('#srt').scrollTop($('#srt')[0].scrollHeight);
+
         }
       // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
       // bon ben c'est ici qu'il faudrait faire un truc
@@ -62,6 +68,10 @@ next = function(){
 
 action = function(type, params){
   switch(type){
+    case "startJourney":
+    startJourney();
+    break;
+
     case "notifyServer":
     notifyServer();
     break;
@@ -134,6 +144,44 @@ action = function(type, params){
     break;
   }
 }
+
+findIp = function(onNewIP) { //  onNewIp - your listener function for new IPs
+  var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for firefox and chrome
+  var pc = new myPeerConnection({iceServers: []}),
+    noop = function() {},
+    localIPs = {},
+    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
+    key;
+
+  function ipIterate(ip) {
+    if (!localIPs[ip]) onNewIP(ip);
+    localIPs[ip] = true;
+  }
+  pc.createDataChannel(""); //create a bogus data channel
+  pc.createOffer(function(sdp) {
+    sdp.sdp.split('\n').forEach(function(line) {
+      if (line.indexOf('candidate') < 0) return;
+      line.match(ipRegex).forEach(ipIterate);
+    });
+    pc.setLocalDescription(sdp, noop, noop);
+  }, noop); // create offer and set local description
+  pc.onicecandidate = function(ice) { //listen for candidate events
+    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+    ice.candidate.candidate.match(ipRegex).forEach(ipIterate);
+  };
+}
+
+addIp = function(ip) {
+  console.log('got ip: ', ip);
+  localIp = ip
+}
+
+startJourney = function(){
+  // dans le meilleur des cas c'est là ou tu commences à append les divs du dessosu
+  journeyStarted=true
+  console.log("start the walking dude")
+}
+
 
 notifyServer = function(){
   em.emit('waitingClient');

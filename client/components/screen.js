@@ -45,12 +45,22 @@ execute = function(what){
     var whatInstructions = what.match(/[^\s][a-zA-Z0-9\u00E0-\u00FC().'\[\]\;,_!?\-\:]{0,}/gm)
     console.log("insctructions :", whatInstructions)
 
-    $('#srt').append($('<ul/>').html("<small>vous :</small>\ \ \ \ \ \ \ \ " + what))
+    $('#srt').append($('<ul/>').html("<small>"+localIp+":</small>\ \ \ \ \ \ \ \ " + what))
     $('#srt').scrollTop($('#srt')[0].scrollHeight);
 
     switch(whatInstructions[0]){
         case "showServer":
     		em.emit('pingServerShort', pickedColor)
+            
+            $('#srt').append($('<ul/>').html("<small>\ \ \ \ \ \ \ \ Server flashing red now!</small>"))
+            $('#srt').scrollTop($('#srt')[0].scrollHeight);
+
+            console.log("append text to div!")
+
+            setTimeout(function(){
+            $('#srt').append($('<ul/>').html("<small>\ \ \ \ \ \ \ \ Ping server done.</small>"))
+            $('#srt').scrollTop($('#srt')[0].scrollHeight);
+            },3500)
             break;
 
         case "pickColor":

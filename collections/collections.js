@@ -57,7 +57,6 @@ Schemas.ContenusEcran = new SimpleSchema({
 
 
 Schemas.superGlobals = new SimpleSchema({
-
     powerToThePeople: {
       type: Boolean,
       label: "Pouvoir au peuple, les SALM dirigent le déroulé (barre espace)",

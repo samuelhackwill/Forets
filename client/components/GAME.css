@@ -1,0 +1,47 @@
+/* game */
+body.game #srt {
+  color: white;
+  background-color:black!important;
+  font-size:20px;
+  line-height: 3;
+}
+
+span {  
+/*  background-color: hsl(0, 0%, 100%);
+  mix-blend-mode: screen;
+*/}
+
+body.game #srt span.vp {
+  color: white;
+}
+
+body.game .clickable{
+	cursor:pointer;
+}
+
+body.game #workforce{
+	z-index: 1000;
+	color:lightgreen;
+	position:absolute;
+    transform: translate(10px, 10px);
+}
+
+body.game #score{
+	z-index: 1000;
+	color:white;
+	position:absolute;
+    transform: translate(20px, 30px);
+}
+
+body.game #megaLoad{
+/*	width:1%;
+	height:20%;
+	background-color:grey;
+	position:absolute;
+	transform:scaleX();
+
+    -webkit-transition: width 3s linear;
+    -moz-transition: width 3s linear;
+    -o-transition: width 3s linear;
+    transition: width 3s linear;
+*/}

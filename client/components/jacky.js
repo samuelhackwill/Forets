@@ -1,7 +1,18 @@
+//TODO
+// boucle footsteps 
+
+// aaaah le ptit batard de parseur il vire les whitespace quand il stringify ou quoi
+// du coup faut écrire un programme pour en remettre hahahahahahahahahahahahahaahahahhah fuckme
+
 
 var streamCheckInterval;
 var caughtUp = false;
 var intervalReload;
+journeyStarted = false;
+getSvgPos = 0;
+SvgPos =0;
+
+getNmbr = new RegExp('[0-9]+');
 
 Template.jacky.onCreated(function() {
 
@@ -11,7 +22,6 @@ Template.jacky.onCreated(function() {
     this.subscribe('allContenusEcran');
     this.subscribe('allLoteries');
   });
-
 });
 
 
@@ -38,7 +48,11 @@ Template.jacky.onRendered(function () {
   // console.log(Template.instance());
     // zoupageJSON(dataFromDB, data);
   });
-
+  localIp="Local"
+  findIp(addIp);
+  // ça c'est un petit hack webRTC pour chopper l'adresse IP des gens
+  // might not work on safari et tout
+  document.getElementById("MAMAN").style.transform="translateY(0px)"
 
   function catchUpWithTheShow(){
     // console.log('catchUpWithTheShow caughtUp?', caughtUp);
@@ -222,7 +236,9 @@ Template.jacky.onRendered(function () {
     // console.log(e.originalEvent.path[0].id)
     // KEYCODE 32 IS SPACEBAR
     // KEYCIODE 78 IS "n"
-    if(e.keyCode == '32') nextEvent();
+    if(e.keyCode == '32'){
+    nextEvent();
+    }
   });
 
   var alternanceStorm = false;
@@ -283,10 +299,21 @@ var nextEvent = function(){
   // var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
   var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
   console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
+  
   if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
     window.clearTimeout(autonextcontainer)
     compteur +=1
     next();
+    if(journeyStarted){
+      console.log("STEP")
+      getSvg = getNmbr.exec(document.getElementById("MAMAN").style.transform)
+      SvgPos = parseInt(getSvg[0])
+      SvgPos = -15-SvgPos
+
+      console.log("translateY("+SvgPos+"px)")
+      document.getElementById("MAMAN").style.transform = "translateY("+SvgPos+"px)"
+    }
+
     console.log("keyup, ", compteur)
     // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
     // ça avance tout seul avec un délai)
