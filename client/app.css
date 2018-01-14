@@ -10,6 +10,11 @@
   width:25%;
   margin:20px;
 }*/
+
+:root {
+  --magicDisplay: "solid";
+}
+
   @font-face {
     font-family: "typo";
     src: url('Menlo.ttc') format('truetype');
@@ -30,6 +35,7 @@
 }
 
   body{
+    display : --magicDisplay;
     overflow: hidden;
     font-family: "typo", sans-serif;
     text-align: left;
@@ -44,6 +50,7 @@
   }
 
   #MAMAN{
+    animation:transform 1s;
     position: absolute;
     z-index: 1;
     transform:translateY(0px);
@@ -341,7 +348,7 @@ div.login input {
   75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 436.1777, 318.1248);}
 }*/
 
-
+/*
 #OMD_5_{
 animation:ombreOMD_5_ 10s linear;
 animation-iteration-count: infinite;
@@ -1980,4 +1987,4 @@ animation-iteration-count: infinite;
 @keyframes ombreXMLID_131_{
 0%,100%{transform:matrix(1 0 0 1 702.1662 3127.6118);}
 75%{transform:matrix(1, 0, 0, 1, 702.1662, 3127.6118);}
-}
+}*/

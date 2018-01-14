@@ -7,6 +7,7 @@ alternance = false
 autonextcontainer = null
 flipbookstatus = false
 clock = null
+newGUI = false
 
 data = []
 
@@ -67,7 +68,7 @@ next = function(){
       console.log("which foot? ", foot)
       getSvg = getNmbr.exec(document.getElementById("MAMAN").style.transform)
       SvgPos = parseInt(getSvg[0])
-      SvgPos = -15-SvgPos
+      SvgPos = -20-SvgPos
 
       switch(foot){
         case (37):
@@ -172,7 +173,24 @@ action = function(type, params){
 }
 
 everbyBodyScreen = function(color){
+  newGUI = true;
+
   console.log("everybody "+ color[0] + " nowww yooo")
+
+  randomVal = 3+Math.floor(Math.random() * Math.floor(5));
+
+  document.getElementById("gcontainer").style.WebkitTransition ="background-color "+randomVal+"s"
+  document.getElementById("gcontainer").style.MozTransition= "background-color "+randomVal+"s"
+  document.getElementById("gcontainer").style.backgroundColor ="red"
+
+  document.getElementById("srt").style.backgroundColor="#ffffff00"
+
+  document.getElementById("formulaire").style.display="none"
+
+  var sheet = document.createElement('style')
+  sheet.innerHTML = "small {color:red}";
+  document.body.appendChild(sheet);
+
 }
 
 findIp = function(onNewIP) { //  onNewIp - your listener function for new IPs
@@ -239,6 +257,8 @@ showFormCall = function(){
 }
 
 focusOnOff = function(clickTarget){
+  if (newGUI) return
+
   if (clickTarget=="formulaire") {
     $("#srt").css("background-color", "#333")
     $(".index").css("color", "black")
@@ -253,56 +273,6 @@ focusOnOff = function(clickTarget){
   }
 }
 
-
-sound = function(params){
-  console.log("sound", params);
-  if(params[0]=="start"){
-    // em.emit('adminstartstream');
-    console.log("jacky startTheStream??", streaming);
-    // em.emit('salmstartstream');
-    if(streaming) {
-      var body = { "request": "watch", id: parseInt(1) };
-      streaming.send({"message": body});
-    }
-      
-  }
-}
-
-flipbook = function(){
-  if(flipbookstatus==true){
-    $("#flipbookcontainer").removeClass("visible")
-    $("#flipbookcontainer").addClass("invisible")
-    var zoupla = setTimeout(function(){
-      $("#flipbookcontainer").css("display", "none")},1000)
-  }else{
-    flipbookstatus = true
-    $("#flipbookcontainer").css("display", "inline-block")
-    var zoupla = setTimeout(function(){
-      $("#flipbookcontainer").removeClass("invisible")
-      $("#flipbookcontainer").addClass("visible")},1000)
-  }
-}
-
-/*
-ça je m'en servais avant dans l'inscription pour donner rendez-vous aux gens 
-
-time = function(params){
-var nextsrt = compteur + 1
-
-var stringdeb = params[0]
-var stringfin = params[1] || ""
-// bam pseudo-argument optionnel dans ta face
-
-var stringdebpropre = stringdeb.replace(/\_/g, ' ');
-var stringfinpropre = stringfin.replace(/\_/g, ' ');
-
-var phrase = stringdebpropre + " le " + nextspectacledate + " à " + nextspectacletime + " " + stringfinpropre
-var addobject = {text:phrase, type: "text"}
-
-data.splice(nextsrt, 0, addobject, [type="text"])
-}
-*/
-
 cue = function(params){
       console.log("params du cue ", params, Router.current().route.getName())
     if(Roles.userIsInRole(Meteor.user(), "admin")==true && Router.current().route.getName() == "admin"){
@@ -312,80 +282,12 @@ cue = function(params){
     }
 }
 
-
 jacky = function(params){
   console.log("etes vous bien le jacky que nous cherchons?", params[0], params[1])
   if(Roles.userIsInRole(Meteor.user(), params[0])==true){
     console.log("l'user est bien le jacky que nous cherchons", params[0], params[1])
     gotobookmark(params[1])
   }
-}
-
-parking = function(params){
-  // TO DO : A REFACTORER SALEMENT
-  console.log("parking : is admin?");
-
-  var fonctions = []
-  var on_off = params[0]
-  params.shift()
-
-  var howmany = params.length
-  for(i=0; i<howmany; i++){
-    fonctions.push(params[i])
-  }
-
-  console.log("fonctions", fonctions);
-
-  // if(Roles.userIsInRole(Meteor.user(), "admin")==true) {
-
-    // console.log("parking : is admin");
-    // var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
-    // var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : false;
-    var isSUPERinterrupt = getSuperGlobal("SUPERinterrupt", false);
-    console.log("parking : is isSUPERinterrupt", isSUPERinterrupt);
-    if(SUPERinterrupt !== false) {
-      var parkingRoles = fonctions;
-      if(on_off=="ON"){
-        console.log("parking : enable FOR ROLES -> ", parkingRoles);
-        //ajouter roles dans le tableau SUPERinterrupt si pas déjà dedans
-        for(i=0;i<parkingRoles.length;i++){
-          console.log("user is in role", parkingRoles[i], " ?", Roles.userIsInRole(Meteor.user(), parkingRoles[i]));
-          if((parkingRoles[i] == 'salm' && !Meteor.user()) || Roles.userIsInRole(Meteor.user(), parkingRoles[i])==true) {
-            var found = jQuery.inArray(parkingRoles[i], isSUPERinterrupt);
-            if (found >= 0) {
-              // Element was found, don't add it again.
-            } else {
-              // Element was not found, add it.
-              isSUPERinterrupt.push(parkingRoles[i]);
-              console.log("parking : enabling for ", parkingRoles[i]);
-            }
-          }
-        }
-        
-      //  SUPERinterrupt = true
-      } else if(on_off=="OFF"){
-        console.log("parking : disable FOR ROLES -> ", parkingRoles);
-        //retirer roles du tableau SUPERinterrupt (si déjà dedans)
-        for(i=0;i<parkingRoles.length;i++){
-          var found = jQuery.inArray(parkingRoles[i], isSUPERinterrupt);
-          if (found >= 0) {
-            // Element was found, remove it.
-            isSUPERinterrupt.splice(found, 1);
-            console.log("parking : disabling for ", parkingRoles[i]);
-          } else {
-            // Element was not found, don't remove it.
-          }
-        }
-      }
-      // em.setClient({ value: isSUPERinterrupt });
-      // em.emit('adminSUPERinterrupt');
-      console.log("parking : new SUPERinterrupt = ", isSUPERinterrupt);
-      Meteor.call('setSuperGlobal', {name: 'SUPERinterrupt', value: isSUPERinterrupt});
-    }
-  // } else {
-
-    //  SUPERinterrupt = false
-  // }
 }
 
 timer = function(){
@@ -444,64 +346,6 @@ get_time_diff = function(datetime){
   console.log("date_diff " + date_diff)
 }
 
-addFiction = function(params){
-  var ul = document.getElementById("elemfiction")
-  var li = document.createElement("li")
-  li.setAttribute("id", phrase)
-  li.appendChild(document.createTextNode(phrase))
-  ul.appendChild(li)
-}
-
-removeFiction = function(params){
-  var li = document.getElementById(phrase);
-  if(li!=null){
-    li.parentNode.removeChild(li);
-  }else{
-    console.log("ERR cannot find element '"+ phrase + "'")
-  }
-}
-
-changeImg = function(params){
-
-  console.log("tous les params, ",params)
-
-  console.log("src, ",params[0])
-  console.log("transition, ",params[1])
-  console.log('opacity '+ params[1] +' ease-in-out')
-
-$("#imgcontainerFRONT").css({
-        WebkitTransition : 'opacity '+params[1]+'s ease-in-out',
-        MozTransition    : 'opacity '+params[1]+'s ease-in-out',
-        MsTransition     : 'opacity '+params[1]+'s ease-in-out',
-        OTransition      : 'opacity '+params[1]+'s ease-in-out',
-        transition       : 'opacity '+params[1]+'s ease-in-out'
-    });
-
-  $("#imgcontainerFRONT").addClass("visible")
-  $("#imgcontainerFRONT").removeClass("invisible")
-  
-   // tu change le background-image de front 
-   // tu changes la durée de transition de front 
-   // tu rend visible back et front 
-   // avec un timout = a la durée de la transition de front
-   //    tu changes de lbackground-image de back
-   //    sans transition du fais disparaître front  
-
-
-
-  // if (alternance) {
-  //   $("#imgcontainerFRONT").css("background-image", "url(/img/"+params+".jpg");  
-  //   $("#imgcontainerFRONT").css("opacity", "1");  
-  // }else{
-  //   $("#imgcontainerBACK").css("background-image", "url(/img/"+params+".jpg");  
-  //   $("#imgcontainerFRONT").css("opacity", "0");  
-  // }
-  // console.log(alternance)
-  // console.log(params[0])
-
-
-}
-
 autonext = function(params){
   var wait = params
 
@@ -520,57 +364,6 @@ addclass = function(params){
 removeclass = function(params){
   console.log("removeclass, ", params[0], params[1])
   $("#"+params[0]).removeClass(params[1])
-}
-
-answernext = function(params){
-  compteurquest += 1
-  console.log("answernext, "+params+ "compteurq ="+compteurquest)
-  if(params=="ok") addlistelement(['checklist',posanswers[compteurquest], params])
-  if(params=="nope") addlistelement(['checklist',neganswers[compteurquest], params])
-  if(compteurquest<4){
-    interrupt=true
-  }else{
-    interrupt=false
-    destroy("seqoui")
-  }
-}
-
-
-addlistelement = function(params){
-
-  console.log("les params chelous ", params)
-  var where = params[0]
-  var label = params[1]
-  var status = params[2]
-
-  var labelpropre = label.replace(/\_/g, ' ');
-
-  var newListel = $('<li class='+ status +'>'+ labelpropre +'</li>')
-  newListel.appendTo($("#"+where))
-
-}
-
-newBoutton = function(params){
-  interrupt=true
-
-  var fonctions = []
-  var nom = params[0]
-  params.shift()
-  var label = params[0]
-  var labelpropre = label.replace(/\_/g, ' ');
-
-  params.shift()
-
-  var howmany = params.length
-  for(i=0; i<howmany; i++){
-    fonctions.push(params[i])
-    fonctionsconcat = fonctions.join(";")
-  }
-
-  var newBoutton = $('<input type="button" class="button" value="'+ labelpropre +'" id="'+ nom +'" onclick = "' + fonctionsconcat + '">')
-  newBoutton.appendTo($("#sacbouttons"))
-
-  $("#sacbouttons").css("opacity", "1");  
 }
 
 fullscreen = function(){
@@ -636,64 +429,6 @@ gotobookmark = function(where){
   }
 }
 
-
-
-replaceNext = function(params){
-  console.log("replace next ", params)
-  var nextsrt = compteur + 1
-  var leReplace = {"text":" ", "type":"text"}
-
-  if(params=="1"){
-    leReplace.text = "Bon,tant pis. Par contre vous n’allez rien avoir pour vous abriter pendant l’orage."
-  }
-
-  if(params=="2"){
-    leReplace.text = " "
-  }
-
-  if(params=="3"){
-    leReplace.text = "Excellent. Et puis tenez, si c'est possible et que ça vous ferait plaisir, vous pouvez faire bouillir de l'eau pour vous faire une tisane, ou un chocolat chaud, quelque chose de chaud quoi..."
-  }
-
-  console.log("data next srt AVANT LIFTING ,",data[nextsrt])
-  data.splice(nextsrt, 1, leReplace)
-  console.log("data next srt APRé LIFTING ,",data[nextsrt])
-
-}
-
-addLotteryButtons = function(){
-  console.log("addLotteryButtons yo yo yo yo yo")
-  newBoutton(["iWantONH","Oui","addUserToLottery('oui-non-euh')", "destroy(id)"])
-  newBoutton(["nonB","Non","replaceNext('2')", "destroy(id)"])
-  $("#sacbouttons").addClass("visible")
-  $("#sacbouttons").removeClass("invisible")
-
-}
-
-// SHOW BUTTONS READY!
-// il faut qu'il cale un texte dans la div qui sinon est vide
-// Quand vous avez fini vote cabane / installation, appuyez sur le bouton.
-// LE BOUTON DIT : ça y est je suis installé.
-
-// euh c'est un replaceNext() en fait
-
-addCuppasButtons = function(){
-  console.log("addCuppasButtons yo yo yo yo yo")
-  newBoutton(["finishCuppa","ça_y'est_je_suis_installé","destroy(id)"])
-  $("#cuppasInc").remove()
-  $("#sacbouttons").addClass("visible")
-  $("#sacbouttons").removeClass("invisible")
-}
-
-finishCuppa = function(){
-  console.log("finishCuppa!");
-  var buchesArray = getSuperGlobal("buchesCount", []);
-  var buchesAllumees = buchesArray.filter(function(buche){ return buche; }).length;
-  console.log("finishCuppa?",buchesAllumees);
-  if(buchesAllumees < 6) em.emit('salmFinishCuppa');
-
-}
-
 gotonext = function(params){
   var bonus = parseInt(params)
   compteur += bonus
@@ -702,17 +437,6 @@ gotonext = function(params){
   console.log("gotonext, ", params)
 }
 
-// m'ajouter à un pool de loterie
-addUserToLottery = function(params){
-  console.log('user?', Meteor.connection._lastSessionId, params);
-  var lotteryName = params;
-  if(lotteryName != "") {
-    cookies.set(lotteryName, Meteor.connection._lastSessionId);
-    em.setClient({ lotteryName: lotteryName, sessionId: Meteor.connection._lastSessionId });
-    em.emit('salmAddMeToLottery');
-  }
-
-}
 // unstop (si l'admin redonne le pouvoir au peuple)
 unstop = function(params){
   interrupt = false;

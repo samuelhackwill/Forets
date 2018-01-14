@@ -1,6 +1,4 @@
 //TODO
-// AJOUTEURS DE WHITESPACES POUR LE CHEMIN
-
 // ROUGISSEUR D'ECRAN
 
 // DISPARITION DU CADRE ET TOUT
@@ -10,6 +8,8 @@
 // OMBRES && NUIT
 
 // INTERRUPT DE LA NUIT
+
+// VIDEO JEAN-MICHEL
 
 // JACOB EST LA PYRALE DES CHOCO BISSON
 
@@ -22,6 +22,8 @@ SvgPos =0;
 
 whichKey1='32'
 whichKey2='32'
+// pour avancer dans le texte c'est la barre espace au début
+// puis ça sera la touche directionelle gauche & droite
 
 getNmbr = new RegExp('[0-9]+');
 
@@ -64,6 +66,7 @@ Template.jacky.onRendered(function () {
   // ça c'est un petit hack webRTC pour chopper l'adresse IP des gens
   // might not work on safari et tout
   document.getElementById("MAMAN").style.transform="translateY(0px)"
+  // ça c'est pour que par ensuite le défileur puisse lire les propriétés de maman
 
   function catchUpWithTheShow(){
     // console.log('catchUpWithTheShow caughtUp?', caughtUp);
