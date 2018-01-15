@@ -181,14 +181,15 @@ everbyBodyScreen = function(color){
 
   document.getElementById("gcontainer").style.WebkitTransition ="background-color "+randomVal+"s"
   document.getElementById("gcontainer").style.MozTransition= "background-color "+randomVal+"s"
+
   document.getElementById("gcontainer").style.backgroundColor ="red"
 
   document.getElementById("srt").style.backgroundColor="#ffffff00"
 
-  document.getElementById("formulaire").style.display="none"
+  document.getElementById("formulaire").style.opacity="0"
 
   var sheet = document.createElement('style')
-  sheet.innerHTML = "small {color:red}";
+  sheet.innerHTML = "small {opacity:0}";
   document.body.appendChild(sheet);
 
 }
@@ -230,6 +231,10 @@ startJourney = function(){
   console.log("start the walking dude")
   whichKey1="37"
   whichKey2="39"
+
+  document.getElementById("gcontainer").style.WebkitTransition ="background-color 120s"
+  document.getElementById("gcontainer").style.MozTransition= "background-color 120s"
+  document.getElementById("gcontainer").style.backgroundColor ="#ffffff00"
 }
 
 
