@@ -3,8 +3,6 @@
 
 // INTERRUPT DE LA NUIT
 
-// VIDEO JEAN-MICHEL
-
 // JACOB EST LA PYRALE DES CHOCO BISSON
 
 var streamCheckInterval;
@@ -318,7 +316,7 @@ var nextEvent = function(foot){
     window.clearTimeout(autonextcontainer)
     compteur +=1
     next();
-    if(journeyStarted){
+    if(journeyStarted && isItNight==false){
       randonnee(foot)
     }
 

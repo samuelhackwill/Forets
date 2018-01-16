@@ -8,6 +8,7 @@ autonextcontainer = null
 flipbookstatus = false
 clock = null
 newGUI = false
+isItNight = false
 
 data = []
 
@@ -188,6 +189,8 @@ everbyBodyScreen = function(color){
 
   document.getElementById("formulaire").style.opacity="0"
 
+  document.getElementById("bumper").style.display="none"
+
   var sheet = document.createElement('style')
   sheet.innerHTML = "small {opacity:0}";
   document.body.appendChild(sheet);
@@ -228,13 +231,42 @@ addIp = function(ip) {
 startJourney = function(){
   // dans le meilleur des cas c'est là ou tu commences à append les divs du dessosu
   journeyStarted=true
-  console.log("start the walking dude")
   whichKey1="37"
   whichKey2="39"
 
-  document.getElementById("gcontainer").style.WebkitTransition ="background-color 120s"
-  document.getElementById("gcontainer").style.MozTransition= "background-color 120s"
-  document.getElementById("gcontainer").style.backgroundColor ="#ffffff00"
+  var svgArray = document.getElementsByClassName("paused")
+
+  for(i=0; i<svgArray.length; i++){
+    // console.log("change les bails de eux " +svgArray[i].id)
+    document.getElementById(svgArray[i].id).style.animationPlayState="running"
+  }
+
+  var div = document.createElement("div");
+  div.id="night";
+
+  document.getElementById("gcontainer").appendChild(div);
+
+
+  console.log("let the time begin")
+
+    firstBibu = setTimeout(function(){
+        isItNight = true 
+        interrupt = true
+        console.log("c'est la nuit ", isItNight)
+  }, 112500)
+
+
+  bob = setInterval(function(){
+      bibu = setTimeout(function(){
+            isItNight = true 
+            interrupt = true
+            console.log("c'est la nuit ", isItNight)
+      }, 112500)
+
+      isItNight = false
+      interrupt = false
+      console.log("c'est le jour ", isItNight)
+  }, 150000)
 }
 
 

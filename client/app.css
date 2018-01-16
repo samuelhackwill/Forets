@@ -1,20 +1,3 @@
-/*body  {
-  padding-top:50px; 
-}
-.polls  {
-  display:flex;
-  flex-flow:row wrap;
-  justify-content:center;
-}
-.poll   {
-  width:25%;
-  margin:20px;
-}*/
-
-:root {
-  --magicDisplay: "solid";
-}
-
 @font-face {
     font-family: "typo";
     src: url('Menlo.ttc') format('truetype');
@@ -35,7 +18,6 @@
 }
 
   body{
-    display : --magicDisplay;
     overflow: hidden;
     font-family: "typo", sans-serif;
     text-align: left;
@@ -47,6 +29,28 @@
     height:100%;
 
     scroll-behavior: unset;
+  }
+
+  .paused{
+    animation-play-state: paused;
+  }
+
+  #night{
+    top:0px;
+    left:0px;
+    position:fixed;
+    z-index:100;
+    width:100%;
+    height:100%;
+
+    background-color: #16002D;
+    opacity:0;
+
+    animation: nuitjourBody 150s linear;
+    -moz-animation: nuitjourBody 150s linear;
+    -webkit-animation: nuitjourBody 150s linear;
+    -o-animation: nuitjourBody 150s linear;
+    animation-iteration-count: infinite;
   }
 
   #MAMAN{
@@ -63,26 +67,13 @@
     top:0px;
     position: absolute;
     background-color: white;
-    animation: nuitjourBody 10s linear;
-    -moz-animation: nuitjourBody 10s linear;
-    -webkit-animation: nuitjourBody 10s linear;
-    -o-animation: nuitjourBody 10s linear;
-    animation-iteration-count: infinite;
   }
 
-  @keyframes nuitjourBody{
-  0%, 100% {
-      background-color: white;
-  }
-  45% {
-      background-color: white;
-  }
-  75% {
-      background-color: #16002D;
-  }
-  85% {
-      background-color: #16002D;
-  }
+@keyframes nuitjourBody{
+  0%, 100% {opacity:0;}
+  45% {opacity:0;}
+  75% {opacity:1;}
+  85% {opacity:1;}
 }
 
 
@@ -383,1641 +374,985 @@ div.login input {
 
 
 #OMD1{
-animation:ombreOMD1 10s linear;
+animation:ombreOMD1 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreOMD1{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 183.2189, 5042.9023);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 183.1586, 5042.9023);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 183.2189, 5042.9023);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 183.1586, 5042.9023);}
+85%{opacity:0;}
 }
 
 #OMD2{
-animation:ombreOMD2 10s linear;
+animation:ombreOMD2 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreOMD2{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 400.0319, 5094.8774);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 399.9716, 5094.877);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 400.0319, 5094.8774);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 399.9716, 5094.877);}
+85%{opacity:0;}
 }
 
 #OMD3{
-animation:ombreOMD3 10s linear;
+animation:ombreOMD3 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreOMD3{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, -72.0329, 5177.916);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, -72.0933, 5177.916);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, -72.0329, 5177.916);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, -72.0933, 5177.916);}
+85%{opacity:0;}
 }
 
 #OMD4{
-animation:ombreOMD4 10s linear;
+animation:ombreOMD4 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreOMD4{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 498.2017, 5294.9121);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 498.1413, 5294.9121);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 498.2017, 5294.9121);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 498.1413, 5294.9121);}
+85%{opacity:0;}
 }
 
 #OMD5{
-animation:ombreOMD5 10s linear;
+animation:ombreOMD5 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreOMD5{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 720.1912, 5378.936);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 720.1309, 5378.936);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 720.1912, 5378.936);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 720.1309, 5378.936);}
+85%{opacity:0;}
 }
 
 #OMD6{
-animation:ombreOMD6 10s linear;
+animation:ombreOMD6 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreOMD6{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7247, 5498.9399);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6643, 5498.9399);}
-}
-
-#M1{
-animation:ombreM1 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreM1{
-0%,100%{transform:matrix(1, 0, 0, 1, 183.1869, 5042.9048);}
-75%{transform:matrix(1, 0, 0, 1, 183.1869, 5042.9048);}
-}
-
-#M2{
-animation:ombreM2 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreM2{
-0%,100%{transform:matrix(1, 0, 0, 1, 399.9998, 5094.8799);}
-75%{transform:matrix(1, 0, 0, 1, 399.9998, 5094.8799);}
-}
-
-#M3{
-animation:ombreM3 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreM3{
-0%,100%{transform:matrix(1, 0, 0, 1, -72.065, 5177.9185);}
-75%{transform:matrix(1, 0, 0, 1, -72.065, 5177.9185);}
-}
-
-#M4{
-animation:ombreM4 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreM4{
-0%,100%{transform:matrix(1, 0, 0, 1, 498.1696, 5294.9146);}
-75%{transform:matrix(1, 0, 0, 1, 498.1696, 5294.9146);}
-}
-
-#M5{
-animation:ombreM5 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreM5{
-0%,100%{transform:matrix(1, 0, 0, 1, 720.1592, 5378.9385);}
-75%{transform:matrix(1, 0, 0, 1, 720.1592, 5378.9385);}
-}
-
-#M6{
-animation:ombreM6 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreM6{
-0%,100%{transform:matrix(1, 0, 0, 1, 61.6926, 5498.9424);}
-75%{transform:matrix(1, 0, 0, 1, 61.6926, 5498.9424);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7247, 5498.9399);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6643, 5498.9399);}
+85%{opacity:0;}
 }
 
 #D1{
-animation:ombreD1 10s linear;
+animation:ombreD1 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD1{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 436.1935, 1094.1237);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 436.1614, 1094.1234);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 436.1935, 1094.1237);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 436.1614, 1094.1234);}
+85%{opacity:0;}
 }
 
 #D2{
-animation:ombreD2 10s linear;
+animation:ombreD2 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD2{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 510.1935, 1638.1237);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 510.1614, 1638.1234);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 510.1935, 1638.1237);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 510.1614, 1638.1234);}
+85%{opacity:0;}
 }
 
 #D3{
-animation:ombreD3 10s linear;
+animation:ombreD3 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD3{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 354.1935, 1714.1237);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 354.1614, 1714.1234);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 354.1935, 1714.1237);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 354.1614, 1714.1234);}
+85%{opacity:0;}
 }
 
 #D4{
-animation:ombreD4 10s linear;
+animation:ombreD4 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD4{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 456.1933, 1774.1237);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 456.1613, 1774.1234);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 456.1933, 1774.1237);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 456.1613, 1774.1234);}
+85%{opacity:0;}
 }
 
 #D5{
-animation:ombreD5 10s linear;
+animation:ombreD5 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD5{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 541.6833, 2128.1262);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 541.6513, 2128.126);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 541.6833, 2128.1262);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 541.6513, 2128.126);}
+85%{opacity:0;}
 }
 
 #D6{
-animation:ombreD6 10s linear;
+animation:ombreD6 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD6{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 193.7008, 2225.6213);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 193.6687, 2225.6211);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 193.7008, 2225.6213);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 193.6687, 2225.6211);}
+85%{opacity:0;}
 }
 
 #D7{
-animation:ombreD7 10s linear;
+animation:ombreD7 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD7{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 633.1788, 2272.1191);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 633.1467, 2272.1189);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 633.1788, 2272.1191);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 633.1467, 2272.1189);}
+85%{opacity:0;}
 }
 
 #D8{
-animation:ombreD8 10s linear;
+animation:ombreD8 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD8{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 498.1855, 2279.6187);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 498.1535, 2279.6184);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 498.1855, 2279.6187);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 498.1535, 2279.6184);}
+85%{opacity:0;}
 }
 
 #D9{
-animation:ombreD9 10s linear;
+animation:ombreD9 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD9{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 274.6967, 2287.1184);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 274.6646, 2287.1182);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 274.6967, 2287.1184);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 274.6646, 2287.1182);}
+85%{opacity:0;}
 }
 
 #D10{
-animation:ombreD10 10s linear;
+animation:ombreD10 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD10{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 162.2023, 2356.115);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 162.1703, 2356.1147);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 162.2023, 2356.115);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 162.1703, 2356.1147);}
+85%{opacity:0;}
 }
 
 #D11{
-animation:ombreD11 10s linear;
+animation:ombreD11 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD11{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.573814e-02, 2356.115);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.632369e-02, 2356.1147);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.573814e-02, 2356.115);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.632369e-02, 2356.1147);}
+85%{opacity:0;}
 }
 
 #D12{
-animation:ombreD12 10s linear;
+animation:ombreD12 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD12{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 660.1774, 2375.614);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 660.1454, 2375.6138);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 660.1774, 2375.614);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 660.1454, 2375.6138);}
+85%{opacity:0;}
 }
 
 #D13{
-animation:ombreD13 10s linear;
+animation:ombreD13 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD13{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 321.1944, 2413.1121);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 321.1623, 2413.1118);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 321.1944, 2413.1121);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 321.1623, 2413.1118);}
+85%{opacity:0;}
 }
 
 #D14{
-animation:ombreD14 10s linear;
+animation:ombreD14 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD14{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 388.691, 2429.6113);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 388.6589, 2429.6111);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 388.691, 2429.6113);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 388.6589, 2429.6111);}
+85%{opacity:0;}
 }
 
 #D15{
-animation:ombreD15 10s linear;
+animation:ombreD15 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD15{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 559.6824, 2444.6104);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 559.6504, 2444.6101);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 559.6824, 2444.6104);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 559.6504, 2444.6101);}
+85%{opacity:0;}
 }
 
 #D16{
-animation:ombreD16 10s linear;
+animation:ombreD16 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD16{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 78.2065, 2456.6099);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 78.1745, 2456.6096);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 78.2065, 2456.6099);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 78.1745, 2456.6096);}
+85%{opacity:0;}
 }
 
 #D17{
-animation:ombreD17 10s linear;
+animation:ombreD17 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD17{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 768.1727, 2456.6099);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 768.1407, 2456.6096);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 768.1727, 2456.6099);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 768.1407, 2456.6096);}
+85%{opacity:0;}
 }
 
 #D18{
-animation:ombreD18 10s linear;
+animation:ombreD18 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD18{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1929, 2510.6223);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1608, 2510.6221);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1929, 2510.6223);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1608, 2510.6221);}
+85%{opacity:0;}
 }
 
 #D19{
-animation:ombreD19 10s linear;
+animation:ombreD19 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD19{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 183.2028, 2519.6304);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 183.1707, 2519.6301);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 183.2028, 2519.6304);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 183.1707, 2519.6301);}
+85%{opacity:0;}
 }
 
 #D20{
-animation:ombreD20 10s linear;
+animation:ombreD20 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD20{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 667.6778, 2546.6206);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 667.6458, 2546.6204);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 667.6778, 2546.6206);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 667.6458, 2546.6204);}
+85%{opacity:0;}
 }
 
 #D21{
-animation:ombreD21 10s linear;
+animation:ombreD21 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD21{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7088, 2561.6199);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6768, 2561.6196);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7088, 2561.6199);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6768, 2561.6196);}
+85%{opacity:0;}
 }
 
 #D22{
-animation:ombreD22 10s linear;
+animation:ombreD22 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD22{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 720.1752, 2561.6199);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 720.1431, 2561.6196);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 720.1752, 2561.6199);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 720.1431, 2561.6196);}
+85%{opacity:0;}
 }
 
 #D23{
-animation:ombreD23 10s linear;
+animation:ombreD23 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD23{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 588.1818, 2576.6191);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 588.1497, 2576.6189);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 588.1818, 2576.6191);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 588.1497, 2576.6189);}
+85%{opacity:0;}
 }
 
 #D24{
-animation:ombreD24 10s linear;
+animation:ombreD24 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD24{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1927, 2608.1182);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1606, 2608.1179);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1927, 2608.1182);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1606, 2608.1179);}
+85%{opacity:0;}
 }
 
 #D25{
-animation:ombreD25 10s linear;
+animation:ombreD25 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD25{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, -22.2807, 2657.1245);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, -22.3127, 2657.1243);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, -22.2807, 2657.1245);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, -22.3127, 2657.1243);}
+85%{opacity:0;}
 }
 
 #D26{
-animation:ombreD26 10s linear;
+animation:ombreD26 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD26{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 108.2114, 2685.6248);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 108.1793, 2685.6245);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 108.2114, 2685.6248);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 108.1793, 2685.6245);}
+85%{opacity:0;}
 }
 
 #D27{
-animation:ombreD27 10s linear;
+animation:ombreD27 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD27{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 360.1935, 2671.1235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 360.1614, 2671.1233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 360.1935, 2671.1235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 360.1614, 2671.1233);}
+85%{opacity:0;}
 }
 
 #D28{
-animation:ombreD28 10s linear;
+animation:ombreD28 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD28{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 303.1935, 2695.1235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 303.1614, 2695.1233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 303.1935, 2695.1235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 303.1614, 2695.1233);}
+85%{opacity:0;}
 }
 
 #D29{
-animation:ombreD29 10s linear;
+animation:ombreD29 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD29{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 541.6833, 2702.6245);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 541.6512, 2702.6243);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 541.6833, 2702.6245);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 541.6512, 2702.6243);}
+85%{opacity:0;}
 }
 
 #D30{
-animation:ombreD30 10s linear;
+animation:ombreD30 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD30{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 651.1852, 2702.6245);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 651.1532, 2702.6243);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 651.1852, 2702.6245);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 651.1532, 2702.6243);}
+85%{opacity:0;}
 }
 
 #D31{
-animation:ombreD31 10s linear;
+animation:ombreD31 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD31{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 39.1912, 2729.624);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 39.1592, 2729.6238);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 39.1912, 2729.624);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 39.1592, 2729.6238);}
+85%{opacity:0;}
 }
 
 #D32{
-animation:ombreD32 10s linear;
+animation:ombreD32 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD32{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 240.1935, 2749.1235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 240.1614, 2749.1233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 240.1935, 2749.1235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 240.1614, 2749.1233);}
+85%{opacity:0;}
 }
 
 #D33{
-animation:ombreD33 10s linear;
+animation:ombreD33 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD33{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 426.1935, 2794.1235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 426.1614, 2794.1233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 426.1935, 2794.1235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 426.1614, 2794.1233);}
+85%{opacity:0;}
 }
 
 #D34{
-animation:ombreD34 10s linear;
+animation:ombreD34 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD34{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 318.1935, 2806.1235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 318.1614, 2806.1233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 318.1935, 2806.1235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 318.1614, 2806.1233);}
+85%{opacity:0;}
 }
 
 #D35{
-animation:ombreD35 10s linear;
+animation:ombreD35 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD35{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 618.1863, 2806.1235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 618.1542, 2806.1233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 618.1863, 2806.1235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 618.1542, 2806.1233);}
+85%{opacity:0;}
 }
 
 #D36{
-animation:ombreD36 10s linear;
+animation:ombreD36 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD36{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 108.2114, 2843.136);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 108.1794, 2843.1357);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 108.2114, 2843.136);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 108.1794, 2843.1357);}
+85%{opacity:0;}
 }
 
 #D37{
-animation:ombreD37 10s linear;
+animation:ombreD37 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD37{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.558841e-02, 2864.6226);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.647627e-02, 2864.6223);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.558841e-02, 2864.6226);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.647627e-02, 2864.6223);}
+85%{opacity:0;}
 }
 
 #D38{
-animation:ombreD38 10s linear;
+animation:ombreD38 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD38{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 547.6829, 2889.634);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 547.6508, 2889.6338);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 547.6829, 2889.634);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 547.6508, 2889.6338);}
+85%{opacity:0;}
 }
 
 #D39{
-animation:ombreD39 10s linear;
+animation:ombreD39 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD39{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 609.1863, 2912.1326);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 609.1544, 2912.1323);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 609.1863, 2912.1326);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 609.1544, 2912.1323);}
+85%{opacity:0;}
 }
 
 #D40{
-animation:ombreD40 10s linear;
+animation:ombreD40 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD40{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 748.6821, 2864.6221);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 748.65, 2864.6218);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 748.6821, 2864.6221);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 748.65, 2864.6218);}
+85%{opacity:0;}
 }
 
 #D41{
-animation:ombreD41 10s linear;
+animation:ombreD41 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD41{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 247.7045, 2930.6191);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 247.6724, 2930.6189);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 247.7045, 2930.6191);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 247.6724, 2930.6189);}
+85%{opacity:0;}
 }
 
 #D42{
-animation:ombreD42 10s linear;
+animation:ombreD42 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD42{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 510.1935, 2930.6194);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 510.1614, 2930.6191);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 510.1935, 2930.6194);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 510.1614, 2930.6191);}
+85%{opacity:0;}
 }
 
 #D43{
-animation:ombreD43 10s linear;
+animation:ombreD43 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD43{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 141.1941, 2966.6147);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 141.162, 2966.6145);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 141.1941, 2966.6147);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 141.162, 2966.6145);}
+85%{opacity:0;}
 }
 
 #D44{
-animation:ombreD44 10s linear;
+animation:ombreD44 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD44{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 624.1859, 2997.6191);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 624.1539, 2997.6189);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 624.1859, 2997.6191);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 624.1539, 2997.6189);}
+85%{opacity:0;}
 }
 
 #D45{
-animation:ombreD45 10s linear;
+animation:ombreD45 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD45{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7088, 3018.6272);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6767, 3018.627);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7088, 3018.6272);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6767, 3018.627);}
+85%{opacity:0;}
 }
 
 #D46{
-animation:ombreD46 10s linear;
+animation:ombreD46 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD46{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 690.1826, 3057.6165);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 690.1506, 3057.6162);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 690.1826, 3057.6165);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 690.1506, 3057.6162);}
+85%{opacity:0;}
 }
 
 #D47{
-animation:ombreD47 10s linear;
+animation:ombreD47 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD47{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.540816e-02, 3095.1233);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.665938e-02, 3095.123);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.540816e-02, 3095.1233);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.665938e-02, 3095.123);}
+85%{opacity:0;}
 }
 
 #D48{
-animation:ombreD48 10s linear;
+animation:ombreD48 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD48{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 702.182, 3143.1121);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 702.15, 3143.1118);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 702.182, 3143.1121);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 702.15, 3143.1118);}
+85%{opacity:0;}
 }
 
 #D49{
-animation:ombreD49 10s linear;
+animation:ombreD49 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD49{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 567.1901, 3152.1206);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 567.1581, 3152.1204);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 567.1901, 3152.1206);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 567.1581, 3152.1204);}
+85%{opacity:0;}
 }
 
 #D50{
-animation:ombreD50 10s linear;
+animation:ombreD50 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD50{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 16.716, 3185.1189);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 16.6839, 3185.1187);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 16.716, 3185.1189);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 16.6839, 3185.1187);}
+85%{opacity:0;}
 }
 
 #D51{
-animation:ombreD51 10s linear;
+animation:ombreD51 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD51{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 660.1774, 3245.1069);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 660.1453, 3245.1067);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 660.1774, 3245.1069);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 660.1453, 3245.1067);}
+85%{opacity:0;}
 }
 
 #D52{
-animation:ombreD52 10s linear;
+animation:ombreD52 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD52{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 768.1725, 3245.1064);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 768.1405, 3245.1062);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 768.1725, 3245.1064);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 768.1405, 3245.1062);}
+85%{opacity:0;}
 }
 
 #D53{
-animation:ombreD53 10s linear;
+animation:ombreD53 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD53{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7086, 3251.1155);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6765, 3251.1152);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 61.7086, 3251.1155);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 61.6765, 3251.1152);}
+85%{opacity:0;}
 }
 
 #D54{
-animation:ombreD54 10s linear;
+animation:ombreD54 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD54{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.570857e-02, 3309.6121);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.635420e-02, 3309.6118);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 1.570857e-02, 3309.6121);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, -1.635420e-02, 3309.6118);}
+85%{opacity:0;}
 }
 
 #D55{
-animation:ombreD55 10s linear;
+animation:ombreD55 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD55{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 129.2104, 3309.6125);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 129.1783, 3309.6123);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 129.2104, 3309.6125);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 129.1783, 3309.6123);}
+85%{opacity:0;}
 }
 
 #D56{
-animation:ombreD56 10s linear;
+animation:ombreD56 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD56{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 609.1863, 3321.6033);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 609.1543, 3321.603);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 609.1863, 3321.6033);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 609.1543, 3321.603);}
+85%{opacity:0;}
 }
 
 #D57{
-animation:ombreD57 10s linear;
+animation:ombreD57 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD57{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 240.193, 3360.6104);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 240.1609, 3360.6101);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 240.193, 3360.6104);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 240.1609, 3360.6101);}
+85%{opacity:0;}
 }
 
 #D58{
-animation:ombreD58 10s linear;
+animation:ombreD58 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD58{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1928, 3386.1089);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1607, 3386.1086);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1928, 3386.1089);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1607, 3386.1086);}
+85%{opacity:0;}
 }
 
 #D59{
-animation:ombreD59 10s linear;
+animation:ombreD59 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD59{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 595.6844, 3423.6267);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6524, 3423.6265);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 595.6844, 3423.6267);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6524, 3423.6265);}
+85%{opacity:0;}
 }
 
 #D60{
-animation:ombreD60 10s linear;
+animation:ombreD60 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD60{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1928, 3458.125);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1607, 3458.1248);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1928, 3458.125);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1607, 3458.1248);}
+85%{opacity:0;}
 }
 
 #D61{
-animation:ombreD61 10s linear;
+animation:ombreD61 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD61{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 730.6802, 3458.1245);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 730.6481, 3458.1243);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 730.6802, 3458.1245);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 730.6481, 3458.1243);}
+85%{opacity:0;}
 }
 
 #D62{
-animation:ombreD62 10s linear;
+animation:ombreD62 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD62{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 225.203, 3489.6235);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 225.171, 3489.6233);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 225.203, 3489.6235);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 225.171, 3489.6233);}
+85%{opacity:0;}
 }
 
 #D63{
-animation:ombreD63 10s linear;
+animation:ombreD63 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD63{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 595.6845, 3515.1221);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6525, 3515.1218);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 595.6845, 3515.1221);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6525, 3515.1218);}
+85%{opacity:0;}
 }
 
 #D64{
-animation:ombreD64 10s linear;
+animation:ombreD64 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD64{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1928, 3558.6248);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1607, 3558.6245);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 366.1928, 3558.6248);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 366.1607, 3558.6245);}
+85%{opacity:0;}
 }
 
 #D65{
-animation:ombreD65 10s linear;
+animation:ombreD65 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD65{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 711.1811, 3558.6245);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 711.1491, 3558.6243);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 711.1811, 3558.6245);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 711.1491, 3558.6243);}
+85%{opacity:0;}
 }
 
 #D66{
-animation:ombreD66 10s linear;
+animation:ombreD66 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD66{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 739.6796, 3621.6213);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 739.6476, 3621.6211);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 739.6796, 3621.6213);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 739.6476, 3621.6211);}
+85%{opacity:0;}
 }
 
 #D67{
-animation:ombreD67 10s linear;
+animation:ombreD67 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD67{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 660.1772, 3633.6208);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 660.1451, 3633.6206);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 660.1772, 3633.6208);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 660.1451, 3633.6206);}
+85%{opacity:0;}
 }
 
 #D68{
-animation:ombreD68 10s linear;
+animation:ombreD68 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD68{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 108.2112, 3642.6157);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 108.1791, 3642.6155);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 108.2112, 3642.6157);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 108.1791, 3642.6155);}
+85%{opacity:0;}
 }
 
 #D69{
-animation:ombreD69 10s linear;
+animation:ombreD69 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD69{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 774.178, 3663.6191);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 774.1459, 3663.6189);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 774.178, 3663.6191);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 774.1459, 3663.6189);}
+85%{opacity:0;}
 }
 
 #D70{
-animation:ombreD70 10s linear;
+animation:ombreD70 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD70{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 559.6823, 3693.6133);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 559.6502, 3693.613);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 559.6823, 3693.6133);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 559.6502, 3693.613);}
+85%{opacity:0;}
 }
 
 #D71{
-animation:ombreD71 10s linear;
+animation:ombreD71 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD71{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 759.1787, 3741.6155);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 759.1467, 3741.6152);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 759.1787, 3741.6155);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 759.1467, 3741.6152);}
+85%{opacity:0;}
 }
 
 #D72{
-animation:ombreD72 10s linear;
+animation:ombreD72 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD72{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 529.6838, 3774.6135);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 529.6517, 3774.6133);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 529.6838, 3774.6135);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 529.6517, 3774.6133);}
+85%{opacity:0;}
 }
 
 #D73{
-animation:ombreD73 10s linear;
+animation:ombreD73 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD73{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 702.1818, 3782.1135);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 702.1498, 3782.1133);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 702.1818, 3782.1135);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 702.1498, 3782.1133);}
+85%{opacity:0;}
 }
 
 #D74{
-animation:ombreD74 10s linear;
+animation:ombreD74 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD74{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 129.2103, 3846.615);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 129.1783, 3846.6147);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 129.2103, 3846.615);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 129.1783, 3846.6147);}
+85%{opacity:0;}
 }
 
 #D75{
-animation:ombreD75 10s linear;
+animation:ombreD75 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD75{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 702.1819, 3903.6104);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 702.1499, 3903.6101);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 702.1819, 3903.6104);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 702.1499, 3903.6101);}
+85%{opacity:0;}
 }
 
 #D76{
-animation:ombreD76 10s linear;
+animation:ombreD76 150s linear;
 animation-iteration-count: infinite;
 }
 
 @keyframes ombreD76{
-0%,100%{transform:matrix(0.2774, 0, -0.9608, -0.2774, 595.6844, 3935.1089);}
-75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6524, 3935.1086);}
-}
-
-#A1{
-animation:ombreA1 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA1{
-0%,100%{transform:matrix(1, 0, 0, 1, 436.1777, 1094.125);}
-75%{transform:matrix(1, 0, 0, 1, 436.1777, 1094.125);}
-}
-
-#A2{
-animation:ombreA2 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA2{
-0%,100%{transform:matrix(1, 0, 0, 1, 510.1777, 1638.125);}
-75%{transform:matrix(1, 0, 0, 1, 510.1777, 1638.125);}
-}
-
-#A3{
-animation:ombreA3 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA3{
-0%,100%{transform:matrix(1, 0, 0, 1, 354.1777, 1714.125);}
-75%{transform:matrix(1, 0, 0, 1, 354.1777, 1714.125);}
-}
-
-#A4{
-animation:ombreA4 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA4{
-0%,100%{transform:matrix(1, 0, 0, 1, 456.1776, 1774.125);}
-75%{transform:matrix(1, 0, 0, 1, 456.1776, 1774.125);}
-}
-
-#A5{
-animation:ombreA5 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA5{
-0%,100%{transform:matrix(1, 0, 0, 1, 541.6676, 2128.1277);}
-75%{transform:matrix(1, 0, 0, 1, 541.6676, 2128.1277);}
-}
-
-#A6{
-animation:ombreA6 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA6{
-0%,100%{transform:matrix(1, 0, 0, 1, 193.685, 2225.6228);}
-75%{transform:matrix(1, 0, 0, 1, 193.685, 2225.6228);}
-}
-
-#A7{
-animation:ombreA7 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA7{
-0%,100%{transform:matrix(1, 0, 0, 1, 633.163, 2272.1206);}
-75%{transform:matrix(1, 0, 0, 1, 633.163, 2272.1206);}
-}
-
-#A8{
-animation:ombreA8 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA8{
-0%,100%{transform:matrix(1, 0, 0, 1, 498.1697, 2279.6201);}
-75%{transform:matrix(1, 0, 0, 1, 498.1697, 2279.6201);}
-}
-
-#A9{
-animation:ombreA9 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA9{
-0%,100%{transform:matrix(1, 0, 0, 1, 274.6809, 2287.1199);}
-75%{transform:matrix(1, 0, 0, 1, 274.6809, 2287.1199);}
-}
-
-#A10{
-animation:ombreA10 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA10{
-0%,100%{transform:matrix(1, 0, 0, 1, 162.1866, 2356.1165);}
-75%{transform:matrix(1, 0, 0, 1, 162.1866, 2356.1165);}
-}
-
-#A11{
-animation:ombreA11 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA11{
-0%,100%{transform:matrix(1, 0, 0, 1, -3.051758e-05, 2356.1165);}
-75%{transform:matrix(1, 0, 0, 1, -3.051758e-05, 2356.1165);}
-}
-
-#A12{
-animation:ombreA12 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA12{
-0%,100%{transform:matrix(1, 0, 0, 1, 660.1616, 2375.6155);}
-75%{transform:matrix(1, 0, 0, 1, 660.1616, 2375.6155);}
-}
-
-#A13{
-animation:ombreA13 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA13{
-0%,100%{transform:matrix(1, 0, 0, 1, 321.1786, 2413.1135);}
-75%{transform:matrix(1, 0, 0, 1, 321.1786, 2413.1135);}
-}
-
-#A14{
-animation:ombreA14 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA14{
-0%,100%{transform:matrix(1, 0, 0, 1, 388.6752, 2429.6128);}
-75%{transform:matrix(1, 0, 0, 1, 388.6752, 2429.6128);}
-}
-
-#A15{
-animation:ombreA15 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA15{
-0%,100%{transform:matrix(1, 0, 0, 1, 559.6667, 2444.6118);}
-75%{transform:matrix(1, 0, 0, 1, 559.6667, 2444.6118);}
-}
-
-#A16{
-animation:ombreA16 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA16{
-0%,100%{transform:matrix(1, 0, 0, 1, 78.1908, 2456.6113);}
-75%{transform:matrix(1, 0, 0, 1, 78.1908, 2456.6113);}
-}
-
-#A17{
-animation:ombreA17 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA17{
-0%,100%{transform:matrix(1, 0, 0, 1, 768.157, 2456.6113);}
-75%{transform:matrix(1, 0, 0, 1, 768.157, 2456.6113);}
-}
-
-#A18{
-animation:ombreA18 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA18{
-0%,100%{transform:matrix(1, 0, 0, 1, 366.1771, 2510.6238);}
-75%{transform:matrix(1, 0, 0, 1, 366.1771, 2510.6238);}
-}
-
-#A19{
-animation:ombreA19 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA19{
-0%,100%{transform:matrix(1, 0, 0, 1, 183.187, 2519.6318);}
-75%{transform:matrix(1, 0, 0, 1, 183.187, 2519.6318);}
-}
-
-#A20{
-animation:ombreA20 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA20{
-0%,100%{transform:matrix(1, 0, 0, 1, 667.662, 2546.6221);}
-75%{transform:matrix(1, 0, 0, 1, 667.662, 2546.6221);}
-}
-
-#A21{
-animation:ombreA21 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA21{
-0%,100%{transform:matrix(1, 0, 0, 1, 61.6931, 2561.6213);}
-75%{transform:matrix(1, 0, 0, 1, 61.6931, 2561.6213);}
-}
-
-#A22{
-animation:ombreA22 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA22{
-0%,100%{transform:matrix(1, 0, 0, 1, 720.1594, 2561.6213);}
-75%{transform:matrix(1, 0, 0, 1, 720.1594, 2561.6213);}
-}
-
-#A23{
-animation:ombreA23 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA23{
-0%,100%{transform:matrix(1, 0, 0, 1, 588.166, 2576.6206);}
-75%{transform:matrix(1, 0, 0, 1, 588.166, 2576.6206);}
-}
-
-#A24{
-animation:ombreA24 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA24{
-0%,100%{transform:matrix(1, 0, 0, 1, 366.1769, 2608.1196);}
-75%{transform:matrix(1, 0, 0, 1, 366.1769, 2608.1196);}
-}
-
-#A25{
-animation:ombreA25 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA25{
-0%,100%{transform:matrix(1, 0, 0, 1, -22.2964, 2657.126);}
-75%{transform:matrix(1, 0, 0, 1, -22.2964, 2657.126);}
-}
-
-#A26{
-animation:ombreA26 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA26{
-0%,100%{transform:matrix(1, 0, 0, 1, 108.1956, 2685.6262);}
-75%{transform:matrix(1, 0, 0, 1, 108.1956, 2685.6262);}
-}
-
-#A27{
-animation:ombreA27 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA27{
-0%,100%{transform:matrix(1, 0, 0, 1, 360.1777, 2671.125);}
-75%{transform:matrix(1, 0, 0, 1, 360.1777, 2671.125);}
-}
-
-#A28{
-animation:ombreA28 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA28{
-0%,100%{transform:matrix(1, 0, 0, 1, 303.1777, 2695.125);}
-75%{transform:matrix(1, 0, 0, 1, 303.1777, 2695.125);}
-}
-
-#A29{
-animation:ombreA29 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA29{
-0%,100%{transform:matrix(1, 0, 0, 1, 541.6675, 2702.626);}
-75%{transform:matrix(1, 0, 0, 1, 541.6675, 2702.626);}
-}
-
-#A30{
-animation:ombreA30 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA30{
-0%,100%{transform:matrix(1, 0, 0, 1, 651.1694, 2702.626);}
-75%{transform:matrix(1, 0, 0, 1, 651.1694, 2702.626);}
-}
-
-#A31{
-animation:ombreA31 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA31{
-0%,100%{transform:matrix(1, 0, 0, 1, 39.1755, 2729.6255);}
-75%{transform:matrix(1, 0, 0, 1, 39.1755, 2729.6255);}
-}
-
-#A32{
-animation:ombreA32 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA32{
-0%,100%{transform:matrix(1, 0, 0, 1, 240.1777, 2749.125);}
-75%{transform:matrix(1, 0, 0, 1, 240.1777, 2749.125);}
-}
-
-#A33{
-animation:ombreA33 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA33{
-0%,100%{transform:matrix(1, 0, 0, 1, 426.1777, 2794.125);}
-75%{transform:matrix(1, 0, 0, 1, 426.1777, 2794.125);}
-}
-
-#A34{
-animation:ombreA34 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA34{
-0%,100%{transform:matrix(1, 0, 0, 1, 318.1777, 2806.125);}
-75%{transform:matrix(1, 0, 0, 1, 318.1777, 2806.125);}
-}
-
-#A35{
-animation:ombreA35 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA35{
-0%,100%{transform:matrix(1, 0, 0, 1, 618.1705, 2806.125);}
-75%{transform:matrix(1, 0, 0, 1, 618.1705, 2806.125);}
-}
-
-#A36{
-animation:ombreA36 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA36{
-0%,100%{transform:matrix(1, 0, 0, 1, 108.1957, 2843.1375);}
-75%{transform:matrix(1, 0, 0, 1, 108.1957, 2843.1375);}
-}
-
-#A37{
-animation:ombreA37 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA37{
-0%,100%{transform:matrix(1, 0, 0, 1, -1.831055e-04, 2864.624);}
-75%{transform:matrix(1, 0, 0, 1, -1.831055e-04, 2864.624);}
-}
-
-#A38{
-animation:ombreA38 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA38{
-0%,100%{transform:matrix(1, 0, 0, 1, 547.6671, 2889.6355);}
-75%{transform:matrix(1, 0, 0, 1, 547.6671, 2889.6355);}
-}
-
-#A39{
-animation:ombreA39 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA39{
-0%,100%{transform:matrix(1, 0, 0, 1, 609.1707, 2912.134);}
-75%{transform:matrix(1, 0, 0, 1, 609.1707, 2912.134);}
-}
-
-#A40{
-animation:ombreA40 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA40{
-0%,100%{transform:matrix(1, 0, 0, 1, 748.6664, 2864.6235);}
-75%{transform:matrix(1, 0, 0, 1, 748.6664, 2864.6235);}
-}
-
-#A41{
-animation:ombreA41 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA41{
-0%,100%{transform:matrix(1, 0, 0, 1, 247.6887, 2930.6206);}
-75%{transform:matrix(1, 0, 0, 1, 247.6887, 2930.6206);}
-}
-
-#A42{
-animation:ombreA42 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA42{
-0%,100%{transform:matrix(1, 0, 0, 1, 510.1777, 2930.6208);}
-75%{transform:matrix(1, 0, 0, 1, 510.1777, 2930.6208);}
-}
-
-#A43{
-animation:ombreA43 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA43{
-0%,100%{transform:matrix(1, 0, 0, 1, 141.1783, 2966.6162);}
-75%{transform:matrix(1, 0, 0, 1, 141.1783, 2966.6162);}
-}
-
-#A44{
-animation:ombreA44 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA44{
-0%,100%{transform:matrix(1, 0, 0, 1, 624.1702, 2997.6206);}
-75%{transform:matrix(1, 0, 0, 1, 624.1702, 2997.6206);}
-}
-
-#A45{
-animation:ombreA45 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA45{
-0%,100%{transform:matrix(1, 0, 0, 1, 61.693, 3018.6287);}
-75%{transform:matrix(1, 0, 0, 1, 61.693, 3018.6287);}
-}
-
-#A46{
-animation:ombreA46 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA46{
-0%,100%{transform:matrix(1, 0, 0, 1, 690.1669, 3057.6179);}
-75%{transform:matrix(1, 0, 0, 1, 690.1669, 3057.6179);}
-}
-
-#A47{
-animation:ombreA47 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA47{
-0%,100%{transform:matrix(1, 0, 0, 1, -3.662109e-04, 3095.1248);}
-75%{transform:matrix(1, 0, 0, 1, -3.662109e-04, 3095.1248);}
-}
-
-#A48{
-animation:ombreA48 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA48{
-0%,100%{transform:matrix(1, 0, 0, 1, 702.1663, 3143.1135);}
-75%{transform:matrix(1, 0, 0, 1, 702.1663, 3143.1135);}
-}
-
-#A49{
-animation:ombreA49 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA49{
-0%,100%{transform:matrix(1, 0, 0, 1, 567.1744, 3152.1221);}
-75%{transform:matrix(1, 0, 0, 1, 567.1744, 3152.1221);}
-}
-
-#A50{
-animation:ombreA50 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA50{
-0%,100%{transform:matrix(1, 0, 0, 1, 16.7002, 3185.1204);}
-75%{transform:matrix(1, 0, 0, 1, 16.7002, 3185.1204);}
-}
-
-#A51{
-animation:ombreA51 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA51{
-0%,100%{transform:matrix(1, 0, 0, 1, 660.1616, 3245.1084);}
-75%{transform:matrix(1, 0, 0, 1, 660.1616, 3245.1084);}
-}
-
-#A52{
-animation:ombreA52 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA52{
-0%,100%{transform:matrix(1, 0, 0, 1, 768.1568, 3245.1079);}
-75%{transform:matrix(1, 0, 0, 1, 768.1568, 3245.1079);}
-}
-
-#A53{
-animation:ombreA53 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA53{
-0%,100%{transform:matrix(1, 0, 0, 1, 61.6928, 3251.1169);}
-75%{transform:matrix(1, 0, 0, 1, 61.6928, 3251.1169);}
-}
-
-#A54{
-animation:ombreA54 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA54{
-0%,100%{transform:matrix(1, 0, 0, 1, -6.103516e-05, 3309.6135);}
-75%{transform:matrix(1, 0, 0, 1, -6.103516e-05, 3309.6135);}
-}
-
-#A55{
-animation:ombreA55 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA55{
-0%,100%{transform:matrix(1, 0, 0, 1, 129.1946, 3309.614);}
-75%{transform:matrix(1, 0, 0, 1, 129.1946, 3309.614);}
-}
-
-#A56{
-animation:ombreA56 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA56{
-0%,100%{transform:matrix(1, 0, 0, 1, 609.1705, 3321.6047);}
-75%{transform:matrix(1, 0, 0, 1, 609.1705, 3321.6047);}
-}
-
-#A57{
-animation:ombreA57 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA57{
-0%,100%{transform:matrix(1, 0, 0, 1, 240.1772, 3360.6118);}
-75%{transform:matrix(1, 0, 0, 1, 240.1772, 3360.6118);}
-}
-
-#A58{
-animation:ombreA58 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA58{
-0%,100%{transform:matrix(1, 0, 0, 1, 366.177, 3386.1104);}
-75%{transform:matrix(1, 0, 0, 1, 366.177, 3386.1104);}
-}
-
-#A59{
-animation:ombreA59 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA59{
-0%,100%{transform:matrix(1, 0, 0, 1, 595.6687, 3423.6282);}
-75%{transform:matrix(1, 0, 0, 1, 595.6687, 3423.6282);}
-}
-
-#A60{
-animation:ombreA60 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA60{
-0%,100%{transform:matrix(1, 0, 0, 1, 366.177, 3458.1265);}
-75%{transform:matrix(1, 0, 0, 1, 366.177, 3458.1265);}
-}
-
-#A61{
-animation:ombreA61 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA61{
-0%,100%{transform:matrix(1, 0, 0, 1, 730.6644, 3458.126);}
-75%{transform:matrix(1, 0, 0, 1, 730.6644, 3458.126);}
-}
-
-#A62{
-animation:ombreA62 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA62{
-0%,100%{transform:matrix(1, 0, 0, 1, 225.1873, 3489.625);}
-75%{transform:matrix(1, 0, 0, 1, 225.1873, 3489.625);}
-}
-
-#A63{
-animation:ombreA63 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA63{
-0%,100%{transform:matrix(1, 0, 0, 1, 595.6688, 3515.1235);}
-75%{transform:matrix(1, 0, 0, 1, 595.6688, 3515.1235);}
-}
-
-#A64{
-animation:ombreA64 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA64{
-0%,100%{transform:matrix(1, 0, 0, 1, 366.177, 3558.6262);}
-75%{transform:matrix(1, 0, 0, 1, 366.177, 3558.6262);}
-}
-
-#A65{
-animation:ombreA65 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA65{
-0%,100%{transform:matrix(1, 0, 0, 1, 711.1654, 3558.626);}
-75%{transform:matrix(1, 0, 0, 1, 711.1654, 3558.626);}
-}
-
-#A66{
-animation:ombreA66 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA66{
-0%,100%{transform:matrix(1, 0, 0, 1, 739.6639, 3621.6228);}
-75%{transform:matrix(1, 0, 0, 1, 739.6639, 3621.6228);}
-}
-
-#A67{
-animation:ombreA67 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA67{
-0%,100%{transform:matrix(1, 0, 0, 1, 660.1614, 3633.6223);}
-75%{transform:matrix(1, 0, 0, 1, 660.1614, 3633.6223);}
-}
-
-#A68{
-animation:ombreA68 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA68{
-0%,100%{transform:matrix(1, 0, 0, 1, 108.1954, 3642.6172);}
-75%{transform:matrix(1, 0, 0, 1, 108.1954, 3642.6172);}
-}
-
-#A69{
-animation:ombreA69 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA69{
-0%,100%{transform:matrix(1, 0, 0, 1, 774.1622, 3663.6206);}
-75%{transform:matrix(1, 0, 0, 1, 774.1622, 3663.6206);}
-}
-
-#A70{
-animation:ombreA70 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA70{
-0%,100%{transform:matrix(1, 0, 0, 1, 559.6665, 3693.6147);}
-75%{transform:matrix(1, 0, 0, 1, 559.6665, 3693.6147);}
-}
-
-#A71{
-animation:ombreA71 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA71{
-0%,100%{transform:matrix(1, 0, 0, 1, 759.163, 3741.6169);}
-75%{transform:matrix(1, 0, 0, 1, 759.163, 3741.6169);}
-}
-
-#A72{
-animation:ombreA72 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA72{
-0%,100%{transform:matrix(1, 0, 0, 1, 529.668, 3774.615);}
-75%{transform:matrix(1, 0, 0, 1, 529.668, 3774.615);}
-}
-
-#A73{
-animation:ombreA73 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA73{
-0%,100%{transform:matrix(1, 0, 0, 1, 702.1661, 3782.115);}
-75%{transform:matrix(1, 0, 0, 1, 702.1661, 3782.115);}
-}
-
-#A74{
-animation:ombreA74 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA74{
-0%,100%{transform:matrix(1, 0, 0, 1, 129.1946, 3846.6165);}
-75%{transform:matrix(1, 0, 0, 1, 129.1946, 3846.6165);}
-}
-
-#A75{
-animation:ombreA75 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA75{
-0%,100%{transform:matrix(1, 0, 0, 1, 702.1662, 3903.6118);}
-75%{transform:matrix(1, 0, 0, 1, 702.1662, 3903.6118);}
-}
-
-#A76{
-animation:ombreA76 10s linear;
-animation-iteration-count: infinite;
-}
-
-@keyframes ombreA76{
-0%,100%{transform:matrix(1, 0, 0, 1, 595.6687, 3935.1104);}
-75%{transform:matrix(1, 0, 0, 1, 595.6687, 3935.1104);}
+0%,100%{opacity:0; transform:matrix(0.2774, 0, -0.9608, -0.2774, 595.6844, 3935.1089);}
+45%{opacity:.6;}
+75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6524, 3935.1086);}
+85%{opacity:0;}
 }
