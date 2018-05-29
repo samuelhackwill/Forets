@@ -1,16 +1,23 @@
 <head>
-  <title>JACKY</title>
+  <title>🖥</title>
   <meta charset="utf-8">
 </head>
 
 <template name="game">
 
-	<div id="workforce">1</div>
-	<div id="score">0</div>
+<!-- 	<div id="workforce">1</div>
+	<div id="score">0</div> -->
 
 	<div id="megaLoad"></div>
 
-  {{> screen}}
+  <div id="gcontainer" onclick="focusOnOff(event.target.id)">
+    <div id="srtcontainer" class="posmid">
+      <div id="bumper"></div>
+      <div id="srt">
+      </div>
+<!--       <input id="formulaire" type="form" onkeyup="search(event, this)">
+ -->    </div>
+  </div>
 
 
 </template>
