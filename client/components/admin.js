@@ -5,6 +5,10 @@ Template.registerHelper('equals', function (a, b) {
 
 
 var refreshedUp = false;
+secondRound = false;
+
+speedWinnerPseudo = ""
+moneyWinnerPseudo = ""
 
 // salut c'est sam
 
@@ -16,6 +20,7 @@ Template.admin.onCreated(function() {
     this.subscribe('allRepresentations');
     this.subscribe('allContenusEcran');
     this.subscribe('allLoteries');
+    this.subscribe('allScore');
   });
 
 });
@@ -31,23 +36,52 @@ Template.admin.onRendered(function () {
 
     whichEtat = "e"+event.data[1]
     console.log(whichEtat)
+    // console.log("donne moi tout batard ", event)
+
+      if(event.data[0]==144 && secondRound === true && event.data[2]!==0){
+
+        switch(event.data[1]){
+          case 50:
+          console.log("show us the speed winner")
+            em.setClient({ pseudo: speedWinnerPseudo });
+            em.emit("showSpeedWinnerAdmin")
+          break;
+
+          case 52:
+            console.log("show us the money winner")
+            em.setClient({ pseudo: moneyWinnerPseudo });
+            em.emit("showMoneyWinnerAdmin")
+          break;
+        }
 
 
-    if(event.data[0]==144 && (event.data[1]==49 || event.data[1]==54 || event.data[1]==58 )){
-      console.log("ca_va_peter cote client")
-      em.emit("ca_va_peter")
-      // donc là il faut instead qu'il appelle une fonction serveur qui fasse claquer un orage chez tous 
-      // les clients
-
-      // 49
-      // 54
-      // 58
     }
 
-    if(event.data[0]==144 && event.data[1]==45){
-      em.setClient({ key: whichEtat });
-      em.emit("new_ambiance")
-    }
+    // 50 speed
+    // 52 money
+    // 53 I
+    // 54 A
+    // 55 P
+    // 57 T
+    // 59 M
+    // 60 Y
+    // 62 J 
+
+    // if(event.data[0]==144 && (event.data[1]==49 || event.data[1]==54 || event.data[1]==58 )){
+    //   console.log("ca_va_peter cote client")
+    //   em.emit("ca_va_peter")
+    //   // donc là il faut instead qu'il appelle une fonction serveur qui fasse claquer un orage chez tous 
+    //   // les clients
+
+    //   // 49
+    //   // 54
+    //   // 58
+    // }
+
+    // if(event.data[0]==144 && event.data[1]==45){
+    //   em.setClient({ key: whichEtat });
+    //   em.emit("new_ambiance")
+    // }
 
     // console.log(event.data)
   }
@@ -416,6 +450,11 @@ Template.admin.onRendered(function () {
 
     //  KEYCODE 32 IS SPACEBAR
     // KEYCIODE 78 IS "n"
+    //  77 is M
+
+    if(e.keyCode == '77'){
+      Meteor.call("jmMic")
+    }
 
     var isItPowerToThePeople = getSuperGlobal("powerToThePeople");
     if(!isItPowerToThePeople) {
@@ -621,6 +660,30 @@ Template.loteriesList.helpers({
 
 Template.showtime.events({
 
+  'click #armKeyboard' : function(){
+    if(secondRound){
+      secondRound=false;
+    }else{
+      secondRound=true;
+    }
+    console.log("second round", secondRound)
+  },
+
+  'click .winners':function(){
+    speedWinner = score.find({type:"speed"},{limit: 1, sort: {value: 1}}).fetch()
+    speedWinnerPseudo = speedWinner[0].pseudo
+    speedWinnerScore = speedWinner[0].value
+
+    console.log("the speed winner is ", speedWinnerPseudo, " with a score of ", speedWinnerScore/1000, " seconds")
+
+    moneyWinner = score.find({type:"money"},{limit: 1, sort: {value: -1}}).fetch()
+    moneyWinnerPseudo = moneyWinner[0].pseudo
+    moneyWinnerScore = moneyWinner[0].value
+
+    console.log("the money winner is ", moneyWinnerPseudo, " with a score of ", moneyWinnerScore, " trees cut")
+
+  },
+
   'click #top_midi1':function(){
     output.send([144, 84, 127]); // full velocity note on A4 on channel zero
 /*  
@@ -791,6 +854,11 @@ Template.showtime.events({
 
 
 Template.admin.events({
+
+  'click #whoShowLightButton' : function(){
+    args = document.getElementById('whoShowLight').value
+    Meteor.call('showLightCall', args)
+  },
 
   'click .divAmbiance' : function(event){
     var _id = event.currentTarget.id

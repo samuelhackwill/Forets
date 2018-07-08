@@ -2,10 +2,19 @@
 var streamCheckInterval;
 var caughtUp = false;
 var intervalReload;
-
 score = 0
+var uid = 0
+var armToggle = false;
+localName = undefined
+
+mouseOverToggle = false;
+mouseClicToggle = false;
+mouseClicUnToggle = false;
+spacebarReToggle = false;
 
 actionAvailable = 1
+
+fragCount = 0
 
 Template.game.onCreated(function() {
 
@@ -13,6 +22,7 @@ Template.game.onCreated(function() {
   this.autorun(() => {
     this.subscribe('allRepresentations');
     this.subscribe('allContenusEcran');
+    this.subscribe('allScore');
     this.subscribe('allLoteries');
   });
 
@@ -33,7 +43,7 @@ Template.game.onRendered(function () {
     console.log('data ?', data);
     console.log('ContenusEcran ?', ContenusEcran.find().fetch());
     if(data) {
-      catchUpWithTheShow();
+      // catchUpWithTheShow();
     }
 
     //
@@ -46,42 +56,23 @@ Template.game.onRendered(function () {
 
   $(document.body).addClass('game');
 
-  function catchUpWithTheShow(){
-    console.log('catchUpWithTheShow caughtUp?', caughtUp);
-    if(!caughtUp) {
-      caughtUp = true;
-      console.log("checking compteur", compteur, "cookie.compteur", cookies.get('compteur'), modeSpectacle);
-      //si on est en mode spectacle, que l'admin a le pouvoir
-      var isPowerToThePeople = getSuperGlobal('powerToThePeople');
-      if(modeSpectacle && !isPowerToThePeople) {
-        //et si il y a un compteur enregistré
-        var compteurAdmin = getSuperGlobal('compteurAdmin');
-        console.log("checking compteurAdmin", compteurAdmin);
 
-        if(null !== compteurAdmin) compteur = parseInt(compteurAdmin);
-        if(compteur != -1) {
-          //revenir où on était dans le spectacle
-          next();
-        }
-
-        //ambiance?
-        var whichAmbiance = getSuperGlobal("whichAmbiance", "");
-        if(whichAmbiance != "") { //il y a une ambiance en cours
-          //passons à cette ambiance
-          var newAmbiance = ambiances.findOne({name: whichAmbiance});
-          if(newAmbiance) {
-            console.log("set Ambiance", newAmbiance.value)
-            changeImg(newAmbiance.value)
-          }
-        }
-      }
-      
-    }
-
-  }
 
   em.addListener('salmtheoneshow', showTheOneButtons);
   em.addListener('salmtheonehide', hideTheOneButtons);
+  em.addListener('jmMicServer', function(){
+        if(armToggle){
+          document.getElementById("actif").style="opacity:0"
+          document.getElementById("repos").style="opacity:1"
+        }else{
+          document.getElementById("actif").style="opacity:1"
+          document.getElementById("repos").style="opacity:0"
+        }
+        armToggle =! armToggle
+  });
+
+
+ 
 
   function showTheOneButtons(){
 
@@ -138,6 +129,14 @@ Template.game.onRendered(function () {
       next();
     } 
   }); 
+
+  em.addListener('showLightServer', function(who){
+    if (localName===who) {
+      document.getElementById("fond_x5F_jour").style="transition: all 1s ease;background-color:white;opacity:1"
+      console.log(who)
+    }else{
+      return}
+  });
 
   em.addListener('salmForceGoTo', function(what) {
     console.log('salm salmForceGoTo!', what);
@@ -221,188 +220,6 @@ Template.game.onRendered(function () {
     //   {},{fields: {'source':"SourceOne", 'currency': "USD"}}
     // ));
 
-  //streaming janus
-  var server = null;
-  // if(window.location.protocol === 'http:')
-  //     server = "http://" + window.location.hostname + ":8088/janus";
-  // else
-  //     server = "https://" + window.location.hostname + ":8089/janus";
-
-  // var host = window.location.hostname == "localhost" ? "www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com" : window.location.hostname;
-  // var host = window.location.hostname == "localhost" ? "www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com" : window.location.hostname;
-  var host = "www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com";
-  var server = null;
-  if(window.location.protocol === 'http:')
-      server = "http://" + host + ":8088/janus";
-  else
-      server = "https://" + host + ":8089/janus";
-
-  var janus = null;
-  // var streaming = null;
-  streaming = null;
-  var started = false;
-  var spinner = null;
-
-  var selectedStream = null;
-
-  // Initialize the library (all console debuggers enabled)
-  Janus.init({debug: "all", callback: function() {
-    
-    console.log('Janus initiated.');
-
-    // Use a button to start the demo
-    // $('#start').click(function() {
-    if(started)
-      return;
-    started = true;
-
-    // $(this).attr('disabled', true).unbind('click');
-    // Make sure the browser supports WebRTC
-    if(!Janus.isWebrtcSupported()) {
-      console.log("No WebRTC support... ");
-      return;
-    }
-    console.log('WebRTC is supported.');
-    console.log('Creating Janus Session...');
-    // Create session
-    janus = new Janus({
-      server: server,
-      success: function() {
-        // Attach to streaming plugin
-        janus.attach({
-          plugin: "janus.plugin.streaming",
-          success: function(pluginHandle) {
-            // $('#details').remove();
-            streaming = pluginHandle;
-            Janus.log("Plugin attached! (" + streaming.getPlugin() + ", id=" + streaming.getId() + ")");
-            console.log("Plugin attached! (" + streaming.getPlugin() + ", id=" + streaming.getId() + ")");
-            // Setup streaming session
-            // $('#update-streams').click(updateStreamsList);
-            // updateStreamsList();
-            //janus.destroy();
-              //si le pouvoir est déjà aux mains de l'admin lancons le stream au chargement de la page
-              // var powerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}});
-              // var isPowerToThePeople = (powerToThePeople) ? powerToThePeople.powerToThePeople : true;
-              var isPowerToThePeople = getSuperGlobal("powerToThePeople", false); // par défaut false, admin a le pouvoir -> donc lancer le stream (?)
-              if(!isPowerToThePeople) {
-                console.log("le pouvoir est déjà aux mains de l'admin lancons le stream au chargement de la page");
-                startTheStream();
-              }
-
-          },
-          error: function(error) {
-            Janus.error("  -- Error attaching plugin... ", error);
-            console.log("Error attaching plugin... " + error);
-          },
-          onmessage: function(msg, jsep) {
-            Janus.debug(" ::: Got a message :::");
-            Janus.debug(JSON.stringify(msg));
-            var result = msg["result"];
-            if(result !== null && result !== undefined) {
-              if(result["status"] !== undefined && result["status"] !== null) {
-                var status = result["status"];
-                if(status === 'starting')
-                  console.log("Message : Starting, please wait...");
-                  // $('#status').removeClass('hide').text("Starting, please wait...").show();
-                else if(status === 'started')
-                  console.log("Message : Started");
-                  // $('#status').removeClass('hide').text("Started").show();
-                else if(status === 'stopped')
-                  stopStream();
-              }
-            } else if(msg["error"] !== undefined && msg["error"] !== null) {
-              console.log("Message : "+msg["error"]);
-              stopStream();
-              return;
-            }
-            if(jsep !== undefined && jsep !== null) {
-              Janus.debug("Handling SDP as well...");
-              Janus.debug(jsep);
-              // Answer
-              streaming.createAnswer({
-                jsep: jsep,
-                media: { audioSend: false, videoSend: false },  // We want recvonly audio/video
-                success: function(jsep) {
-                  Janus.debug("Got SDP!");
-                  Janus.debug(jsep);
-                  var body = { "request": "start" };
-                  streaming.send({"message": body, "jsep": jsep});
-                  // $('#watch').html("Stop").removeAttr('disabled').click(stopStream);
-                },
-                error: function(error) {
-                  Janus.error("WebRTC error:", error);
-                  console.log("WebRTC error... " + JSON.stringify(error));
-                }
-              });
-            }
-          },
-          onremotestream: function(stream) {
-            Janus.debug(" ::: Got a remote stream :::");
-            console.log(" ::: Got a remote stream :::");
-            console.log(JSON.stringify(stream));
-            Janus.debug(JSON.stringify(stream));
-            // if($('#remotevideo').length === 0)
-            //   $('#stream').append('<video class="rounded centered hide" id="remotevideo" width=320 height=240 autoplay/>');
-            // Show the stream and hide the spinner when we get a playing event
-            // $("#remotevideo").bind("playing", function () {
-            //   $('#waitingvideo').remove();
-            //   $('#remotevideo').removeClass('hide');
-            //   if(spinner !== null && spinner !== undefined)
-            //     spinner.stop();
-            //   spinner = null;
-            // });
-            // Janus.attachMediaStream($('#remotevideo').get(0), stream);
-            console.log($('#stream-video'), $('#stream-video').get(0));
-            Janus.attachMediaStream($('#stream-video').get(0), stream);
-          },
-          oncleanup: function() {
-            Janus.log(" ::: Got a cleanup notification :::");
-            // $('#waitingvideo').remove();
-            // $('#remotevideo').remove();
-          }
-        });
-      },
-      error: function(error) {
-        Janus.error(error);
-        console.log("ERROR !!! :"+error);
-        // var body = { "request": "stop" };
-        // streaming.send({"message": body});
-        // streaming.hangup();
-        //TODO setTimeout hangup + setTimeout request watch à nouveau? à tester en régie avec lieven
-        // bootbox.alert(error, function() {
-        //   window.location.reload();
-        // });
-        /* no reload on error stream audio for videoproj */
-        /*
-        var waitBeforeReload = 10 //secondes;
-        $('#stream-error').append("Il semble que la connection avec le serveur a été perdue. La page va se recharger dans <span>"+waitBeforeReload+" secondes</span>. (<a href=\"javascript:void(0);\" class=\"reload\" title=\"Annuler le rechargement\">Recharger maintenant</a> ou <a href=\"javascript:void(0);\" class=\"cancel\" title=\"Annuler le rechargement\">Annuler</a>)");
-        $('#stream-error a.reload').click(function(){
-          console.log("Manual page reload.");
-          window.location.reload();
-        });
-        $('#stream-error a.cancel').click(function(){
-          console.log("cancelling auto page reload.");
-          clearInterval(intervalReload);
-          $('#stream-error').empty(); //vider l'élément d'erreur
-        });
-        var count = waitBeforeReload;
-        intervalReload = setInterval(function(){
-          $('#stream-error').find('span').text(count == 1 ? count+" seconde" : count+" secondes");
-          count -= 1;
-          if (count === 0){
-            clearInterval(intervalReload); // Stopping the counter when reaching 0.
-            console.log("Stream error reloading");
-            window.location.reload();
-          }
-        }, 1000);
-        */
-      },
-      destroyed: function() {
-        console.log("destroyed");
-        window.location.reload();
-      }
-    });
-  }});
 
   
   $(document.body).on('keyup', function(e) {
@@ -413,6 +230,17 @@ Template.game.onRendered(function () {
     // KEYCODE 32 IS SPACEBAR
     // KEYCIODE 78 IS "n"
     if(e.keyCode == '32') nextEvent();
+    // if(e.keyCode == '78'){
+    //     if(armToggle){
+    //       document.getElementById("actif").style="opacity:0"
+    //       document.getElementById("repos").style="opacity:1"
+    //     }else{
+    //       document.getElementById("actif").style="opacity:1"
+    //       document.getElementById("repos").style="opacity:0"
+    //     }
+    //     armToggle =! armToggle
+    //     console.log(armToggle)
+    // }
   });
 
   var alternanceStorm = false;
@@ -447,24 +275,7 @@ Template.game.onRendered(function () {
 
     alternanceImg = false;
 
-  function changeImg(params){
 
-    if($("#imgcontainerBACK").hasClass( "invisible")){
-      $('#imgcontainerBACK').removeClass('invisible');
-      $('#imgcontainerBACK').addClass('visible');
-    }
-
-    if (alternanceImg==true) {
-      $("#imgcontainerFRONT").css("background-image", "url(/img/"+params+".jpg");  
-      $('#imgcontainerFRONT').removeClass('invisible');
-      $('#imgcontainerFRONT').addClass('visible');
-    }else{
-      $("#imgcontainerBACK").css("background-image", "url(/img/rain3.jpg");  
-      $('#imgcontainerFRONT').addClass('invisible');
-      $('#imgcontainerFRONT').removeClass('visible');
-    }
-    alternanceImg =! alternanceImg
-  }
 
 
   // $("#login").click(function(e) { 
@@ -477,6 +288,62 @@ Template.game.onRendered(function () {
   //     clearInterval(interval); 
   //     interval = null;
   // });
+
+    em.addListener('showSpeedWinnerServer', function(params){
+
+            document.getElementById("srt").style="-webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;"
+
+      setTimeout(function(){
+        document.getElementById("srt").style="display:none"
+      }, 50)      
+
+
+    console.log("who is the speed winner", params.pseudo)
+
+    if(localName===params.pseudo){
+      document.getElementById("winner").style="display:initial;opacity:0; fill:orange;-webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;"
+
+      setTimeout(function(){
+        document.getElementById("black").style="opacity:0;fill:black;"
+        document.getElementById("winner").style="opacity:1;fill:orange;"
+      }, 50)      
+
+
+    }else{
+      document.getElementById("black").style="display:initial;opacity:0; fill:black;-webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;"
+
+      setTimeout(function(){
+        document.getElementById("black").style="opacity:1;fill:black;"
+      }, 50)      
+
+    }
+
+  });
+
+
+    em.addListener('showMoneyWinnerServer', function(params){
+
+    console.log("who is the money winner", params.pseudo)
+
+    if(localName===params.pseudo){
+      document.getElementById("winner").style="display:initial;opacity:0; fill:orange;-webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;"
+
+      setTimeout(function(){
+        document.getElementById("black").style="opacity:0;fill:black;"
+        document.getElementById("winner").style="opacity:1;fill:orange;"
+      }, 50)      
+
+
+    }else{
+      document.getElementById("black").style="display:initial;opacity:0; fill:black;-webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;"
+
+      setTimeout(function(){
+        document.getElementById("black").style="opacity:1;fill:black;"
+      }, 50)      
+
+    }
+
+  });
 
   em.addListener('salmstartstream', startTheStream);
 
@@ -546,66 +413,99 @@ var nextEvent = function(){
 
 Template.game.events({
 
-  'mousemove' : function(pos){
-      document.getElementById("workforce").style.left = pos.pageX+"px"
-      document.getElementById("workforce").style.top = pos.pageY+"px"
-      document.getElementById("score").style.left = pos.pageX+"px"
-      document.getElementById("score").style.top = pos.pageY+"px"
+  'click .trees':function(e){
+
+      uid ++
+
+      console.log("uid ",uid)
+      onomatopees = ["tac", "crac", "toc", "tchouc"]
+      onomatopeesFin = ["scccrouatch", "ccrrrrfrouch", "crrrrrrrrBOMMMftch"] 
+
+      // console.log("clic tree! ", e)
+
+      console.log("clic occured here , ", e.screenY, " ", e.screenX)
+
+        console.log("creating UID : ", uid)
+      $('<div class="crac" id="'+uid+'" style="top:'+(e.screenY-80)+'px;left:'+e.screenX+'px";>'+onomatopees[getRndInteger(0,onomatopees.length-1)]+'</div>').appendTo('#cracs');
+
+      setTimeout(function(){
+        console.log("moving UID : ", uid)
+
+        document.getElementById(uid).style="top:"+(e.screenY-80)+"px;left:"+e.screenX+"px; transform: translateY(20px); opacity:0;"
+      }, 40)    
+
+      setTimeout(balayeurUid.bind(null, uid), 500)
+      // donc la pour mémoire on a eu pleeeeein de problème mais en fait c'était lié au fait 
+      // que uid était réécrit avant d'être repassé à la fonction tiemout
+      // du coup là ce qu'on fait c'est qu'on appelle une fonction extérieure en lui passant
+      // l'uid DU MOMENT au lieu de le demander au moment ou le timeout est executé, tu vois?
+      // y'a surement une façon plus maline de faire ça avec les scope javascript mais comme j'entrave rien
+
+
+
+
+    // couché :
+    // transform: rotateZ(90deg);
+    // transform-origin: 8% 43%;
+
+    // transform: translate(document.getElementById("I2").transform.baseVal.consolidate().matrix.e, document.getElementById("I2").transform.baseVal.consolidate().matrix.f) rotate(-90deg);
+
+    // pis faut faire disparaître l'ombre, etc.
+
+
+    currentHP = document.getElementById(e.target.id).HP
+    if (currentHP===undefined) {
+      console.log("first run, giving the object initial HP")
+      document.getElementById(e.target.id).HP = -1
+      return
+    }else{
+      if(currentHP<-4){
+        console.log("this tree, ", e.target.id, " is dying")
+
+        fragCount += 1;
+        // console.log("this tree lives at X  ", document.getElementById(e.target.id).transform.baseVal.consolidate().matrix.e)
+        // console.log("this tree lives at Y  ", document.getElementById(e.target.id).transform.baseVal.consolidate().matrix.f)
+
+        // treeX = document.getElementById(e.target.id).transform.baseVal.consolidate().matrix.e
+        // treeY = document.getElementById(e.target.id).transform.baseVal.consolidate().matrix.f
+
+        // document.getElementById(e.target.id).style+="transform : translate("+treeX+"px,"+treeY+"px) rotate(-90deg)"
+        // document.getElementById(e.target.id).style="transform: rotateZ(90deg); transform-origin: 8% 43%;"
+
+        document.getElementById(e.target.id).style="display:none;"
+
+        if(mouseClicToggle===true){
+          if(mouseClicUnToggle===false){
+          console.log("you should goto bookmark del a fin des eindjlsc")
+          gotobookmark("arbreTombe")
+          mouseClicUnToggle=true
+        }else{
+          compteur += 1;
+          next();
+        }
+      }
+
+        return
+      }
+      console.log("second run, giving the object -1 hp")
+      document.getElementById(e.target.id).HP --
+    }
+
+    console.log("object's HP equals ", document.getElementById(e.target.id).HP)
+
+    // et là en gros si la carac HP existe pas (undefined), tu la crée
+    // si elle existe tu la -1
   },
+
+  // 'mousemove' : function(pos){
+  //     document.getElementById("workforce").style.left = pos.pageX+"px"
+  //     document.getElementById("workforce").style.top = pos.pageY+"px"
+  //     document.getElementById("score").style.left = pos.pageX+"px"
+  //     document.getElementById("score").style.top = pos.pageY+"px"
+  // },
 
   'click .clickable' : function(e){
     startWork(e.target.id)
-  },
-
-  'click #cuppasInc': function(){
-  //Meteor.call('setSuperGlobal', {name: 'cuppasCount', value: +=1});
-  Meteor.call('setSuperGlobal', {name: 'cuppasInc'});
-  },
-
-  'click #cuppasDec': function(){
-    Meteor.call('setSuperGlobal', {name: 'cuppasDec'});
-  },
-
-  'click #finishCuppa': function(){
-    Meteor.call('setSuperGlobal', {name: 'finishCuppa'});
-  },
-  'click #oui': function(){
-    console.log('salmclick oui', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'oui', mode: 'singlePlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited');
-    console.log('salmclick emmited oui', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #non': function(){
-    console.log('salmclick non', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'non', mode: 'singlePlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited non', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #euh': function(){
-    console.log('salmclick euh', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'euh', mode: 'singlePlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited euh', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #ouiMP': function(){
-    console.log('salmclick oui', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'oui', mode: 'multiPlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited');
-    console.log('salmclick emmited oui', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #nonMP': function(){
-    console.log('salmclick non', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'non', mode: 'multiPlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited non', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #euhMP': function(){
-    console.log('salmclick euh', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'euh', mode: 'multiPlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited euh', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
   },
 
   'touchstart #gcontainer': function(){
@@ -693,7 +593,43 @@ function finishWork(where){
       }
 };
 
+startNight = function(){
+  setTimeout(function(){
+    document.getElementById("lumieres_1_").style="opacity:1;"
+    document.getElementById("fond_x5F_jour").style="opacity:0;"
+    document.getElementById("bourg").style="opacity:1;"
+
+    document.getElementById("srt").style="color:#DBDBCC;background-color:#0A0606;"
+
+    // il faudrait une fonction meteor qui me log le score de chaque personne a ce moment là
+
+  },5000)
+}
+
+
+  logName = function(){
+    console.log(document.getElementById("whoInput").value)
+    localName = document.getElementById("whoInput").value
+    document.getElementById("who").style="opacity:0";
+
+    Meteor.call("lognameClient", localName)
+
+    setTimeout(function(){
+      document.getElementById("who").style="display:none";
+    },500)
+  }
+
+
+  function balayeurUid(pastUid){
+    console.log("destroying uid ", pastUid)
+    document.getElementById(pastUid).remove()
+  }
+
   function balayeurfunc(){
           $( ".eclair" ).remove();
           $( ".eclair2" ).remove();
   }
+
+   function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+} 

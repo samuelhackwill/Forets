@@ -2,6 +2,8 @@
 // ContenusEcran.before.insert(function (userId, doc) {
 //   doc.createdAt = new Date();
 // });
+ratsRace = 0
+namesRace = []
 
 glisseContainer = null
 indexPostit = 0
@@ -10,6 +12,11 @@ servColor = "red"
 Meteor.publish('allPostits', function(){
   return Postit.find();
 });
+
+Meteor.publish('allScore', function(){
+  return score.find();
+});
+
 Meteor.publish('allContenusEcran', function () {
   return ContenusEcran.find();
 });
@@ -61,10 +68,17 @@ if (Meteor.isServer) {
   UserStatus.events.on("connectionLogin", function(fields) { console.log("connectionLogin", fields); });
 
 
+  em.addListener('showScoreAdmin', function(params){
+    console.log("show who won the speed contest MF")
+    console.log(" et donc ",params.key)
+
+    em.emit('showScoreServer', params.key)
+  });
+
   em.addListener('resetIndex', function(){
     indexPostit=0
     // console.log("RESET INDEX")
-  })
+  });
 
   em.addListener('addPostit', function(){
      // Postit.insert(emptyPostit)
@@ -118,6 +132,14 @@ if (Meteor.isServer) {
 
     em.addListener('waitingClient', function(){
       console.log("WAITING CLIENT!")
+    });
+
+    em.addListener('showSpeedWinnerAdmin', function(args){
+      em.emit('showSpeedWinnerServer', args)
+    });   
+
+     em.addListener('showMoneyWinnerAdmin', function(args){
+      em.emit('showMoneyWinnerServer', args)
     });
 
 
@@ -274,6 +296,33 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
+
+    logScore:function(obj){
+      console.log("pseudo ,", obj.pseudo)
+      console.log("speed ,", obj.speed)
+      console.log("money ,", obj.money)
+
+      score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});  
+      score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});  
+    },
+
+    jmMic:function(){
+      em.emit("jmMicServer")
+    },
+
+    showLightCall:function(who){
+      console.log("show light call ", who)
+      em.emit('showLightServer', who);
+
+    },
+
+    lognameClient:function(name){
+      // console.log("new client logged name : ", name, " he is the ", ratsRace, "th to register")
+      namesRace[ratsRace] = name
+      console.log(namesRace[ratsRace])
+      ratsRace ++
+    },
+
     startTheStream: function(){
       // superGlobals.upsert('streamStarted', { $set: { value: true, time: Date.now() } });
     },

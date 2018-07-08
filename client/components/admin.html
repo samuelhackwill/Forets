@@ -299,39 +299,16 @@
       </div>
     </div>
     <div class="col-lg-6 col-md-6 col-xs-12 text-left">
-<!--       <div id="containerAmbiance">
-        <div id="ambiance1" class="divAmbiance">1</div>
-        <div id="ambiance2" class="divAmbiance">2</div>
-        <div id="ambiance3" class="divAmbiance">3</div>
-        <div id="ambiance4" class="divAmbiance">4</div>
-        <div id="ambiance5" class="divAmbiance">5</div>
-        <div id="ambiance6" class="divAmbiance">6</div>
-        <div id="ambiance7" class="divAmbiance">7</div>
-        <div id="ambiance8" class="divAmbiance">8</div>
-      </div> -->
-      Buches 
-      <input type="button" id="top_midi1" value="1">
-      <input type="button" id="top_midi2" value="2">
-      <input type="button" id="top_midi3" value="3">
-      <input type="button" id="top_midi4" value="4">
-      <input type="button" id="top_midi5" value="5">
-      <input type="button" id="top_midi6" value="6">
-      <input type="button" id="kill_midi" value="KILL MIDI">
-      <br />
-      <strong>Thés</strong><br />
-      volontaires : {{cuppasCount}}<br />
-      tasses prêtes : {{nbCuppasFinished}}<br />
-      bûches à allumer : {{buchesCount}}<br />
-      next bûche in {{nextBucheAllumage}} cup(s).<br />
-      <input type="button" id="resetCuppas" value="reset cuppas">
-      <br />
-      <input type="button" id="fakeCuppasInc" value="inc cuppas">
-      <input type="button" id="fakeCuppasFinished" value="finish a cup"><br />
-      {{#each dataArray buchesArray}}
-        <img id="buche-{{@index}}" src="wooden-log{{#if equals this.value true}}-burning{{/if}}.svg" width="32" />
-      {{/each}}
-    </div>
 
+   <form>
+    <input id="whoShowLight" type="form">
+    <button type="button" id="whoShowLightButton">BIM</button> 
+  </form> 
+
+    <button class="winners">CALC WINNERS</button> 
+    <button id="armKeyboard"> ARM KEYBOARD</button>
+
+</div>
 
 </template>
 

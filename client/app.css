@@ -3,6 +3,11 @@
     src: url('Menlo.ttc') format('truetype');
   }
 
+@font-face{
+  font-family:'svgFont';
+  src: url('mplus-2m-regular.ttf') format('opentype');
+}
+
   #srt span em{
     font-style: italic;
     color:grey;
@@ -270,7 +275,7 @@
     padding-left: 4px;
     padding-right:3px;
 
-    overflow: scroll;
+    overflow-y: scroll;
 
     margin-left:12.5%;
 

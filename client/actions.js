@@ -10,6 +10,12 @@ clock = null
 newGUI = false
 isItNight = false
 
+IWonSpeed = false
+IWonMoney = false
+
+dateStart = 0
+dateFinish = 0
+
 data = []
 
 leftSteps = ["left1.mp3","left2.mp3","left3.mp3","left4.mp3","left5.mp3","left6.mp3","left7.mp3","left8.mp3"]
@@ -90,8 +96,61 @@ next = function(){
       document.getElementById("MAMAN").style.transform = "translateY("+SvgPos+"px)"
   }
 
+
+  // 19 I
+  // 15 A
+  // 8 P
+  // 4 T
+  // 1 M
+
+
 action = function(type, params){
   switch(type){
+    case "logScore":
+    speedScore = dateFinish - dateStart
+    Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
+    break
+
+    case "startRace":
+    dateStart = new Date()
+    break;    
+
+    case "endRace":
+    dateFinish = new Date()
+    break;
+
+    case "showBourg":
+    showBourg();
+    startNight();
+    break;
+
+    case "unstop":
+    unstop();
+    break;
+
+    case "toggleMouseOver":
+    console.log("tis now mouseover who rules")
+    addMOListener();
+    break;
+
+    case "toggleMouseClic":
+    console.log("tis now mouseclic who rules")
+    removeMOListener();
+    break;
+
+    case "showTree":
+    console.log("SHOW TREE YO, which one: ", params)
+    showTree(params[0])
+    break;
+
+    case "treesReady":
+    treesReady()
+    break;
+
+    case "showAllTrees":
+    showAllTrees()
+    break;
+
     case "everyBody":
     everbyBodyScreen(params);
     break;
@@ -172,6 +231,74 @@ action = function(type, params){
     break;
   }
 }
+
+treesReady = function(){
+  treesArray = document.getElementsByClassName("trees")
+
+  for(i=1; i<treesArray.length; i++){
+    console.log()
+     treesArray[i].classList.remove("st13");
+  }
+}
+
+showTree = function(type){
+  document.getElementById(type+"1").style="opacity:1;"
+  document.getElementById("d"+type+"1").style="opacity:1;"
+}
+
+showAllTrees = function(){
+  treesIndex = 1
+  treesArray = document.getElementsByClassName("trees")
+
+  bob = setInterval(function(){
+    if(treesIndex<treesArray.length){
+      treesArray[treesIndex].style="opacity:1;"
+      treesIndex ++
+    }else{
+      clearInterval(bob)
+    }
+
+  }, 50)
+}
+
+addMOListener = function(){
+
+  allTrees = document.getElementsByClassName("trees")
+
+  for(i=0; i<allTrees.length; i++){
+      allTrees[i].addEventListener("mouseover", function(){
+        if(mouseClicToggle===false){
+            compteur+=1;
+            next()
+          }else{
+            return
+          }
+      });
+  }
+
+
+ }
+
+ showBourg = function(){
+  document.getElementById("bourg").style="opacity:1;"
+ }
+
+ removeMOListener = function(){
+
+  mouseClicToggle=true;
+
+  allTrees = document.getElementsByClassName("trees")
+
+  for(i=0; i<allTrees.length; i++){
+      allTrees[i].addEventListener("click", function(){
+        if(mouseClicUnToggle===false){
+            compteur+=1;
+            next()
+          }
+      });
+  }
+
+ }
 
 everbyBodyScreen = function(color){
   newGUI = true;

@@ -12,7 +12,27 @@ loteries = new Meteor.Collection('loteries');
 
 PhoneNumbers = new Meteor.Collection('phoneNumbers');
 
+score = new Meteor.Collection("score")
+
 var Schemas = {};
+
+Schemas.score = new SimpleSchema({
+  type : {
+    type:String,
+    label:"Type",
+    max:200,
+  },
+
+  value : {
+    type: Number,
+    label: "Score",
+  }, 
+
+   pseudo : {
+    type: String,
+    label: "quiça",
+  }
+});
 
 Schemas.ContenusEcran = new SimpleSchema({
 
@@ -429,8 +449,21 @@ ambiances.allow({
 });
 
 
+
 //permissions
 Postit.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+})
+
+score.allow({
   insert:function(){
     return true;
   },
