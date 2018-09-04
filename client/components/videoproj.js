@@ -404,11 +404,28 @@ Template.videoproj.onRendered(function () {
   $(document.body).on('keyup', function(e) {
 
     e = e || window.event
-
-
     // KEYCODE 32 IS SPACEBAR
     // KEYCIODE 78 IS "n"
+
+    // 48 = 0
+    // 49 = 1
+    // 50 = 2
+    // 51 = 3
+
     if(e.keyCode == '32') nextEvent();
+
+    if(e.keyCode == '48'){
+      document.getElementById("srt").innerHTML="miracle des dieux :<br/>aucun bug"
+    }    
+    if(e.keyCode == '49'){
+      document.getElementById("srt").innerHTML="pas de prise RJ45<br/>(bug lvl 1)"
+    }    
+    if(e.keyCode == '50'){
+      document.getElementById("srt").innerHTML="conflit DHCP<br/>(!bug lvl 3!)"
+    }
+    if(e.keyCode == '51'){
+      document.getElementById("srt").innerHTML=""
+    }
   });
 
   var alternanceStorm = false;
@@ -523,6 +540,54 @@ Template.videoproj.onRendered(function () {
   }
 
 });
+
+
+next = function(){
+  console.log('next', compteur, data[compteur]);
+  var currentData = data[compteur]
+  var type = currentData["type"]
+  var params = currentData["text"]
+
+  while(data[compteur]["type"]!="text"){
+      // tant que data[compteur] est une balise, ben continue à executer les instructions s'il te plaît
+      action(type, params)
+      if((data[compteur]["type"]!="text")||(data[compteur]["text"]=="")){
+        // euh alors ça je sais pas pourquoi ça marche mais ça permet d'éviter des situations où, arrivé à un bookmark
+        // il sautait deux lignes au lieu d'une
+        compteur+=1;
+        next();
+      }
+    }
+
+    if((type=="text")&&(params!="")){
+      //document.getElementById("srt").innerHTML = params
+        if(params=="***"){
+        // ça c'est pour caler des blancs
+        //document.getElementById("srt").innerHTML = ""
+
+       // VERSION MTL MON GARS
+        //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
+        //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        // }else{
+        //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
+        //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        // }
+       // END MTL
+
+          // version game hédé
+          // $('#srt').append($('<ul/>').html(params))
+          // $('#srt').scrollTop($('#srt')[0].scrollHeight);
+
+          // version avignon du cul mon gars
+          $('#srt').html("\ \ \ \ \ ")
+        }else{
+          $('#srt').html(params)
+        }
+        // }
+      // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
+      // bon ben c'est ici qu'il faudrait faire un truc
+    }
+  }
 
 var nextEvent = function(){
 

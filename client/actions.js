@@ -10,6 +10,8 @@ clock = null
 newGUI = false
 isItNight = false
 
+firstShowServer = true
+
 IWonSpeed = false
 IWonMoney = false
 
@@ -31,44 +33,57 @@ etats = {
   ambiance7:["rain1","7"]
 }
 
-next = function(){
-  console.log('next', compteur, data[compteur]);
-  var currentData = data[compteur]
-  var type = currentData["type"]
-  var params = currentData["text"]
+// alors là pour le délire j'ai tout mis dans game.js
+// comme ça VP.js peut avoir son propre nextttt
 
-  while(data[compteur]["type"]!="text"){
-      // tant que data[compteur] est une balise, ben continue à executer les instructions s'il te plaît
-      action(type, params)
-      if((data[compteur]["type"]!="text")||(data[compteur]["text"]=="")){
-        // euh alors ça je sais pas pourquoi ça marche mais ça permet d'éviter des situations où, arrivé à un bookmark
-        // il sautait deux lignes au lieu d'une
-        compteur+=1;
-        next();
-      }
-    }
+// next = function(){
+//   console.log('next', compteur, data[compteur]);
+//   var currentData = data[compteur]
+//   var type = currentData["type"]
+//   var params = currentData["text"]
 
-    if((type=="text")&&(params!="")){
-      //document.getElementById("srt").innerHTML = params
-        if(params=="***"){
-        // ça c'est pour caler des blancs
-        //document.getElementById("srt").innerHTML = ""
-          $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
-          $('#srt').scrollTop($('#srt')[0].scrollHeight);
-        }else{
-          // version le havre
-          $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
-          $('#srt').scrollTop($('#srt')[0].scrollHeight);
+//   while(data[compteur]["type"]!="text"){
+//       // tant que data[compteur] est une balise, ben continue à executer les instructions s'il te plaît
+//       action(type, params)
+//       if((data[compteur]["type"]!="text")||(data[compteur]["text"]=="")){
+//         // euh alors ça je sais pas pourquoi ça marche mais ça permet d'éviter des situations où, arrivé à un bookmark
+//         // il sautait deux lignes au lieu d'une
+//         compteur+=1;
+//         next();
+//       }
+//     }
 
-          // version game hédé
-          // $('#srt').append($('<ul/>').html(params))
-          // $('#srt').scrollTop($('#srt')[0].scrollHeight);
+//     if((type=="text")&&(params!="")){
+//       //document.getElementById("srt").innerHTML = params
+//         if(params=="***"){
+//         // ça c'est pour caler des blancs
+//         //document.getElementById("srt").innerHTML = ""
 
-        }
-      // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
-      // bon ben c'est ici qu'il faudrait faire un truc
-    }
-  }
+//        // VERSION MTL MON GARS
+//         //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
+//         //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+//         // }else{
+//         //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
+//         //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+//         // }
+//        // END MTL
+
+//           // version game hédé
+//           // $('#srt').append($('<ul/>').html(params))
+//           // $('#srt').scrollTop($('#srt')[0].scrollHeight);
+
+//           // version avignon du cul mon gars
+//           $('#srt').append($('<ul/>').html("\ \ \ \ \ "))
+//           $('#srt').scrollTop($('#srt')[0].scrollHeight);
+//         }else{
+//           $('#srt').append($('<ul/>').html(params))
+//           $('#srt').scrollTop($('#srt')[0].scrollHeight);
+//         }
+//         // }
+//       // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
+//       // bon ben c'est ici qu'il faudrait faire un truc
+//     }
+//   }
 
   randonnee = function(foot){
 
@@ -106,6 +121,12 @@ next = function(){
 
 action = function(type, params){
   switch(type){
+    case "avignonLight":
+      if(Roles.userIsInRole(Meteor.user(), "admin")==true){
+        // document.getElementById("")
+    }
+    break
+
     case "logScore":
     speedScore = dateFinish - dateStart
     Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
@@ -402,8 +423,10 @@ notifyServer = function(){
 }
 
 showServerCall = function(){
+  if(firstShowServer){
   console.log("showServerCall")
     em.emit('pingServer');
+  }
 }
 
 hideServerCall = function(){
