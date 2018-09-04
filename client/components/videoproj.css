@@ -16,7 +16,15 @@ ul.admin_menu li:last-child:after {
 
 /* videoproj */
 body.videoproj #srt {
-  color: transparent;
+color: white !important;
+width:100% !important;
+background-color:black !important;
+font-size:80px !important;
+height:auto !important;
+margin: 0px !important;
+padding: 50px !important;
+top:170px !important;
+text-align:center;
 }
 body.videoproj #srt span.vp {
   color: white;

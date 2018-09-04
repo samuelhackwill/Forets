@@ -18,3 +18,11 @@ ul.admin_menu li:last-child:after {
 body.strobe #srt {
   display:none;
 }
+
+#gcontainer {
+	    -webkit-transition: background-color 0s !important;
+    -moz-transition: background-color 0s !important;
+    -o-transition: background-color 0s !important;
+    transition: background-color 0s !important;
+
+}

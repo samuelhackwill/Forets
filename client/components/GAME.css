@@ -1,9 +1,99 @@
-/* game */
+
+ #bob {
+  display:none;
+ }
+
+ ul {
+  margin-bottom:4px !important;
+ }
+
 body.game #srt {
-  color: white;
-  background-color:black!important;
-  font-size:20px;
-  line-height: 3;
+  font-family: "typo", sans serif;
+  font-size:20px !important;
+  top : 120px !important;
+  line-height: 1.3 !important;
+/*
+  -webkit-transition: all 45s ease;
+  -moz-transition: all 45s ease;
+  -o-transition: all 45s ease;
+  transition: all 45s ease;    */
+}
+
+/*FIN AVIGNON*/
+
+.winnersRect{
+    -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;    
+}
+
+#bourg, #lumieres_1_, #fond_x5F_jour{
+    -webkit-transition: all 45s ease;
+    -moz-transition: all 45s ease;
+    -o-transition: all 45s ease;
+    transition: all 45s ease;    
+
+}
+
+#who{
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background-color: yellow;
+
+      -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;    
+}
+
+#who > input{
+  width:100%;
+}
+
+#who > button{
+  width:100%;
+}
+
+.crac{
+  position:absolute;
+
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;    
+/*
+    -webkit-transition: opacity .5s ease;
+    -moz-transition: opacity .5s ease;
+    -o-transition: opacity .5s ease;
+    transition: opacity .5s ease;
+*/
+
+}
+
+.trees {
+  cursor:pointer !important;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently */
+}
+
+.trees:hover {
+  fill:grey;
+}
+
+.trees::selection{
+  background-color:rgba(0,0,0,0);
+}
+
+svg {
+height:100%;
 }
 
 span {  
