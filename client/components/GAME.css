@@ -1,5 +1,5 @@
 /* game */
-/*body.game #srt {
+body.game #srt {
   font-size:15px;
   line-height: 1.2;
   z-index: 1000;
@@ -13,10 +13,14 @@
   -moz-transition: all 45s ease;
   -o-transition: all 45s ease;
   transition: all 45s ease;  
-}*/
+}
+
+body.game #gcontainer{
+  height:0% !important;
+}
 
  /*AVIGNON*/
-
+/*
  #bob {
   display:none;
  }
@@ -30,12 +34,12 @@ body.game #srt {
   font-size:20px !important;
   top : 120px !important;
   line-height: 1.3 !important;
-/*
+
   -webkit-transition: all 45s ease;
   -moz-transition: all 45s ease;
   -o-transition: all 45s ease;
-  transition: all 45s ease;    */
-}
+  transition: all 45s ease;   
+}*/
 
 /*FIN AVIGNON*/
 
