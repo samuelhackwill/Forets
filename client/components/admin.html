@@ -14,7 +14,6 @@
           <li><a href="/data" target="_blank">data</a></li>
           <li><a href="/representations" target="_blank">réprésentations</a></li>
           <li><a href="/users" target="_blank">users</a></li>
-          <li><a href="/ambiances" target="_blank">ambiances</a></li>
         </ul>
       </div>
     </div>
@@ -31,52 +30,10 @@
     </div>
 
 
-    <div class="row">
-        <h2>Téléphones <button data-toggle="collapse" data-target="#phones">▾</button></h2>
-
-        <div id="phones" class="collapse">
-
-          <div class="center-block col-md-10">
-                {{> phonesList}}
-          </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <h2>Stats Server - Users online <button data-toggle="collapse" data-target="#stats">▾</button></h2>
-
-        <div id="stats" class="collapse">
-
-          <div class="col-lg-3 col-md-3">
-                {{> status userStatus}}
-          </div>
-          <div class="col-lg-9 col-md-9">
-              {{> serverStatus }}
-          </div>
-        </div>
-    </div>
-    
-
 
     <div class="row" style="display:none">
       {{> screen}}
     </div>
-
-
-
-
-    <div class="row">
-        <h2>Loteries <button data-toggle="collapse" data-target="#loteries">▾</button></h2>
-
-        <div id="loteries" class="collapse in">
-
-          <div class="center-block col-md-10">
-                {{> loteriesList}}
-          </div>
-        </div>
-    </div>
-
 
 
 
@@ -85,95 +42,6 @@
 
 </template>
 
-
-<template name="status">
-    <h3>Local status:</h3>
-
-    <button class="btn btn-success resync">Resync Time</button>
-
-    <dl class="dl-horizontal">
-        <dt>Server Time:</dt><dd>{{serverTime}}</dd>
-        <dt>Local Offset:</dt><dd>{{serverOffset}} ms</dd>
-        <dt>RTT:</dt><dd>{{serverRTT}} ms</dd>
-        <dt>Idle:</dt><dd>{{isIdleText}}</dd>
-        <dt>Monitor on:</dt><dd>{{isMonitoringText}}</dd>
-        <dt>Last Activity:</dt><dd>{{lastActivity}}</dd>
-    </dl>
-
-    {{#if isMonitoring}}
-    <h4>Idle monitoring is on.</h4>
-    <button class="btn btn-danger stop-monitor">Stop Monitor</button>
-    {{else}}
-    <form class="start-monitor">
-        <legend>Start monitor with the following parameters:</legend>
-        <label>Idle Threshold:</label>
-        <input class="form-control" name="threshold" type="number" min="5000" step="1" value="30000" required>
-        <label>Monitor Interval:</label>
-        <input class="form-control" name="interval" type="number" min="1000" step="1" value="1000" required>
-        <label>Idle on window blur:</label>
-        <select class="form-control" name="idleOnBlur" required>
-            <option value="true" selected>true</option>
-            <option value="false">false</option>
-        </select>
-        <button type="submit" class="btn btn-primary pull-right">Start Monitor</button>
-    </form>
-    {{/if}}
-</template>
-
-<template name="serverStatus">
-    <h3>All user connections on server:</h3>
-    <p>There are currently {{allUsersCount}} ({{anonymousCount}} anonymous) users online.</p>
-    <table class="table table-condensed table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Username/Connection</th>
-                <th>Route</th>
-                <th>Idle</th>
-                <th>Last Activity</th>
-                <th>IP (<i>Last</i>)</th>
-                <th style="width: 256px">User Agent (<i>Last</i>)</th>
-            </tr>
-        </thead>
-        <tbody>
-        {{#each anonymous}}
-        {{> serverConnection}}
-        {{/each}}
-        {{#each users}}
-            <tr class="bold {{userClass}}">
-                <td>{{username}}<br>(last login {{localeTime status.lastLogin.date}})</td>
-                <td>{{status.idle}}</td>
-                <td>{{#with status.lastActivity}}
-                    {{> relTime}}
-                    {{else}}
-                    (active or not monitoring)
-                    {{/with}}
-                </td>
-                <td><i>{{status.lastLogin.ipAddr}}</i></td>
-                <td><i>{{status.lastLogin.userAgent}}</i></td>
-            </tr>
-            {{#each connections}}
-            {{> serverConnection}}
-            {{/each}}
-        {{/each}}
-        </tbody>
-    </table>
-</template>
-
-<template name="serverConnection">
-    <tr class="{{connectionClass}}">
-        <td>{{_id}}{{#with loginTime}}<br>(login {{this}}){{/with}}</td>
-        <td>{{currentRoute}}</td>
-        <td>{{idle}}</td>
-        <td>{{#with lastActivity}}
-            {{> relTime}}
-            {{else}}
-            (active or not monitoring)
-            {{/with}}
-        </td>
-        <td>{{ipAddr}}</td>
-        <td>{{userAgent}}</td>
-    </tr>
-</template>
 
 <template name="relTime">
     {{localeTime this}}
@@ -214,14 +82,6 @@
       <input type="text" id="whereSUPERinterrupt" placeholder="bookmark?" value="liaison_tel"/>
       <br />
       <div class="autofill_bookmark">
-        <span>spectacle</span><br />
-        <span>lotterieONH</span><br />
-        <span>phoneNrLT</span><br />
-        <span>LT</span><br />
-        <span>lotterieCabane</span><br />
-        <span>showButtonsReady</span><br />
-        <span>ltCabanePhoneNumber</span><br />
-        <span>ltCabane</span><br />
         <span>texteFin</span><br />
         <span>noirPanic</span><br />
       </div>
@@ -280,26 +140,6 @@
       <br />-->
       <button id="next">next</button>
 
-      <button id="start-the-stream">start the stream</button><br />
-      
-      <button id="show-the-ONE">montrer boutons</button>
-      <button id="hide-the-ONE">cachez boutons</button><br />
-      <!--<div id="srt-the-one">
-        bienvenue,
-      </div>-->
-      <button id="oui">FAKE OUI</button>
-      <button id="non">FAKE NON</button>
-      <button id="euh">FAKE EUH</button>
-
-      Training <button data-toggle="collapse" data-target="#training-admin">▾</button><br />
-      <div id="training-admin" class="collapse">
-        <button id="show-the-ONE-single-training">montrer boutons training SINGLE</button><br />
-        <button id="show-the-ONE-multi-training">montrer boutons training MULTI</button><br />
-        <button id="hide-the-ONE-training">cachez boutons training</button>
-      </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-xs-12 text-left">
-
    <form>
     <input id="whoShowLight" type="form">
     <button type="button" id="whoShowLightButton">BIM</button> 
@@ -310,88 +150,4 @@
 
 </div>
 
-</template>
-
-
-<template name="phonesList">
-
-    <p>There are currently {{phoneNumbersCount}} phone numbers.</p>
-    <table class="table table-condensed table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Phone</th>
-                <th><span class="small">Calls</span></th>
-                <th><span class="small">Representation</span></th>
-                <th><span class="small">Created</span></th>
-                <th><span class="small">Modified</span></th>
-                <th><span class="small">X</span></th>
-            </tr>
-        </thead>
-        <tbody>
-        {{#each listPhoneNumbers}}
-            <tr>
-                <td class="bold">{{number}}</td>
-                <td class="bold">{{calls}}</td>
-                <td class="bold">{{getRepresentationName}}</td>
-                <td class="small">{{created}}</td>
-                <td class="small">{{updated}}</td>
-                <td>{{> quickRemoveButton collection="PhoneNumbers" _id=this._id onError=quickRemoveButtonOnError onSuccess=quickRemoveButtonOnSuccess beforeRemove=quickRemoveButtonBeforeRemove class="btn btn-danger"}}</td>
-            </tr>
-        {{/each}}
-        </tbody>
-    </table>
-</template>
-
-
-
-<template name="loteriesList">
-
-    <table class="table table-condensed table-striped table-hover">
-        <!--<thead>
-            <tr>
-                <th>Nom</th>
-                <th><span class="small">Ids</span></th>
-                <th><span class="small">Created</span></th>
-                <th><span class="small">Modified</span></th>
-                <th><span class="small">X</span></th>
-            </tr>
-        </thead>-->
-        {{#each listLoteries}}
-          <thead>
-            <tr>
-                <th colspan="3">Nom</th>
-                <th><span class="small">Created</span></th>
-                <th><span class="small">Modified</span></th>
-                <th><span class="small">X</span></th>
-            </tr>
-            <tr>
-                <th class="bold" colspan="3">{{name}}<br /><span class="small">{{_id}}</span></th>
-                <td class="small"><span class="small">{{created}}</span></td>
-                <td class="small"><span class="small">{{updated}}</span></td>
-                <td>{{> quickRemoveButton collection="loteries" _id=this._id onError=quickRemoveButtonOnError onSuccess=quickRemoveButtonOnSuccess beforeRemove=quickRemoveButtonBeforeRemove class="btn btn-danger"}}</td>
-            </tr>
-            <tr>
-                <th colspan="3"><span class="small">Ids</span></th>
-                <th colspan="3"><span class="small">messages
-                  <br /><button class="pick-random-one">choisir 1 random SALM pour le ONH SP</button>
-                  <br /><button class="pick-everybody-tea">choisir tous les SALM pour le thés/cabane</button>
-                  <!--<br /><button class="assign-random-phoneNumbers">assigner des numéros au hasard</button>-->
-                  <br /><button class="deliver-messages">envoyer les messages</button></span>
-                </th>
-            </tr>
-          </thead>
-        <tbody>
-            <tr>
-                <td colspan="3" class="bold">{{#each dataArray ids}}{{this.value}}<br />{{/each}}</td>
-                <td colspan="3" class="bold">
-                {{#each dataArray messages}}
-                  {{#each dataArray this.value}}
-                    {{this.key}}: {{this.value}}<br />
-                  {{/each}}
-                {{/each}}
-                </td>
-            </tr>
-        </tbody>
-        {{/each}}
-    </table>
 </template>

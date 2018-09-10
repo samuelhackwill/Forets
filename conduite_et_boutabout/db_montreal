@@ -1,0 +1,597 @@
+%%% ne pas oublier de dire aux gens qu'ils peuvent s'entraider si ils sont bloqués où qu'ils ont l'impression d'être bloqués (ça sera évident)
+%%% le formulaire est au début
+%%% c'est le seul moment où y'a du temps tampon en fait
+
+...
+...
+...
+***
+...ous m'entendez?
+ah ben oui oups pardon j'ai oublié de parler dans le micro
+fait que forcément vous m'entendiez pas quoi.
+bon
+***
+hé ben bonjour déjà et bienvenue
+à ce petit prototype qui vise à alimenter le Tiret du six,
+un projet de performance auto-performée en cours d'écriture.
+***
+comme je vous l'ai déjà dit plus tôt
+je suis actuellement assis dans les gradins
+***
+et je dois dire que c'est bien pratique puisque
+depuis ce fauteil où je suis assis
+je peux vous parler sans trop d'effort
+regardez
+***
+hop
+hop
+hop
+***
+hop
+hop
+hop
+hop
+hop
+***
+yeah
+***
+ i 
+like 
+ to
+move
+ it
+move 
+ it
+ i 
+like 
+ to
+move
+ it
+move 
+ it
+ i
+like
+ to
+move
+ it
+move 
+ it
+ i
+like 
+ to
+***
+MOVE IT
+***
+excellent
+l'avantage de ce texte qui défile tout seul,
+c'est que je peux vous faire lire des trucs de manière synchronisée
+mais le problème c'est que cette methode de lecture n'est pas adaptée à votre singularité d'être humain
+puisqu'il y en a certains parmi vous qui aiment lire super-vite pour frimer
+d'autres qui aiment prendre le temps de faire des micro-siestes entre deux phrases
+bon hé ben la technologie qu'on utilise en ce moment 
+ne permet pas à votre subjectivité de s'exprimer
+donc là, 
+dès que vous êtes prêt
+vous allez pouvoir identifier mentalement la touche du clavier qu'on appelle communément
+"la barre espace"
+et appuyer dessus.
+et encore
+ok
+super
+si vous lisez ces lignes
+c'est que vous maîtrisez cette technologie
+sans cela
+il aurait été impossible d'arriver ici.
+bon non pas que ça soit un endroit particulièrement avenant
+c'est une sorte de vaste plaine balayée par le vent, sous un soleil impitoyable.
+chaque pression sur la barre espace
+est comme un pas supplémentaire que vous faites
+accablé•e•s,
+mais résolu•e•s,
+dans ce vaste espace sauvage
+(vous pouvez y mettre tout l'accablement et/ou la résolution que vous voulez)
+un pied
+devant
+l'autre
+puis 
+un autre 
+pied
+devant 
+l'autre
+gauche,
+droite
+gauche,
+droite
+***
+#startRace
+gauche
+droite 
+gauche
+droite 
+gauche
+droite 
+gauche
+gauche
+droite 
+gauche
+droite 
+gauche
+droite 
+gauche
+gauche
+droite 
+gauche
+droite 
+gauche
+droite 
+#endRace
+gauche
+#showTree I
+ah tiens c'est quoi ça
+attendez je crois bien savoir ce que c'est
+je crois que c'est un peuplier
+mais oui c'est ça
+avec le tronc bien droit
+non?
+
+#showTree A
+et ça là bas ça doit être un épicéa
+ou un pin douglas
+fin un sapin quoi
+
+#showTree P
+et là, mais oui regardez, on reconnait bien là le port typique d'un arbre de climat tempéré
+aux branches basses broutées par les herbivores
+sans doute un tilleul
+ou un érable peut être?
+
+#showTree T
+ah et ça c'est un beau pin parasol 
+superbe
+on en trouve sur le pourtour méditérannéen en général
+fin bon c'est étrange d'en voir un ici je dois dire
+
+#showTree M
+oulah 
+c'est quoi ce truc
+
+et alors 
+#treesReady
+si on imagine que la plaine finalement c'est une sorte de forêt
+#showAllTrees
+que vous décidez d'aller explorer maintenant
+peut-être allez-vous y trouver des vivres?
+ou un abri pour la nuit?
+au final vous y trouvez seulement quelques bêtes craintives
+qui s'enfuient devant vous avec de petits cris apeurés.
+et alors
+normalement vous avez une sorte de truc triangulaire qui flotte sur l'écran
+une pure abstraction inventée dans les années 70
+qu'on appelle "le pointeur de souris"
+ou le "curseur"
+c'est bien utile
+#toggleMouseOver
+si vous le positionnez sur un des arbres, il se passe quoi?
+#stop
+allez-y vous pouvez essayer
+
+humm ah oui je vois
+c'est ce qu'il me semblait
+on dirait que quelqu'un ou quelque chose vous a confié
+***
+LE GRAND GANT BLANC
+***
+qui permet de cliquer sur des trucs
+gant qu'on voit parfois aux mains des chauffeurs de limousine
+ou à celles de mickey mouse
+et dans les navigateurs web.
+c'est un artefact magique d'une grande puissance
+qui peut vous permettre de saisir un arbre tout entier dans vos mains
+
+#toggleMouseClic
+
+ne voudriez-vous pas essayer pour voir?
+
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+tchoc
+chac
+chouc
+cric 
+crac
+crouck
+plaf
+plouck
+cronk
+
+#bookmark arbreTombe
+#stop
+sentez-vous cette pugnace odeur de résine?
+entendez-vous le bruit du vent qui joue dans la canopée?
+vos pieds ne s'enfoncent-t-ils pas dans l'épais tapis d'aiguilles au sol?
+vous êtes un peu galvanisés par toutes ces sensations
+et vous vous mettez au travail
+six arbres,
+sept arbres,
+huit arbres
+sont tombés
+vous aurez encore besoin d'en couper encore pas mal
+pour vous fabriquer des abris 
+dignes de ce nom
+pour vous abriter,
+et abriter les votres 
+avant que la nuit ne tombe.
+***
+***
+***
+***
+***
+***
+encore un petit effort
+***
+***
+***
+et alors là ça y est
+vous avez récolté assez de matériaux,
+#unstop
+vous pouvez à nouveau appuyer sur la barre espace 
+cette-fois ci, tout en faisant basculer la touche avec le poids d'un de vos doigts
+vous pouvez imaginer que vous être en fait en train d'enfoncer des clous
+dans des planches
+ou que vous montez un mur de briques
+ou que vous poncez une porte
+ou que vous posez des tuiles sur un toit
+ou que vous montez une fenêtre
+que vous faites un pause à l'ombre avec des amis
+en mangeant une petite salade feta-olives
+avant de reprendre le travail
+#showBourg
+et que ni une ni deux voici un joli petit village qui est sorti de terre.
+vous êtes assis sur une chaise,
+et vous regardez tomber la nuit dans la fraîcheur du soir
+#stop
+#logScore
+en attendant que les autres membres du village vous rejoignent.
+
+%%% fin autogestion
+
+#bookmark texteFin
+et alors à la faveur de l'obscurité qui règne maintenant dans la pièce
+je vous propose qu'on annonce les scores
+bon alors pardon j'ai un peu fait preuve de duplicité
+puisque je vous ai pas dit très clairement les règles du jeu ;
+mais enfin disons qu'il y avait deux victoires individuelles possibles
+la victoire de vitesse 
+(c'est la personne qui a été la plus rapide pendant la séquence du "droite gauche droite gauche, voyez?")
+et la victoire économique
+(c'est la personne qui a coupé le plus d'arbres).
+
+et alors dans une version prochaine du jeu on pourra 
+regarder aussi un peu l'état de la biodiversité des forêts et tout
+à l'échelle de la salle
+là j'ai pas eu le temps de le faire malheureusement
+j'avais même préparé une petite table dans le fond de la salle 
+qui était sensée avoir des espèces endémiques propres:
+le gingko biloba (Y) et le palmier (J)
+bref, la prochaine fois donc
+
+dans un petit moment je vais vous donner un signal
+vous allez pouvoir lever la tête,
+moi je vais jouer des notes de piano différentes pour chaque victoire
+celle là c'est la vitesse (l'écran de la personne qui a gagné va devenir orange)
+celle là c'est l'économique (pareil)
+PUIS les autres notes ç'aurait été pour regarder l'état de conservation des arbres, espèce par espèce
+peupliers ("I")
+sapins ("A")
+tilleuls ("P")
+pins parasol ("T")
+gingko biloba ("Y")
+palmiers ("J")
+
+voilà merci à tous, vous allez pouvoir lever la tête,
+#stop
+j'annonce le score.
+
+
+
+
+
+// et à la fin JM pourrait faire quoi avec la lumière des écrans?
+----- rejouer la séquence dans laquelle on a construit les hameaux
+----- révéler des traits de personnalité des gens
+----- hi score quand même un peu aussi mais éventuellement flou
+
+
+
+
+______
+
+OLD VERSION
+
+______
+
+
+regardez-la bien
+on constate que, contrairement aux autres mots, elle a une ombre
+et si vous passez votre curseur de souris dessus
+vous avez vu?
+c'est étrange non?
+votre curseur devient une sorte de main gantée
+du genre que porte mickey mouse
+ou un major-d'homme au volant de sa limousine
+bon c'est une convention un peu étrange de l'informatique
+on se demande bien ce que ça peut vouloir dire
+peut-être est-ce que vous pouvez saisir cette forêt dans vos mains, maintenant qu'elles sont gantées
+allez-y, essayez pour voir?
+// message d'encouragement si les gens glandent trop
+
+// message de victoire quand les gens cliquent sur "forêt"
+// a partir de maintenant, il faut cliquer sur "forêt" pour faire avancer le récit
+// peut être qu'il y a un temps de chargement sur la forêt, qui est rendu visible par le curseur qui est une sorte de cercle de chargement (?)
+
+bravo, et encore?
+sentez-vous cette pugnace odeur de résine?
+entendez-vous le bruit du vent qui joue dans la canopée?
+vos pieds ne s'enfoncent-t-ils pas dans l'épais tapis d'aiguilles au sol?
+avez-vous aussi remarqué que c'est à nouveau vous qui faites avancer le texte?
+mais cette fois pas de barre espace. Il faut couper des arbres dans la forêt.
+
+// faire appraître deux trois forêts en plus
+
+comme ça
+voilà
+c'est bien
+très bien.
+disons que ces forêts sont certes belles
+mais qu'on ne peut pas simplement les laisser comme ça
+il faut avançer dans notre histoire
+il faut couper ces arbres.
+pour ceux que ça répugne
+disons que je vous donne à nouveau accès à la barre espace
+à votre guise
+coupez des arbres ou regardez leurs ombres s'allonger.
+
+// attention la nuit est susceptible de tomber à tout moment!
+
+si on considère que toutes vos forêts rassemblées
+forment une sorte de territoire,
+un écosystème
+à certains endroits, ça commence à s'éclaircir
+certain territoires autrefois couverts d'arbres 
+sont troués d'immenses clairières
+d'autres espaces restent plus ou moins inexplorés
+tiens on pourrait changer la couleur du fond d'écran de votre navigateur
+de vert à jaune en fonction du nombre d'arbres qui vous reste
+comme ça en levant la tête vous pourrez plus ou moins vous rendre compte de l'état du territoire
+plus la lumière qui sort de l'écran de vos voisins est jaune,
+plus ils auront coupé d'arbres ;
+et plus elle est verte,
+plus ils auront laissé leurs forêts intactes.
+
+collectivement, vous avez coupé
+xxx arbres
+vous avez aussi commencé à agir sur la biodiversité
+espèces menacées :
+xxx
+xxx
+xxx
+espèces éteintes :
+xxx
+espèces qui ont l'air d'aller bien pour le moment :
+xxx
+xxx
+xxx
+xxx
+xxx
+xxx
+
+// pendant la nuit on a qu'a dire que les gens ils ont des sons de la nuit : hibou, grillon, coyotte, cloche qui sonne au loin, euh vent, oiseaux, truc enfin bon bref, pis ils peuvent se faire un petit concert entre eux.
+
+individuellement, vous avez coupé 
+xxx arbres
+
+c'est mieux//moins bien que votre voisin de gauche
+c'est mieux//moins bien que votre voisin de droite
+
+hé mais c'est même vous qui avez coupé le plus d'arbres là // hé mais c'est même vous qui avez coupé le moins d'arbres là //// l'écran des personnes qui ont coupé le plus d'arbres et le moins d'arbre envoient respectivement de la lumière rouge et verte, si vous voulez voir qui c'est vous pouvez lever la tête et regarder autour de vous.
+
+// pendant la nuit, jean-michel apparaît, on a faké un feu de camp éventuellement... il hulule? il donne les résultats de la journée précédente? ne sait pas.
+
+// DEUXIEME JOUR : IL N'Y A PLUS DU TOUT DE TEXTE, MAIS DU SON D'AMBIANCE ET 
+
+
+
+
+ga
+salut c'est samuel ça se paaa bonbb
+
+

@@ -187,59 +187,6 @@ Template.admin.onRendered(function () {
   console.log('em', em);
 
 
-  em.addListener('salmreponseoui', function(what) {
-    //console.log('salm euh!', what, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    //output.send([144, 69, 91]);
-    //un_note = setTimeout(output.send([144, 52, 0]),1500)
-    console.log('salm oui!', what, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    if(what.mode == 'singlePlayer') {
-      //mode single - play sound
-      var son = new Audio('oui.ogg');
-      son.addEventListener('playing', function(){
-       console.log('oui playing', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-      });
-      son.play();
-    } else if(what.mode == 'multiPlayer') {
-      //mode multi - send midi
-      output.send([144, 65, 91]);
-      un_note = setTimeout(function(){ output.send([144, 65, 0])},10)
-    }
-  }); 
-
-  em.addListener('salmreponsenon', function(what) {
-    console.log('salm non!', what, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    if(what.mode == 'singlePlayer') {
-      //mode single - play sound
-      var son = new Audio('non.ogg');
-      son.addEventListener('playing', function(){
-       console.log('non playing', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-      });
-      son.play();
-    } else if(what.mode == 'multiPlayer') {
-      //mode multi - send midi
-      output.send([144, 67, 91]);
-      un_note = setTimeout(function(){ output.send([144, 67, 0])},10)
-    }
-  }); 
-
-  em.addListener('salmreponseeuh', function(what) {
-    console.log('salm euh!', what, moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-
-    if(what.mode == 'singlePlayer') {
-      //mode single - play sound
-      var son = new Audio('euuuh.ogg');
-      son.addEventListener('playing', function(){
-       console.log('euh playing', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-      });
-      son.play();
-    } else if(what.mode == 'multiPlayer') {
-      //mode multi - send midi
-      output.send([144, 69, 91]);
-      un_note = setTimeout(function(){ output.send([144, 69, 0])},10)
-    }
-  }); 
-
-
   em.addListener('adminnext', function(what) {
     console.log('admin next!', what);
     var son = new Audio('euuuh.ogg').play();
@@ -255,46 +202,6 @@ Template.admin.onRendered(function () {
   em.addListener('adminSUPERinterrupt', function(what) {
     console.log('admin SUPER interrupt!', what);
     console.log('changer le mode SUPERinterrupt NOT USED RIGHT NOW');
-    // Meteor.call('setSuperGlobal', {name: 'SUPERinterrupt', value: what.value});
-    // var son = new Audio('euuuh.ogg').play();
-    // console.log('SERVER HI', arguments[0].$inc, Object.keys(arguments[0].$inc)[0], _.toArray(arguments));
-
-    // var choice = parseInt(Object.keys(arguments[0].$inc)[0].replace(/(choices\.|\.votes)/g, ''));
-    // var sounds = ['oui.ogg', 'non.ogg', 'euuuh.ogg'];
-    // var son = new Audio(sounds[choice]).play();
-  }); 
-
-  em.addListener('adminFireBuche', function(what) {
-    console.log('admin FIRE a buche!', what);
-
-    var buchesArray = getSuperGlobal("buchesCount", []);
-    var buchesAllumees = buchesArray.filter(function(buche){ return buche; }).length;
-    console.log("buchesAllumees is ", buchesAllumees);
-    // if(buchesAllumees > 0) {
-    if(what.buches > 0) {
-      console.log("buchesAllumees > 0 !!", buchesAllumees);
-      buchesToMidi = {
-        midi1: [144, 84, 127],
-        midi2: [144, 85, 127],
-        midi3: [144, 86, 127],
-        midi4: [144, 87, 127],
-        midi5: [144, 88, 127],
-        midi6: [144, 89, 127]
-      }
-      // output.send(buchesToMidi['midi'+buchesAllumees]);
-      output.send(buchesToMidi['midi'+what.buches]);
-    // } else if(buchesAllumees == 0) {
-    } else if(what.buches == 0) {
-      console.log("buchesAllumees == 0", buchesAllumees);
-      //kill buches midi
-      output.send([144, 84, 0]); // full velocity note on A4 on channel zero
-      output.send([144, 85, 0]); // full velocity note on A4 on channel zero
-      output.send([144, 86, 0]); // full velocity note on A4 on channel zero
-      output.send([144, 87, 0]); // full velocity note on A4 on channel zero
-      output.send([144, 88, 0]); // full velocity note on A4 on channel zero
-      output.send([144, 89, 0]); // full velocity note on A4 on channel zero
-
-    }
     // Meteor.call('setSuperGlobal', {name: 'SUPERinterrupt', value: what.value});
     // var son = new Audio('euuuh.ogg').play();
     // console.log('SERVER HI', arguments[0].$inc, Object.keys(arguments[0].$inc)[0], _.toArray(arguments));
@@ -482,15 +389,6 @@ Template.admin.onRendered(function () {
 
 });
 
-Template.admin.helpers({
-  usersOnline:function(){
-    return Meteor.users.find();
-  },
-  usersOnlineCount:function(){
-   //event a count of users online too.
-   return Meteor.users.find().count();
-  }
-});
 
 Template.showtime.helpers({
   isPowerToTheAdminChecked:function(){
@@ -532,48 +430,6 @@ Template.showtime.helpers({
    //event a count of users online too.
    return Meteor.users.find().count();
   },
-
-  cuppasCount:function(){
-    // var cuppasCount = superGlobals.findOne({ cuppasCount: { $exists: true}});
-    // var theCuppasCount = (cuppasCount) ? cuppasCount.cuppasCount : 0;
-    var theCuppasCount = getSuperGlobal("cuppasCount", 0);
-    console.log("theCuppasCount", theCuppasCount);
-   return theCuppasCount;
-  },
-  nbCuppasFinished: function(){
-    // var cuppasFinished = superGlobals.findOne({ nbCuppasFinished: { $exists: true}});
-    // var nbCuppasFinished = (cuppasFinished) ? cuppasFinished.nbCuppasFinished : 0;
-    var nbCuppasFinished = getSuperGlobal("nbCuppasFinished", 0);
-    console.log("nbCuppasFinished", nbCuppasFinished);
-   return nbCuppasFinished;
-  },
-  buchesAllummees: function(){
-
-    var buchesArray = getSuperGlobal("buchesCount", []);
-    var buchesAllumees = buchesArray.filter(function(buche){ return buche; }).length;
-
-  },
-  nextBucheAllumage:function(){
-    // var nextBuche = superGlobals.findOne({ nextBucheAllumage: { $exists: true}});
-    // var nextBucheAllumage = (nextBuche) ? nextBuche.nextBucheAllumage : 0;
-    var nextBucheAllumage = getSuperGlobal("nextBucheAllumage", 0);
-    console.log("nextBucheAllumage", nextBucheAllumage);
-   return nextBucheAllumage;
-  },
-  buchesCount: function(){
-    // var buchesCount = superGlobals.findOne({ buchesCount: { $exists: true}});
-    // var buchesArray = (buchesCount) ? buchesCount.buchesCount : 0;
-    var buchesArray = getSuperGlobal("buchesCount", 0);
-    console.log("buchesArray", buchesArray);
-   return buchesArray.length;
-  },
-  buchesArray: function(){
-    // var buchesCount = superGlobals.findOne({ buchesCount: { $exists: true}});
-    // var buchesArray = (buchesCount) ? buchesCount.buchesCount : [];
-    var buchesArray = getSuperGlobal("buchesCount", []);
-    console.log("buchesArray", buchesArray, buchesArray.sort().reverse());
-   return buchesArray.sort().reverse();
-  },
   loopCount: function(count){
     var countArr = [];
     for (var i=0; i<count; i++){
@@ -594,67 +450,6 @@ Template.showtime.helpers({
   },
   compteurAdmin: function(){
     return getSuperGlobal('compteurAdmin');
-  }
-});
-
-Template.phonesList.helpers({
-  listPhoneNumbers:function(){
-    console.log("PhoneNumbers??");
-    return PhoneNumbers.find({}, {sort: {updated: -1}});
-  },
-  phoneNumbersCount:function(){
-   //event a count of users online too.
-   return PhoneNumbers.find().count();
-  },
-  getRepresentationName:function(){
-   var found = representations.findOne({_id: this.representation})
-   console.log("getRepresentationName", found);
-   return (found) ? found.name : this.representation;
-  },
-  quickRemoveButtonOnError: function () {
-    return function (error) { alert("BOO!"); console.log(error); };
-  },
-  quickRemoveButtonOnSuccess: function () {
-    return function (result) { alert("YAY!"); console.log(result); };
-  },
-  quickRemoveButtonBeforeRemove: function () {
-    return function (collection, id) {
-      var doc = collection.findOne(id);
-      if (confirm('Really delete "' + doc.number + '"?')) {
-        this.remove();
-      }
-    };
-  }
-});
-Template.loteriesList.helpers({
-  listLoteries:function(){
-    console.log("loteries??");
-    return loteries.find();
-  },
-  quickRemoveButtonOnError: function () {
-    return function (error) { alert("BOO!"); console.log(error); };
-  },
-  quickRemoveButtonOnSuccess: function () {
-    return function (result) { alert("YAY!"); console.log(result); };
-  },
-  quickRemoveButtonBeforeRemove: function () {
-    return function (collection, id) {
-      var doc = collection.findOne(id);
-      if (confirm('Really delete "' + doc.name + '"?')) {
-        this.remove();
-      }
-    };
-  },
-
-  dataArray: function (obj) {
-    var arr = [], datas = obj;
-    for (var key in datas) {
-        var obj = {};
-        obj.key = key;
-        obj.value = datas[key];
-        arr.push(obj);
-    }
-    return arr;
   }
 });
 
@@ -714,76 +509,6 @@ Template.showtime.events({
     output.send([144, 89, 0]); // full velocity note on A4 on channel zero
   },
 
-  // faire un bouton pour éteindre toutes les buches!
-
-  'click #resetCuppas': function(){
-    //Meteor.call('setSuperGlobal', {name: 'cuppasCount', value: +=1});
-    Meteor.call('setSuperGlobal', {name: 'cuppasReset'});
-  },
-  'click #fakeCuppasInc': function(){
-    //Meteor.call('setSuperGlobal', {name: 'cuppasCount', value: +=1});
-    Meteor.call('setSuperGlobal', {name: 'cuppasInc'});
-  },
-  'click #fakeCuppasFinished': function(){
-    //Meteor.call('setSuperGlobal', {name: 'cuppasCount', value: +=1});
-    Meteor.call('setSuperGlobal', {name: 'finishCuppa'});
-  },
-  'click #resetSUPERinterrupt': function(){
-    console.log("resetSUPERinterrupt!");
-    //Meteor.call('setSuperGlobal', {name: 'cuppasCount', value: +=1});
-    var bookmarkToGo = ($('#whereSUPERinterrupt').val() != "") ? $('#whereSUPERinterrupt').val() : 'spectacle';
-    em.setClient({ bookmark: bookmarkToGo });
-    em.emit('adminForceGoTo');
-      gotobookmark(bookmarkToGo);
-    Meteor.call('setSuperGlobal', {name: 'SUPERinterrupt', value: []});
-  },
-
-  'click #start-the-stream': function(){
-    // console.log('superGlobals streamStarted', Meteor);
-    // Meteor.call('startTheStream', function(result){
-    //   console.log(result);
-    // });
-    // em.setClient({ compteur: compteur });
-    em.emit('adminstartstream');
-    console.log('adminstartstream emmited');
-  },
-  'click #show-the-ONE': function(){
-      em.emit('adminshowtheone');
-  },
-  'click #hide-the-ONE': function(){
-      em.emit('adminhidetheone');
-  },
-  'click #show-the-ONE-single-training': function(){
-      em.emit('adminshowtheone-single-training');
-  },
-  'click #show-the-ONE-multi-training': function(){
-      em.emit('adminshowtheone-multi-training');
-  },
-
-  'click #hide-the-ONE-training': function(){
-      em.emit('adminhidetheone-training');
-  },
-/*
-  'submit #addcompteur': function(event){
-
-
-      var newCompteur = $('#newCompteur').val();
-
-
-      console.log("addcompteur submit", newCompteur);
-      Meteor.call('createCompteurFromAdmin',newCompteur,function(err,result){
-        if(!err){
-          console.log("a new compteur just got created")
-        } else {
-          console.log("something goes wrong with the following error message " +err.reason )
-        }
-      });
-           
-
-      return false;
-
-
-  },*/
   'click button.remove-SUPERinterrupt': function(event){
 
     if(Roles.userIsInRole(Meteor.user(), "admin")==true) {
@@ -865,26 +590,6 @@ Template.admin.events({
     changeImg([etats[_id][0], etats[_id][1]])
   },
 
-    'click #oui': function(){
-    console.log('salmclick oui', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'oui', mode: 'singlePlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited');
-    console.log('salmclick emmited oui', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #non': function(){
-    console.log('salmclick non', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'non', mode: 'singlePlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited non', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-  'click #euh': function(){
-    console.log('salmclick euh', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-    em.setClient({ reponse: 'euh', mode: 'singlePlayer' });
-    em.emit('salmclick');
-    console.log('salmclick emmited euh', moment().format('YYYYMMDD-HH:mm:ss.SSS'));
-  },
-
   'click input#setCompteur': function(){
     console.log('setCompteur', $('#adminCompteur').val());
     compteur = parseInt($('#adminCompteur').val())-1;
@@ -906,41 +611,4 @@ Template.admin.events({
     next();
   }
 
-});
-
-Template.loteriesList.events({
-
-  'click button.pick-random-one': function(event){
-
-    console.log('click button.pick-random-one', $(event.currentTarget).val(), this);
-
-    args = {_id: this._id}
-
-    Meteor.call('chooseRandomONE', args);
-  },
-  'click button.pick-everybody-tea': function(event){
-
-    console.log('click button.pick-everybody-tea', $(event.currentTarget).val(), this);
-
-    args = {_id: this._id}
-
-    Meteor.call('chooseEverybodyTea', args);
-  },
-  'click button.assign-random-phoneNumbers': function(event){
-
-    console.log('click button.assign-random-phoneNumbers', $(event.currentTarget).val(), this);
-
-    args = {_id: this._id}
-
-    Meteor.call('assignRandomPhoneNumbers', args);
-  },
-  'click button.deliver-messages': function(event){
-
-    console.log('click button.deliver-messages', $(event.currentTarget).val(), this);
-
-    args = {_id: this._id, name: this.name}
-    em.setClient(args);
-    em.emit('adminDeliverMessages');
-  }
-
-});
+})

@@ -23,18 +23,10 @@ data = []
 leftSteps = ["left1.mp3","left2.mp3","left3.mp3","left4.mp3","left5.mp3","left6.mp3","left7.mp3","left8.mp3"]
 rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","right6.mp3","right7.mp3","right8.mp3"]
 
-etats = {
-  ambiance1:["rain1","1"],
-  ambiance2:["rain1","2"],
-  ambiance3:["rain2","3"],
-  ambiance4:["rain1","4"],
-  ambiance5:["rain2","5"],
-  ambiance6:["rain3","6"],
-  ambiance7:["rain1","7"]
-}
 
 // alors là pour le délire j'ai tout mis dans game.js
 // comme ça VP.js peut avoir son propre nextttt
+// chacun son next
 
 // next = function(){
 //   console.log('next', compteur, data[compteur]);
@@ -88,9 +80,9 @@ etats = {
   randonnee = function(foot){
 
       console.log("which foot? ", foot)
-      getSvg = getNmbr.exec(document.getElementById("MAMAN").style.transform)
-      SvgPos = parseInt(getSvg[0])
-      SvgPos = -20-SvgPos
+      // getSvg = getNmbr.exec(document.getElementById("MAMAN").style.transform)
+      // SvgPos = parseInt(getSvg[0])
+      // SvgPos = -20-SvgPos
 
       switch(foot){
         case (37):
@@ -104,11 +96,10 @@ etats = {
         break;
 
       }
-      console.log(foot)
 
 
-      console.log("translateY("+SvgPos+"px)")
-      document.getElementById("MAMAN").style.transform = "translateY("+SvgPos+"px)"
+      // console.log("translateY("+SvgPos+"px)")
+      // document.getElementById("MAMAN").style.transform = "translateY("+SvgPos+"px)"
   }
 
 
@@ -196,24 +187,16 @@ action = function(type, params){
     showFormCall()
     break
 
-    case "cue":
-    cue(params)
-    break
-
     case "sound":
     sound(params)
     break
 
-    case "addclass":
-    addclass(params)
-    break
-
-    case "setdate":
-    nextspectacledate = params[0] + " " + params[1]
-    break
-
     case "time":
     time(params)
+    break
+
+    case "addclass":
+    addclass(params)
     break
 
     case "removeclass":
@@ -237,18 +220,8 @@ action = function(type, params){
     gotonext(params)
     break
 
-    case "btn":
-    $("#sacbouttons").removeClass("invisible")
-    newBoutton(params)
-    break
-
     case "fullscreen":
     fullscreen();
-    break;
-
-    case "timer":
-    console.log("TIMER!!!!!")
-    timer()
     break;
   }
 }
@@ -460,23 +433,6 @@ focusOnOff = function(clickTarget){
   }
 }
 
-cue = function(params){
-      console.log("params du cue ", params, Router.current().route.getName())
-    if(Roles.userIsInRole(Meteor.user(), "admin")==true && Router.current().route.getName() == "admin"){
-      var string = params[0]
-      var stringpropre = string.replace(/\_/g, ' ');
-      alert("CUE DU CUE, ",stringpropre)
-    }
-}
-
-jacky = function(params){
-  console.log("etes vous bien le jacky que nous cherchons?", params[0], params[1])
-  if(Roles.userIsInRole(Meteor.user(), params[0])==true){
-    console.log("l'user est bien le jacky que nous cherchons", params[0], params[1])
-    gotobookmark(params[1])
-  }
-}
-
 timer = function(){
   // le timer ci-dessous
   interrupt = true;
@@ -564,22 +520,6 @@ fullscreen = function(){
   } else if (i.msRequestFullscreen) {
     i.msRequestFullscreen();
   }
-}
-
-destroy = function(self){
-  // FUNCTION DESTROY
-  // dans l'idéal faudrait lui passer un délai également
-  var delay = 333
-  var element = document.getElementById(self)
-  var parentid = element.parentNode.id
-
-  $("#"+parentid).css("opacity","0")
-
-  $("#srt").html("ok")
-
-  setTimeout(function(){
-    $("#"+parentid).empty()
-  },delay)
 }
 
 gotobookmark = function(where){

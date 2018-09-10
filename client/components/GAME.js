@@ -1,10 +1,7 @@
-
-var streamCheckInterval;
-var caughtUp = false;
-var intervalReload;
 score = 0
 var uid = 0
 var armToggle = false;
+
 localName = undefined
 
 mouseOverToggle = false;
@@ -12,9 +9,11 @@ mouseClicToggle = false;
 mouseClicUnToggle = false;
 spacebarReToggle = false;
 
-actionAvailable = 1
+// actionAvailable = 1
 
 fragCount = 0
+
+var caughtUp = false;
 
 Template.game.onCreated(function() {
 
@@ -23,14 +22,12 @@ Template.game.onCreated(function() {
     this.subscribe('allRepresentations');
     this.subscribe('allContenusEcran');
     this.subscribe('allScore');
-    this.subscribe('allLoteries');
   });
 
 });
 
 
 Template.game.onRendered(function () {
-
 
   this.autorun(() => {
     let ready = Template.instance().subscriptionsReady();
@@ -57,9 +54,6 @@ Template.game.onRendered(function () {
   $(document.body).addClass('game');
 
 
-
-  em.addListener('salmtheoneshow', showTheOneButtons);
-  em.addListener('salmtheonehide', hideTheOneButtons);
   em.addListener('jmMicServer', function(){
         if(armToggle){
           document.getElementById("actif").style="opacity:0"
@@ -70,40 +64,6 @@ Template.game.onRendered(function () {
         }
         armToggle =! armToggle
   });
-
-
- 
-
-  function showTheOneButtons(){
-
-    // if(Roles.userIsInRole(Meteor.user(), "jacky_one")==true) {
-      console.log('showTheOneButtons');
-      $('<button id="oui" class="button">oui</button><button id="non" class="button">non</button><button id="euh" class="button">euh</button>').appendTo('#sacbouttons');
-    $("#sacbouttons").css("opacity", "1")
-    // }
-
-  }
-
-
-  function hideTheOneButtons(){
-    $("#sacbouttons").css("opacity", "0")
-      delayedEmpty = setTimeout(function(){
-      $("#sacbouttons").empty()
-      },333)
-
-    //$('#sacbouttons').clear();
-  }
-
-// });
-  function showMeTheButtons(){
-
-      // if(Roles.userIsInRole(Meteor.user(), "jacky_one")==true) {
-    console.log('showMeTheButtons');
-    $('<button id="oui" class="button">oui</button><button id="non" class="button">non</button><button id="euh" class="button">euh</button>').appendTo('#sacbouttons');
-    $("#sacbouttons").css("opacity", "1")
-      // }
-
-  }
 
 
   em.addListener('salmnext', function(what) {
@@ -143,82 +103,6 @@ Template.game.onRendered(function () {
     // compteur = what.compteur;
     gotobookmark(what.bookmark);
   }); 
-
-  em.addListener('salmrefreshpage', function(what) {
-    console.log('salm refresh page!', what);
-    location.reload();
-  }); 
-  
-  // var streamStarted = Meteor.superGlobals.findOne({}, {fields: {name: 1, _id: 0}}).name;
-  Meteor.call('isTheStreamStarted', function(result){
-    console.log(result);
-  });
-
-
-  em.addListener('salmpoweradmin', function(what) {
-    console.log('salm admin has the power!', what);
-    console.log("le pouvoir est aux mains de l'admin", streamCheckInterval);
-    //faire des trucs quand l'admin prend le pouvoir
-    startTheStream();
-    //lancer le check du stream à interval régulier
-    console.log("streamCheckInterval?", streamCheckInterval);
-
-    if (!streamCheckInterval) {
-        console.log("starting streamCheckInterval 1");
-        streamCheckInterval = setInterval(function(){checkTheStream();}, 5000); 
-        console.log("starting streamCheckInterval 2", streamCheckInterval);
-    }
-  });
-  em.addListener('salmpowerpeople', function(what) {
-    console.log('salm people have the power!', what);
-      console.log("le pouvoir est aux mains du peuple", streamCheckInterval);
-      //arretons le check du stream à interval régulier
-      console.log("stopping streamCheckInterval 1", streamCheckInterval);
-      clearInterval(streamCheckInterval); 
-      streamCheckInterval = null;
-      console.log("stopping streamCheckInterval 2", streamCheckInterval);
-  }); 
-  em.addListener('salmUnStop', function(what) {
-    console.log('salm unstop', what);
-    console.log('salm unstop - interrupt?', interrupt);
-    unstop();
-  }); 
-
-
-  em.addListener('salmGetMessage', function(what) {
-    console.log('salm get message', what);
-    if(what.name != "") { //checkons le nom de la loterie
-      var lotteryCookie = cookies.get(what.name);
-      if(lotteryCookie) { //le cookie de cette loterie est bien là
-        console.log('salm get message lotteryCookie', lotteryCookie);
-        Meteor.call('retrieveMessage', what._id, lotteryCookie, function(error, result) {
-          // 'result' is the method return value
-          if(error) console.log("error", error);
-          if(result) {
-            console.log("result", result);
-            var resultParsed = result.replace(/(\w+)\(?.*/, '$1');
-            console.log("resultParsed", resultParsed);
-            switch(resultParsed) {
-              case 'showMeTheButtons':
-                showMeTheButtons();
-                break;
-              case 'addCuppasButtons':
-                addCuppasButtons();
-                break;
-              case 'displayPhoneNumbers':
-                console.log("DISPLAY PHONE NUMBERS");
-              default:
-                break;
-            }
-          }
-        });
-      }
-    }
-  }); 
-  // console.log()
-  // superGlobals.find({});
-    //   {},{fields: {'source':"SourceOne", 'currency': "USD"}}
-    // ));
 
 
 next = function(){
@@ -292,51 +176,44 @@ next = function(){
     // }
   });
 
-  var alternanceStorm = false;
-  var balayeur
-
-  em.addListener('new_ambiance_client', function() {
-    // var ambiance = superGlobals.findOne({ whichAmbiance: { $exists: true}});
-    // var whichAmbiance = (ambiance) ? ambiance.whichAmbiance : "e41";
-    var whichAmbiance = getSuperGlobal("whichAmbiance", "e41");
-    var newAmbiance = ambiances.findOne({name: whichAmbiance});
-    console.log("ambiance?", newAmbiance);
-    if(newAmbiance){
-      console.log("new Ambiance", newAmbiance.value)
-      changeImg(newAmbiance.value)
-    }
-  });
-
-  em.addListener('ca_va_peter_client', function(/* client */) {
-        if(alternanceStorm){
-          clearTimeout(balayeur)
-          $( ".eclair" ).remove();
-          $('#gcontainer').prepend('<div class="eclair2"></div>');
-          alternanceStorm = false;
-        }else{
-          clearTimeout(balayeur)
-          $( ".eclair2" ).remove();
-          $('#gcontainer').prepend('<div class="eclair"></div>');
-          alternanceStorm = true;
-        }
-        balayeur = setTimeout(balayeurfunc,2500)
-    });
-
-    alternanceImg = false;
 
 
+  // OLD AMBIANCE SHEIT
 
-
-  // $("#login").click(function(e) { 
-  //     if (!interval) {
-  //         interval = setInterval(function(){myFunction();}, 2000); 
-  //     }
+  // em.addListener('new_ambiance_client', function() {
+  //   // var ambiance = superGlobals.findOne({ whichAmbiance: { $exists: true}});
+  //   // var whichAmbiance = (ambiance) ? ambiance.whichAmbiance : "e41";
+  //   var whichAmbiance = getSuperGlobal("whichAmbiance", "e41");
+  //   var newAmbiance = ambiances.findOne({name: whichAmbiance});
+  //   console.log("ambiance?", newAmbiance);
+  //   if(newAmbiance){
+  //     console.log("new Ambiance", newAmbiance.value)
+  //     changeImg(newAmbiance.value)
+  //   }
   // });
 
-  // $("#logout").click(function(e) { 
-  //     clearInterval(interval); 
-  //     interval = null;
-  // });
+  // OLD STORM SHEIT
+
+  // var alternanceStorm = false;
+  // var balayeur
+
+  // em.addListener('ca_va_peter_client', function(/* client */) {
+  //       if(alternanceStorm){
+  //         clearTimeout(balayeur)
+  //         $( ".eclair" ).remove();
+  //         $('#gcontainer').prepend('<div class="eclair2"></div>');
+  //         alternanceStorm = false;
+  //       }else{
+  //         clearTimeout(balayeur)
+  //         $( ".eclair2" ).remove();
+  //         $('#gcontainer').prepend('<div class="eclair"></div>');
+  //         alternanceStorm = true;
+  //       }
+  //       balayeur = setTimeout(balayeurfunc,2500)
+  //   });
+
+  //   alternanceImg = false;
+
 
     em.addListener('showSpeedWinnerServer', function(params){
 
@@ -393,54 +270,6 @@ next = function(){
     }
 
   });
-
-  em.addListener('salmstartstream', startTheStream);
-
-  function startTheStream(what) {
-
-    console.log('salm startstream!', what, streaming);
-    if(streaming) {
-      var body = { "request": "watch", id: parseInt(1) };
-      streaming.send({"message": body});
-    }
-
-    if (!streamCheckInterval) {
-        streamCheckInterval = setInterval(function(){checkTheStream();}, 30000); 
-    }
-    // if($('#streamFrame').length == 0) {
-
-    //   $('<iframe>', {
-    //   'src': 'http://www.on-appuiera-sur-espace-une-fois-rendu-a-la-page-d-accueil.com/stream/',
-    //    id:  'streamFrame',
-    //    frameborder: 0,
-    //    scrolling: 'no'
-    //   }).appendTo('#stream-ifr');
-
-
-    //   setTimeout(function(){
-    //     console.log('streamFrame', $("#streamFrame").contents().find('#start'));
-    //     var startButton = $("#streamFrame").contents().find('#start');
-    //     if(startButton.length > 0) {
-    //       startButton.trigger('click');
-    //     }
-    //   }, 2000);
-    //   // $('streamFrame').on('load', function(){
-    //   //   console.log('streamFrame loaded');
-    //   // });
-    //   // console.log('streamFrame added');
-    //   // $('streamFrame').attr();
-    //   // console.log('streamFrame src', $('streamFrame').attr('src'));
-    // }
-
-
-
-  }
-
-  function checkTheStream(){
-    console.log('checkTheStream!');
-    if(!Janus.initDone || !streaming) Janus.init();
-    if(null != streaming && !streaming.webrtcStuff.started) startTheStream();
-  }
 
 });
 
@@ -546,6 +375,8 @@ Template.game.events({
     // si elle existe tu la -1
   },
 
+  // VIEUX CODE HEDE BAZOUGES
+
   // 'mousemove' : function(pos){
   //     document.getElementById("workforce").style.left = pos.pageX+"px"
   //     document.getElementById("workforce").style.top = pos.pageY+"px"
@@ -555,92 +386,9 @@ Template.game.events({
 
   'click .clickable' : function(e){
     startWork(e.target.id)
-  },
-
-  'touchstart #gcontainer': function(){
-    // alert('touchstart #gcontainer');
-    nextEvent();
   }
 
 })
-
-function startWork(where){
-
-  document.getElementById("megaLoad").style.width="100%"
-
-
-  if (actionAvailable<1) {
-    console.log("no one available to do the job")
-    return
-  }else{
-    console.log("start work on ",where)
-
-    actionAvailable -= 1
-    document.getElementById("workforce").innerHTML = actionAvailable
-
-    switch(where){
-      case "E0":
-      case "E1":
-      case "E2":
-        delay = 15000
-      break;
-
-      case "M0":
-      case "M1":
-      case "M2":
-      case "M3":
-        delay = 4000
-      break;
-    }
-
-    workDone = setTimeout(function(){
-      finishWork(where)
-    }, delay)
-  }
-};
-
-function finishWork(where){
-    console.log(where, " work done here!")
-    actionAvailable += 1
-    document.getElementById("workforce").innerHTML = actionAvailable
-
-    switch(where){
-      case "E0":
-      case "E1":
-      case "E2":
-        document.getElementById(where).innerHTML = "HUTTE"
-        document.getElementById(where).classList.remove("clickable")
-        console.log("hut made at ", where)
-        actionAvailable += 1
-        document.getElementById("workforce").innerHTML = actionAvailable
-      break;
-
-      case "M0":
-      case "M1":
-      case "M2":
-      case "M3":
-      case "M4":
-        randomBonus = Math.floor(Math.random()*2)
-        score += 1
-        document.getElementById("score").innerHTML = score
-
-
-        maxSlicer = document.getElementById(where).innerHTML.length
-        randomSlicer = Math.floor(Math.random() * maxSlicer);
-        SlicerEnd = randomSlicer+1
-
-        console.log("maxSlicer ", maxSlicer, " /Slicer ", randomSlicer, " /SlicerEnd ", SlicerEnd)
-
-        initString = document.getElementById(where).innerHTML
-        newString = initString.substring(-1,randomSlicer)+' '+initString.substring(SlicerEnd, maxSlicer);
-        console.log("sliced string, ",newString)
-
-        document.getElementById(where).innerHTML = newString
-
-        console.log("maïs ready to be harvested at ", where)
-      break;
-      }
-};
 
 startNight = function(){
   setTimeout(function(){
@@ -681,4 +429,86 @@ startNight = function(){
 
    function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
-} 
+}
+
+
+// VIEUX CODE DE HÉDÉ-BAZOUGES
+
+// function startWork(where){
+
+//   document.getElementById("megaLoad").style.width="100%"
+
+
+//   if (actionAvailable<1) {
+//     console.log("no one available to do the job")
+//     return
+//   }else{
+//     console.log("start work on ",where)
+
+//     actionAvailable -= 1
+//     document.getElementById("workforce").innerHTML = actionAvailable
+
+//     switch(where){
+//       case "E0":
+//       case "E1":
+//       case "E2":
+//         delay = 15000
+//       break;
+
+//       case "M0":
+//       case "M1":
+//       case "M2":
+//       case "M3":
+//         delay = 4000
+//       break;
+//     }
+
+//     workDone = setTimeout(function(){
+//       finishWork(where)
+//     }, delay)
+//   }
+// };
+
+// function finishWork(where){
+//     console.log(where, " work done here!")
+//     actionAvailable += 1
+//     document.getElementById("workforce").innerHTML = actionAvailable
+
+//     switch(where){
+//       case "E0":
+//       case "E1":
+//       case "E2":
+//         document.getElementById(where).innerHTML = "HUTTE"
+//         document.getElementById(where).classList.remove("clickable")
+//         console.log("hut made at ", where)
+//         actionAvailable += 1
+//         document.getElementById("workforce").innerHTML = actionAvailable
+//       break;
+
+//       case "M0":
+//       case "M1":
+//       case "M2":
+//       case "M3":
+//       case "M4":
+//         randomBonus = Math.floor(Math.random()*2)
+//         score += 1
+//         document.getElementById("score").innerHTML = score
+
+
+//         maxSlicer = document.getElementById(where).innerHTML.length
+//         randomSlicer = Math.floor(Math.random() * maxSlicer);
+//         SlicerEnd = randomSlicer+1
+
+//         console.log("maxSlicer ", maxSlicer, " /Slicer ", randomSlicer, " /SlicerEnd ", SlicerEnd)
+
+//         initString = document.getElementById(where).innerHTML
+//         newString = initString.substring(-1,randomSlicer)+' '+initString.substring(SlicerEnd, maxSlicer);
+//         console.log("sliced string, ",newString)
+
+//         document.getElementById(where).innerHTML = newString
+
+//         console.log("maïs ready to be harvested at ", where)
+//       break;
+//       }
+// };
+
