@@ -104,6 +104,15 @@ Template.game.onRendered(function () {
     gotobookmark(what.bookmark);
   }); 
 
+guid = function() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
 
 next = function(){
   console.log('next', compteur, data[compteur]);
@@ -158,6 +167,13 @@ next = function(){
   $(document.body).on('keyup', function(e) {
 
     e = e || window.event
+
+          if(e.keyCode == '13'){
+        e.preventDefault();
+        return false
+      }
+
+
 
 
     // KEYCODE 32 IS SPACEBAR
@@ -247,11 +263,23 @@ next = function(){
   });
 
 
+    em.addListener('noirFinal', function(params){
+
+
+        document.body.style.opacity="0"  
+
+  });
+
+
     em.addListener('showMoneyWinnerServer', function(params){
 
     console.log("who is the money winner", params.pseudo)
 
     if(localName===params.pseudo){
+      console.log("I FOUND THE WINNER!")
+      console.log("I FOUND THE WINNER!")
+      console.log("I FOUND THE WINNER!")
+      console.log("I FOUND THE WINNER!")
       document.getElementById("winner").style="display:initial;opacity:0; fill:orange;-webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;"
 
       setTimeout(function(){
@@ -304,12 +332,12 @@ Template.game.events({
       console.log("clic occured here , ", e.screenY, " ", e.screenX)
 
         console.log("creating UID : ", uid)
-      $('<div class="crac" id="'+uid+'" style="top:'+(e.screenY-80)+'px;left:'+e.screenX+'px";>'+onomatopees[getRndInteger(0,onomatopees.length-1)]+'</div>').appendTo('#cracs');
+      $('<div class="crac" id="'+uid+'" style="top:'+(e.screenY-40)+'px;left:'+e.screenX+'px";>'+onomatopees[getRndInteger(0,onomatopees.length-1)]+'</div>').appendTo('#cracs');
 
       setTimeout(function(){
         console.log("moving UID : ", uid)
 
-        document.getElementById(uid).style="top:"+(e.screenY-80)+"px;left:"+e.screenX+"px; transform: translateY(20px); opacity:0;"
+        document.getElementById(uid).style="top:"+(e.screenY-40)+"px;left:"+e.screenX+"px; transform: translateY(20px); opacity:0;"
       }, 40)    
 
       setTimeout(balayeurUid.bind(null, uid), 500)
@@ -358,6 +386,9 @@ Template.game.events({
           gotobookmark("arbreTombe")
           mouseClicUnToggle=true
         }else{
+          if(superMegaInterrupt===true){
+            return
+          }
           compteur += 1;
           next();
         }
@@ -404,12 +435,17 @@ startNight = function(){
 }
 
 
-  logName = function(){
+  logName = function(defaultId){
     console.log(document.getElementById("whoInput").value)
     localName = document.getElementById("whoInput").value
     document.getElementById("who").style="opacity:0";
 
+    if(localName){
     Meteor.call("lognameClient", localName)
+  }else{
+    localName = defaultId
+    Meteor.call("lognameClient", defaultId)
+  }
 
     setTimeout(function(){
       document.getElementById("who").style="display:none";
@@ -430,6 +466,148 @@ startNight = function(){
    function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
+
+// attention baoum tout ça vient du tract qui fait des tableaux de svg random toussa
+
+
+forest = []
+isEndemic=false;
+forestSize = 58
+// euh + 4 du coup
+
+possiblechars = ["I", "I", "I", "A", "A", "A", "A", "A", "P", "P", "T"]
+possiblecharsEndemic = ["Y","Y","Y", "G","G","A", "A", "A", "I", "P", "T"]
+
+makeRandomForest = function(){
+  if(isEndemic){
+    console.log("this is an endemic forest!")
+    for (var i = forestSize-4-1; i >= 0; i--) {
+      forest.push(possiblecharsEndemic[getRndInteger(0, 10)])
+    }
+  }else{
+    console.log("this is a basic forest")
+      for (var i = forestSize-4-1; i >= 0; i--) {
+        forest.push(possiblechars[getRndInteger(0, 10)])
+      }
+  }
+
+// add tutorial trees
+  forest.unshift("I","A","P","T")
+
+}
+
+grabBag = []
+bob = null
+
+makeGrabBag = function(cols,rows){
+  for(x=0; x<cols; x++){
+    for(y=0; y<rows; y++){
+      grabBag.push({x,y})
+    }
+  }
+
+}
+
+shuffle = function(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+drawTitle = function(text){
+  for(z=0; z<text.length; z++){
+    console.log(text[z], " coordsX ",grabBag[grabBag.length-1].x, " coordsY ", grabBag[grabBag.length-1].y)
+
+    var svg = document.getElementById('titleBag'); //Get svg element
+
+    var newText = document.createElementNS("http://www.w3.org/2000/svg", 'text'); //Create a path in SVG's namespace
+    
+    newText.setAttributeNS(null,"x",grabBag[grabBag.length-1].x*50+55+getRndInteger(-15, 15));      
+    newText.setAttributeNS(null,"y",grabBag[grabBag.length-1].y*100+15+65+getRndInteger(-25, 25));   
+    newText.setAttributeNS(null,"class", "A st13 trees st2 st8 st9");
+    newText.setAttributeNS(null,"id", "tree"+z);
+    var textNode = document.createTextNode(text[z]);
+    newText.appendChild(textNode);
+
+    svg.appendChild(newText);
+
+
+    grabBag.splice(-1,1)
+  }
+}
+
+ getRndInteger = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+
+showAllChars = function(){
+  charIndex = 0
+  charArray = document.getElementsByClassName("st7")
+
+  bob = setInterval(function(){
+    if(charIndex<charArray.length){
+      charArray[charIndex].style="opacity:1;"
+      charIndex ++
+    }else{
+      clearInterval(bob)
+    }
+
+  }, 50)
+}
+
+  launchTitle = function(x,y){
+    makeRandomForest()
+    grabBag=[]
+    makeGrabBag(x,y)
+    // 28, 8
+    shuffle(grabBag)
+    drawTitle(forest)
+    // showAllChars()
+  }
+
+  // clickGenerate = function(){
+    
+  //   clearInterval(bob)
+
+  //   document.getElementById("titleBag").style="opacity:0;"
+
+  //   bob = setTimeout(function(){
+  //   document.getElementById("titleBag").style="opacity:1;"
+  //   document.getElementById("titleBag").remove()
+
+  //   svg2 = document.getElementsByTagName('svg')[0]
+  //   var newGroup = document.createElementNS("http://www.w3.org/2000/svg", 'g'); //Create a path in SVG's namespace
+  //   newGroup.setAttributeNS(null,"id", "titleBag");
+    
+  //   svg2.appendChild(newGroup);
+
+
+  //   // numberOfChilds = document.getElementById("titleBag").childElementCount
+
+  //   // if (numberOfChilds) {
+  //   //   for (i=0; i<numberOfChilds; i++){
+  //   //     document.getElementById("titleBag").firstChild.remove()
+  //   //   }
+
+  //   // }
+  //     launchTitle()
+  //   }, 200)
+  // }
+
 
 
 // VIEUX CODE DE HÉDÉ-BAZOUGES

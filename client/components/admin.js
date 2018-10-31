@@ -35,37 +35,45 @@ Template.admin.onRendered(function () {
   function myMIDIMessagehandler(event){
 
     whichEtat = "e"+event.data[1]
-    console.log(whichEtat)
+    console.log(whichEtat, " event data 1")
+    console.log(event.data[2], " event data2")
+    console.log(event.data[3], " event data 3")
     // console.log("donne moi tout batard ", event)
 
       if(event.data[0]==144 && secondRound === true && event.data[2]!==0){
 
         switch(event.data[1]){
-          case 50:
+          case 60:
           console.log("show us the speed winner")
             em.setClient({ pseudo: speedWinnerPseudo });
             em.emit("showSpeedWinnerAdmin")
           break;
 
-          case 52:
+          case 62:
             console.log("show us the money winner")
             em.setClient({ pseudo: moneyWinnerPseudo });
             em.emit("showMoneyWinnerAdmin")
           break;
         }
+      }else{
 
-
+      if(event.data[0]==144 && event.data[2]!==0)
+      {
+        adminNext();
+        console.log("next next next!")
+      }
     }
 
-    // 50 speed
-    // 52 money
-    // 53 I
-    // 54 A
-    // 55 P
-    // 57 T
-    // 59 M
-    // 60 Y
-    // 62 J 
+
+    // 60 speed
+    // 62 money
+    // 64 I
+    // 67 A
+    // 71 P
+    // 72 T
+    // 76 M
+    // 52 Y
+    // 48 J 
 
     // if(event.data[0]==144 && (event.data[1]==49 || event.data[1]==54 || event.data[1]==58 )){
     //   console.log("ca_va_peter cote client")
@@ -455,6 +463,8 @@ Template.showtime.helpers({
 
 Template.showtime.events({
 
+
+
   'click #armKeyboard' : function(){
     if(secondRound){
       secondRound=false;
@@ -462,6 +472,13 @@ Template.showtime.events({
       secondRound=true;
     }
     console.log("second round", secondRound)
+  },
+
+  'click #noirDeFin' : function(){
+
+    console.log("NOIR DE FIN ADMIN DE FIN")
+    Meteor.call('noirDeFinAdmin')
+
   },
 
   'click .winners':function(){
@@ -609,6 +626,17 @@ Template.admin.events({
     em.setClient({ compteur: compteur });
     em.emit('adminnext');
     next();
+  },
+    'click #resetSUPERinterrupt': function(){
+    console.log("resetSUPERinterrupt!");
+    //Meteor.call('setSuperGlobal', {name: 'cuppasCount', value: +=1});
+    var bookmarkToGo = ($('#whereSUPERinterrupt').val() != "") ? $('#whereSUPERinterrupt').val() : 'spectacle';
+    em.setClient({ bookmark: bookmarkToGo });
+    em.emit('adminForceGoTo');
+      gotobookmark(bookmarkToGo);
+    Meteor.call('setSuperGlobal', {name: 'SUPERinterrupt', value: []});
   }
+
+
 
 })

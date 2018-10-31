@@ -9,6 +9,7 @@ flipbookstatus = false
 clock = null
 newGUI = false
 isItNight = false
+superMegaInterrupt = false
 
 firstShowServer = true
 
@@ -112,6 +113,26 @@ rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","
 
 action = function(type, params){
   switch(type){
+    case "bolos":
+      if(localName){
+        console.log("name already found")
+        return
+      }else{
+      var uuid = guid();
+      logName(uuid)
+      }
+    break
+
+    case "openShutter":
+      document.getElementById("shutter").style.opacity="0"
+      setTimeout(function(){
+        document.getElementById("shutter").childNodes[type].style.display='none'
+      }, 4500)
+    break
+    case "makeNewForest":
+      launchTitle(28,8);
+    break
+
     case "avignonLight":
       if(Roles.userIsInRole(Meteor.user(), "admin")==true){
         // document.getElementById("")
@@ -119,6 +140,7 @@ action = function(type, params){
     break
 
     case "logScore":
+    superMegaInterrupt=true
     speedScore = dateFinish - dateStart
     Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
     break
@@ -236,8 +258,10 @@ treesReady = function(){
 }
 
 showTree = function(type){
-  document.getElementById(type+"1").style="opacity:1;"
-  document.getElementById("d"+type+"1").style="opacity:1;"
+  document.getElementById("titleBag").childNodes[type].style.display='initial'
+  document.getElementById("titleBag").childNodes[type].style.opacity='1'
+  // document.getElementById(type+"1").style="opacity:1;"
+  // document.getElementById("d"+type+"1").style="opacity:1;"
 }
 
 showAllTrees = function(){
@@ -246,7 +270,8 @@ showAllTrees = function(){
 
   bob = setInterval(function(){
     if(treesIndex<treesArray.length){
-      treesArray[treesIndex].style="opacity:1;"
+      treesArray[treesIndex].style.display='initial'
+      treesArray[treesIndex].style.opacity='1'
       treesIndex ++
     }else{
       clearInterval(bob)
@@ -262,6 +287,7 @@ addMOListener = function(){
   for(i=0; i<allTrees.length; i++){
       allTrees[i].addEventListener("mouseover", function(){
         if(mouseClicToggle===false){
+            interrupt=false;
             compteur+=1;
             next()
           }else{
@@ -278,6 +304,7 @@ addMOListener = function(){
  }
 
  removeMOListener = function(){
+  interrupt=true;
 
   mouseClicToggle=true;
 

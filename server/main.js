@@ -297,6 +297,10 @@ if (Meteor.isServer) {
 
   Meteor.methods({
 
+    noirDeFinAdmin:function(){
+      em.emit("noirFinal")
+    },
+
     logScore:function(obj){
       console.log("pseudo ,", obj.pseudo)
       console.log("speed ,", obj.speed)
