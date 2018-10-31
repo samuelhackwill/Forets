@@ -436,20 +436,20 @@ startNight = function(){
 
 
   logName = function(defaultId){
-    console.log(document.getElementById("whoInput").value)
-    localName = document.getElementById("whoInput").value
-    document.getElementById("who").style="opacity:0";
+  //   console.log(document.getElementById("whoInput").value)
+  //   localName = document.getElementById("whoInput").value
+  //   document.getElementById("who").style="opacity:0";
 
-    if(localName){
-    Meteor.call("lognameClient", localName)
-  }else{
+  //   if(localName){
+  //   Meteor.call("lognameClient", localName)
+  // }else{
     localName = defaultId
     Meteor.call("lognameClient", defaultId)
-  }
+  // }
 
-    setTimeout(function(){
-      document.getElementById("who").style="display:none";
-    },500)
+  //   setTimeout(function(){
+  //     document.getElementById("who").style="display:none";
+  //   },500)
   }
 
 
