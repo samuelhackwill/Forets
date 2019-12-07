@@ -8,6 +8,7 @@ mouseOverToggle = false;
 mouseClicToggle = false;
 mouseClicUnToggle = false;
 spacebarReToggle = false;
+apocalypse = false;
 
 // actionAvailable = 1
 
@@ -52,6 +53,18 @@ Template.game.onRendered(function () {
 
 
   $(document.body).addClass('game');
+
+  em.addListener('removeClicEnd', function(){
+    console.log("removing clic!")
+    apocalypse = true;
+  });
+
+  em.addListener('logScoreServer', function(){
+    superMegaInterrupt=true
+    speedScore = dateFinish - dateStart
+    console.log("speedScore", speedScore)
+    Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
+  });
 
 
   em.addListener('jmMicServer', function(){
@@ -115,6 +128,7 @@ guid = function() {
 
 
 next = function(){
+
   console.log('next', compteur, data[compteur]);
   var currentData = data[compteur]
   var type = currentData["type"]
@@ -321,6 +335,8 @@ Template.game.events({
 
   'click .trees':function(e){
 
+    if(apocalypse){return}
+
       uid ++
 
       console.log("uid ",uid)
@@ -423,9 +439,9 @@ Template.game.events({
 
 startNight = function(){
   setTimeout(function(){
-    document.getElementById("lumieres_1_").style="opacity:1;"
+    // document.getElementById("lumieres_1_").style="opacity:1;"
     document.getElementById("fond_x5F_jour").style="opacity:0;"
-    document.getElementById("bourg").style="opacity:1;"
+    // document.getElementById("bourg").style="opacity:1;"
 
     document.getElementById("srt").style="color:#DBDBCC;background-color:#0A0606;"
 

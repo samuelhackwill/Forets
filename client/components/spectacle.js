@@ -7,7 +7,6 @@ Template.data.onCreated(function() {
 
   //subscribe à la collection contenus écran + representations
   this.autorun(() => {
-    this.subscribe('superGlobals');
   });
 
 });
@@ -43,7 +42,7 @@ Template.spectacle.onRendered(function () {
     if (!ready){ return; }
     let contnus = ContenusEcran.find().fetch();
     console.log("contnus", contnus, data);
-    data = ContenusEcran.findOne({name: "ce_jeudi_no_comment"}).data
+    data = ContenusEcran.findOne({name: "data_test"}).data
     console.log('srt spectacle rendered');
     console.log('data ?', data);
     console.log('ContenusEcran ?', ContenusEcran.find().fetch());
@@ -81,6 +80,7 @@ Template.spectacle.onRendered(function () {
 
 
   $(document.body).on('keyup', function(e) {
+
 
     e = e || window.event
     // KEYCODE 32 IS SPACEBAR

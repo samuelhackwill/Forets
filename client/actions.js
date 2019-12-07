@@ -10,6 +10,7 @@ clock = null
 newGUI = false
 isItNight = false
 superMegaInterrupt = false
+speedScore = 0
 
 firstShowServer = true
 
@@ -113,6 +114,15 @@ rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","
 
 action = function(type, params){
   switch(type){
+    case "showHud":
+    __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+    superGlobals.update(__id, {$set:{"isItVictoryYet":false},})
+    break
+
+    case "fukinlogscore":
+    FukinScore.insert({name:Session.get("localName"), score:speedScore})
+    break
+
     case "bolos":
       if(localName){
         console.log("name already found")
@@ -129,6 +139,7 @@ action = function(type, params){
         document.getElementById("shutter").childNodes[type].style.display='none'
       }, 4500)
     break
+
     case "makeNewForest":
       launchTitle(28,8);
     break
@@ -136,12 +147,14 @@ action = function(type, params){
     case "avignonLight":
       if(Roles.userIsInRole(Meteor.user(), "admin")==true){
         // document.getElementById("")
+        // lol c'est quoi ça
     }
     break
 
     case "logScore":
     superMegaInterrupt=true
     speedScore = dateFinish - dateStart
+    console.log("speedScore", speedScore)
     Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
     break
 
@@ -154,7 +167,6 @@ action = function(type, params){
     break;
 
     case "showBourg":
-    showBourg();
     startNight();
     break;
 
@@ -297,10 +309,6 @@ addMOListener = function(){
   }
 
 
- }
-
- showBourg = function(){
-  document.getElementById("bourg").style="opacity:1;"
  }
 
  removeMOListener = function(){

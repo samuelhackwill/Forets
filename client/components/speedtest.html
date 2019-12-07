@@ -1,0 +1,23 @@
+
+<template name="speedtest">
+  <div id="topbar">
+    <button id="startCountingBEPO">{{bepoButton}}</button>
+
+    <span>AVG SPEED</span><input id="speedBepo" type="text" name="" class="smallInput">
+    <span>ACCURACY</span><input id="accBepo" type="text" name="" class="smallInput">
+        <br/>
+
+    HIGHSCORE -->
+    <span>AVG SPEED</span><input type="text" name="" value="{{speedHS}}">
+    <span>ACCURACY</span><input type="text" name="" value="{{accHS}}">
+
+  </div>
+  <textarea name="daInput" id="daInput"></textarea>
+
+  {{> diag}}
+</template>
+
+
+<template name="diag">
+  <div id="dialog" style="opacity : {{showHide}};"> Félicitations, vous êtes arrivés au bout du texte d'introduction sur Dominique Sommeveille. Votre vitesse moyenne est de <input id="speedBepo2" type="text" name="" class="smallInput"> caractères par seconde, et votre précision de frappe est <input id="accBepo2" type="text" name="" class="smallInput"></div>
+</template>

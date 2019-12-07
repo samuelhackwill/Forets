@@ -5,8 +5,24 @@
 
 <template name="videoproj">
 
+	<div id="victory" style="opacity:{{victoryOnOff}}">YES!</div>
+
+	<div id="progressBar" style="opacity: {{courseOnOff}};"></div>
+
+<!-- i should be using {{#each}} but fuck this
+ -->
+
+	<div id="runningGuyG" style="opacity: {{courseOnOff}}; transform: translateX({{progressG}}px); background-image: url({{whichImageG}});"></div>
+
+	<div id="runningGuyD" style="opacity: {{courseOnOff}}; transform: translateX({{progressD}}px); background-image: url({{whichImageD}});"></div>
+
+ 	<span id="arr" style="opacity: {{courseOnOff}}; transform: translateX({{whichVous}}px"> &darr; vous</span>
 
   {{> screen}}
 
+</template>
+
+
+<template name="HUD2">
 
 </template>

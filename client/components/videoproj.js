@@ -1,5 +1,9 @@
 var caughtUp = false;
 var intervalReload;
+Session.set("localName", "");
+
+compteurAnim=1;
+
 
 Template.videoproj.onCreated(function() {
 
@@ -7,9 +11,14 @@ Template.videoproj.onCreated(function() {
   this.autorun(() => {
     this.subscribe('allRepresentations');
     this.subscribe('allContenusEcran');
+    this.subscribe('allPosRunner');
+    this.subscribe('allSpeedTest');
+    this.subscribe('allscore');
+    this.subscribe('allFukinScore');
   });
 
 });
+
 
 
 Template.videoproj.onRendered(function () {
@@ -25,9 +34,9 @@ Template.videoproj.onRendered(function () {
     console.log('srt spectacle videoproj rendered');
     console.log('data ?', data);
     console.log('ContenusEcran ?', ContenusEcran.find().fetch());
-    if(data) {
-      catchUpWithTheShow();
-    }
+    // if(data) {
+    //   catchUpWithTheShow();
+    // }
 
     //
     // rawTextToJson();
@@ -35,6 +44,8 @@ Template.videoproj.onRendered(function () {
     // zoupageJSON(dataFromDB, data);
     // autonext(2000);
   });
+
+
 
 
   $(document.body).addClass('videoproj');
@@ -98,10 +109,12 @@ Template.videoproj.onRendered(function () {
     } 
   }); 
 
-  em.addListener('salmForceGoTo', function(what) {
-    console.log('salm salmForceGoTo!', what);
-    // compteur = what.compteur;
-    gotobookmark(what.bookmark);
+  em.addListener('scoreGServer', function() {
+    $('#srt').html("la personne de gauche a mis "+FukinScore.findOne({name:"gauche"}).score/1000+" secondes à parcourir le texte.")
+  }); 
+
+  em.addListener('scoreDServer', function() {
+    $('#srt').html("la personne de droite a mis "+FukinScore.findOne({name:"droite"}).score/1000+" secondes à parcourir le texte.")
   }); 
 
   em.addListener('salmrefreshpage', function(what) {
@@ -118,6 +131,28 @@ Template.videoproj.onRendered(function () {
 
 // CUSTOM KEYUP POUR AVIGNON!!!
 
+startRace = function(){
+  __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+  superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+}
+
+initiateTheShitOutOfThisProgram = function(who){
+     __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+    superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+
+
+    _did = PosRunner.find({name:"gauche"}).fetch()[0]._id
+    _gid = PosRunner.find({name:"droite"}).fetch()[0]._id
+    
+    PosRunner.update(_did, {$set:{"posX":0},})
+    PosRunner.update(_did, {$set:{"cycle":1},})
+
+    PosRunner.update(_gid, {$set:{"posX":0},})
+    PosRunner.update(_gid, {$set:{"cycle":1},})
+
+    Session.set("localName", who)
+}
+
   
   $(document.body).on('keyup', function(e) {
 
@@ -131,6 +166,7 @@ Template.videoproj.onRendered(function () {
     // 51 = 3
 
     if(e.keyCode == '32') nextEvent();
+
 
     if(e.keyCode == '48'){
       document.getElementById("srt").innerHTML="miracle des dieux :<br/>aucun bug"
@@ -205,7 +241,106 @@ var nextEvent = function(){
     compteur +=1
     next();
     console.log("keyup, ", compteur)
+
+    __id = PosRunner.find({name:Session.get("localName")}).fetch()[0]._id
+    _posX = PosRunner.find({name:Session.get("localName")}).fetch()[0].posX
+    _cycle = PosRunner.find({name:Session.get("localName")}).fetch()[0].cycle
+
+    if(_cycle<12){
+      _cycle = _cycle+1
+    }else{
+      _cycle = 1
+    }
+
+    PosRunner.update(__id, {$set:{"posX":_posX+1},})
+    PosRunner.update(__id, {$set:{"cycle":_cycle},})
+
+
+    // document.getElementById("runningGuy").style.background="url('/img/running guy-"+compteurAnim+".png'"
+    // make compteur anim a reactive var ou quoi...
+
     // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
     // ça avance tout seul avec un délai)
   }
 }
+
+// i know this is stupid but don't have time
+
+
+  Template.videoproj.helpers({
+
+    courseOnOff(){
+      victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
+
+      if(victory){
+        return 0
+      }else{
+        return 1
+      }
+    },
+
+    progressG(){
+      _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
+      victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
+
+      if(_progressG>690 && victory==false){
+        console.log("victory gauche")
+        __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+        superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+        document.getElementById("victory").style.opacity="1"
+
+        setTimeout(function(){
+          document.getElementById("victory").style.opacity="0"
+        },3000)
+
+      }
+
+        return _progressG
+        //omg pour l'instant c'est des pourcentages de la taille en pixels du viewport... qui est différent en fonction des machines.
+        // donc faudra faire mieux
+    },    
+
+    progressD(){
+      _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
+      victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
+
+      if(_progressD>690 && victory==false){
+        console.log("victory droite")
+        __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+        superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+
+        document.getElementById("victory").style.opacity="1"
+
+        
+        setTimeout(function(){
+          document.getElementById("victory").style.opacity="0"
+        },3000)
+
+      }
+        return _progressD
+        //omg pour l'instant c'est des pourcentages de la taille en pixels du viewport... qui est différent en fonction des machines.
+        // donc faudra faire mieux
+    },
+
+    whichImageG(){
+      _whichImageG = PosRunner.find({name:"gauche"}).fetch()[0].cycle
+      return "\'/img/running guy-"+_whichImageG+".png\'"
+    },
+
+    whichImageD(){
+      _whichImageD = PosRunner.find({name:"droite"}).fetch()[0].cycle
+      return "\'/img/running guy-"+_whichImageD+".png\'"
+    },
+
+    whichVous(){
+      _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
+      _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
+
+      if(Session.get("localName")=="gauche"){
+        return _progressG+39
+      }else{
+        return _progressD+39
+      }
+    }
+
+  });

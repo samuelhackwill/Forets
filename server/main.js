@@ -13,6 +13,18 @@ Meteor.publish('allPostits', function(){
   return Postit.find();
 });
 
+Meteor.publish('allFukinScore', function(){
+  return FukinScore.find();
+});
+
+Meteor.publish('allSpeedTest', function(){
+  return SpeedTest.find();
+});
+
+Meteor.publish('allPosRunner', function(){
+  return PosRunner.find();
+});
+
 Meteor.publish('allScore', function(){
   return score.find();
 });
@@ -297,8 +309,20 @@ if (Meteor.isServer) {
 
   Meteor.methods({
 
+    scoreGAdmin:function(){
+      em.emit("scoreGServer")
+    },
+
+    scoreDAdmin:function(){
+      em.emit("scoreDServer")
+    },
+
     noirDeFinAdmin:function(){
       em.emit("noirFinal")
+    },
+
+    logScoreAdmin:function(){
+      em.emit("logScoreServer")
     },
 
     logScore:function(obj){
@@ -306,13 +330,22 @@ if (Meteor.isServer) {
       console.log("speed ,", obj.speed)
       console.log("money ,", obj.money)
 
-      score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});  
-      score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});  
+      if(obj.speed==0||undefined){
+        return
+      }else{
+        score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});  
+        score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});  
+      }
+
     },
 
     jmMic:function(){
       em.emit("jmMicServer")
     },
+
+    removeClicAdmin:function(){
+      em.emit("removeClicEnd")
+    },  
 
     showLightCall:function(who){
       console.log("show light call ", who)

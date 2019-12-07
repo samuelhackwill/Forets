@@ -26,7 +26,68 @@ padding: 50px !important;
 top:170px !important;
 text-align:center;
 }
+
+body.videoproj #arr{
+	position: fixed;
+	top: 63%;
+	left: 20%;
+	color:red;
+
+	transition:opacity 3s;
+}
+
+body.videoproj #runningGuyD{
+	position:fixed;
+	top:66%;
+	left:20%;
+	width:89px !important;
+	height:106px !important;
+   background-size: contain !important;
+   background-repeat: no-repeat !important ;
+
+      	transition:opacity 10s;
+}
+
+body.videoproj #runningGuyG{
+	position:fixed;
+	top:80%;
+	left:20%;
+	width:89px !important;
+	height:106px !important;
+   background-size: contain !important;
+   background-repeat: no-repeat !important ;
+
+   	transition:opacity 10s;
+}
+
+body.videoproj #victory{
+	opacity: 0;
+	font-size:200px;
+	color:blue;
+	z-index:10000000;
+	position:fixed;
+	top:33%;
+	left:50%;
+	transform:translate(-50%,-50%);
+
+	transition:opacity 1s;
+}
+
+body.videoproj #progressBar{
+	height:1px;
+	width:58%;
+	background-color:white;
+	position:fixed;
+	top:95%;
+	left:21%;
+
+	transition:opacity 3s;
+}
+
 body.videoproj #srt span.vp {
   color: white;
+}
+body.videoproj #gcontainer{
+	background-color:black;
 }
 

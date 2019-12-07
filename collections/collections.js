@@ -12,7 +12,13 @@ loteries = new Meteor.Collection('loteries');
 
 PhoneNumbers = new Meteor.Collection('phoneNumbers');
 
-score = new Meteor.Collection("score")
+score = new Meteor.Collection("score");
+
+SpeedTest = new Meteor.Collection("speedTest");
+
+PosRunner = new Meteor.Collection("posRunner");
+
+FukinScore = new Meteor.Collection("fukinScore");
 
 var Schemas = {};
 
@@ -144,6 +150,12 @@ Schemas.superGlobals = new SimpleSchema({
       type: [Object],
       label: "Les compteurs pour chaque role",
       optional: true,
+    },
+
+    isItVictoryYet:{
+      type: Boolean,
+      label: "qui c'est qu'a gagné la course",
+      optional:true,
     }
 
 });
@@ -451,6 +463,31 @@ ambiances.allow({
 
 
 //permissions
+
+SpeedTest.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
+
+FukinScore.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
+
 Postit.allow({
   insert:function(){
     return true;
@@ -461,7 +498,7 @@ Postit.allow({
   remove:function(){
     return true;
   }
-})
+});
 
 score.allow({
   insert:function(){
@@ -473,7 +510,19 @@ score.allow({
   remove:function(){
     return true;
   }
-})
+});
+
+PosRunner.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
 
 loteries.allow({
   insert: function () {
@@ -507,7 +556,6 @@ loteries.allow({
 });
 
 
-//permissions
 PhoneNumbers.allow({
   insert: function () {
 

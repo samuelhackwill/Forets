@@ -333,7 +333,6 @@ Template.admin.onRendered(function () {
     // Session.update("compteur", compteur);
     // if(compteur < data.length-1){
       window.clearTimeout(autonextcontainer)
-    console.log('adminNext2', compteur);
       compteur +=1
     console.log('adminNext3', compteur);
       var modeSpectacle = getSuperGlobal("modeSpectacle");
@@ -474,11 +473,29 @@ Template.showtime.events({
     console.log("second round", secondRound)
   },
 
+
+  'click #scoreG' : function(){
+    Meteor.call("scoreGAdmin")
+  },
+
+  'click #scoreD' : function(){
+    Meteor.call("scoreDAdmin")
+  },
+
+
   'click #noirDeFin' : function(){
 
     console.log("NOIR DE FIN ADMIN DE FIN")
     Meteor.call('noirDeFinAdmin')
 
+  },
+
+  'click #logScoreAdmin' : function(){
+    Meteor.call('logScoreAdmin')
+  },  
+
+  'click #removeClicAdmin' : function(){
+    Meteor.call('removeClicAdmin')
   },
 
   'click .winners':function(){
