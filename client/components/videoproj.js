@@ -1,6 +1,14 @@
+// call function yeehaw with setinterval so see the guy running
+// 80 feels natural
+// 5 does not
+// a voir comment on combine avec un keystroke pour que ça soit plus joli qu'à la belonne
+
+
 var caughtUp = false;
 var intervalReload;
 Session.set("localName", "");
+yeecount = 1;
+infiniteZindex = 0;
 
 compteurAnim=1;
 
@@ -45,7 +53,10 @@ Template.videoproj.onRendered(function () {
   // console.log(Template.instance());
     // zoupageJSON(dataFromDB, data);
     // autonext(2000);
+      // Meteor.setInterval(yeehaw(), 100);
+
   });
+
 
 
 
@@ -286,6 +297,18 @@ var nextEvent = function(){
     // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
     // ça avance tout seul avec un délai)
   }
+}
+
+yeehaw = function(){
+  document.getElementById("sprite"+yeecount).style.zIndex=infiniteZindex
+
+  if(yeecount<12){
+    yeecount ++
+  }else{
+    yeecount = 1;
+  }
+
+  infiniteZindex ++
 }
 
 // i know this is stupid but don't have time

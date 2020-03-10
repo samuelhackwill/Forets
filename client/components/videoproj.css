@@ -36,6 +36,59 @@ body.videoproj #arr{
 	transition:opacity 3s;
 }
 
+
+body.videoproj #testRunningGuy{
+	width:89px !important;
+height:106px !important;
+	position:fixed;
+	top:66%;
+	left:20%;
+   background-size: contain !important;
+   background-repeat: no-repeat !important ;
+}
+
+
+body.videoproj #sprite1{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-1.png')
+}
+body.videoproj #sprite2{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-2.png')
+}
+body.videoproj #sprite3{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-3.png')
+}
+body.videoproj #sprite4{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-4.png')
+}
+body.videoproj #sprite5{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-5.png')
+}
+body.videoproj #sprite6{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-6.png')
+}
+body.videoproj #sprite7{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-7.png')
+}
+body.videoproj #sprite8{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-8.png')
+}
+body.videoproj #sprite9{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-9.png')
+}
+body.videoproj #sprite10{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-10.png')
+}
+body.videoproj #sprite11{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-11.png')
+}
+body.videoproj #sprite12{width:inherit;height:inherit;position:inherit;top:inherit;left:inherit;
+background-image: url('img/running guy-12.png')
+}
+
+
+
+/*
+
 body.videoproj #runningGuyD{
 	position:fixed;
 	top:66%;
@@ -59,7 +112,7 @@ body.videoproj #runningGuyG{
 
    	transition:opacity 10s;
 }
-
+*/
 body.videoproj #victory{
 	opacity: 0;
 	font-size:200px;
