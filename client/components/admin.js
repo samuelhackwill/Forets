@@ -126,7 +126,6 @@ Template.admin.onRendered(function () {
   console.log(this.UserConnections);
 
   Meteor.subscribe('userStatus');
-  Meteor.subscribe('allPhoneNumbers');
   Meteor.subscribe('allSuperGlobals');
 
   this.autorun(() => {
@@ -480,6 +479,14 @@ Template.showtime.events({
 
   'click #scoreD' : function(){
     Meteor.call("scoreDAdmin")
+  },
+
+  'click #adminSetCourseOff': function(){
+    Meteor.call("adminSetCourseOff")
+  },
+
+  'click #adminSetCourseOn': function(){
+    Meteor.call("adminSetCourseOn")
   },
 
 

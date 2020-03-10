@@ -44,9 +44,6 @@ Meteor.publish('allAmbiances', function () {
 Meteor.publish('allLoteries', function () {
   return loteries.find();
 });
-Meteor.publish('allPhoneNumbers', function () {
-  return PhoneNumbers.find();
-});
 
 Meteor.publish( 'users', function() {
   let isAdmin = Roles.userIsInRole( this.userId, 'admin' );
@@ -387,6 +384,19 @@ Meteor.methods({
   * @param {String} name Nom du contenu écran
   * @param {String} data Données du contenu écran
   */
+  adminSetCourseOff: function(){
+    console.log("setting victory off")
+      __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+      superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+  },
+  
+  adminSetCourseOn: function(){
+    console.log("setting victory on")
+      __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+      superGlobals.update(__id, {$set:{"isItVictoryYet":false},})
+  },
+
+
   newContenuEcran: function (obj) {
     var loggedInUser = Meteor.user()
 
@@ -847,24 +857,6 @@ Meteor.methods({
     );
   },
 
-  addPhoneNumber: function (obj) {
-    // var loggedInUser = Meteor.user()
-
-    // if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-    //   throw new Meteor.Error(403, "Access denied")
-    // }
-    console.log("addPhoneNumber", obj);
-    var phoneNumber = PhoneNumbers.findOne(obj);
-    console.log("phoneNumber exists ?", phoneNumber);
-    if(phoneNumber) {
-      console.log("it exists already. increment number of calls");
-      PhoneNumbers.update(phoneNumber._id, {
-        $inc: { calls: 1 },
-      });
-    } else {
-      PhoneNumbers.insert(obj, { filter: false });
-    }
-  },
   createUserFromAdmin: function(email,password,role){
     console.log('createUserFromAdmin', email,password,role);
     var id = Accounts.createUser({ email: email, password: password });
@@ -928,16 +920,6 @@ Meteor.methods({
       }
       
     }
-    // var phoneNumber = PhoneNumbers.findOne(obj);
-    // console.log("phoneNumber exists ?", phoneNumber);
-    // if(phoneNumber) {
-    //   console.log("it exists already. increment number of calls");
-    //   PhoneNumbers.update(phoneNumber._id, {
-    //     $inc: { calls: 1 },
-    //   });
-    // } else {
-    //   PhoneNumbers.insert(obj, { filter: false });
-    // }
   },
 
 
@@ -1005,111 +987,6 @@ Meteor.methods({
             {  $set: { messages: messages} },
             { filter: false }
           );
-        }
-
-        // return Collection.find({_id: random && random._id}
-        // var lotteryId = lottery._id;
-      }
-      
-    }
-  },
-
-
-  assignRandomPhoneNumbers: function(args){
-
-    console.log("assignRandomPhoneNumbers server", args);
-    // var nbPeopleToChoose = 1;
-    var lotteryId = args._id;
-    if(lotteryId != "") {
-
-      var lottery = loteries.findOne({_id: lotteryId});
-      console.log("lottery", lottery);
-      if(!lottery) {
-        //y'a pas cette loterie
-        console.log("couldn't find lottery");
-      } else {
-
-
-        //mélanger les ids des participants pour avoir un ordre aléatoire
-        var random = _.shuffle(lottery.ids);
-        console.log("random", random);
-
-        //récupérer les numéros des SAT qui ont appelés
-        var currentRepresentation = null;
-        modeSpectacle = getSuperGlobal("modeSpectacle");
-        if(modeSpectacle) { //le spectacle va bientôt commencer ou a déjà commencé
-          //récupérons la representation du jour
-          var now = new Date();
-          todayStart = new Date(now.setHours(0,0,0,0));
-          todayEnd = new Date(now.setHours(24,0,0,0));
-          console.log("router checkPhone - today is between", todayStart, todayEnd);
-          var foundRepresentation = representations.findOne({ 
-            date_start: { 
-              $gte: todayStart,
-              $lt: todayEnd
-            },
-            "status": /(pending|running)/
-          }, {sort: {date_start: 1}});
-          console.log("router checkPhone - representation?", foundRepresentation);
-          if(foundRepresentation) { //representation du jour trouvée
-            console.log("router checkPhone - representation du jour trouvée");
-            var currentRepresentation = foundRepresentation._id;
-            console.log("router checkPhone - representation?", currentRepresentation);
-          }
-          if(currentRepresentation) {
-
-            console.log("representation en cours = ", currentRepresentation);
-            var phones = PhoneNumbers.find({representation: currentRepresentation}).fetch();
-            if(phones) {
-              var messages = [];
-              var phonesRandom = _.shuffle(phones);
-              console.log("numeros de tél trouvés pour cette representation", phones, phonesRandom);
-              //TODO + de num -> envoyer plusieurs num a chaque SALM (max 4)
-              if(phones.length > random.length) {
-                console.log("+ de nums de tél que de SALM volontaires pour appeler");
-                var nbPhonesToSend = Math.ceil(phones.length/random.length);
-                console.log("nbPhonesToSend", phones.length, random.length, phones.length/random.length, nbPhonesToSend);
-
-                var groupSize = nbPhonesToSend > 4 ? 4 : nbPhonesToSend;
-
-                var phoneGroups = _.map(phonesRandom, function(item, index){
-                  return index % groupSize === 0 ? phonesRandom.slice(index, index + groupSize) : null; 
-                }).filter(function(item){ 
-                  return item; 
-                });
-                console.log("phones groups", phoneGroups);
-                for(i=0;i<random.length;i++){
-                  if(phoneGroups.length>i) {
-                    var obj = {};
-                    var numbers = _.map(phoneGroups[i], function(a) {return "'"+a.number+"'";});
-                    console.log("numbers", numbers, numbers.join(','));
-                    obj[random[i]] = 'displayPhoneNumbers(['+numbers.join(',')+'])';
-                    messages.push(obj);
-                  }
-                }
-
-              } else if(phones.length <= random.length){
-                // - de num (ou pareil)-> envoyer 1 à chaque SALM tant que y'a des nums 
-                
-                for(i=0;i<random.length;i++){
-                  if(phonesRandom.length>i) {
-                    var obj = {};
-                    obj[random[i]] = "displayPhoneNumbers(['"+phonesRandom[i].number+"']);";
-                    messages.push(obj);
-                  }
-                }
-              }
-              //TODO et sinon envoyer message 'désolé y'avait pas assez de numéros à distribuer'
-              if(messages.length>0){
-                console.log('update lottery messages', messages);
-                loteries.update(lottery._id, 
-                  {  $set: { messages: messages} },
-                  { filter: false }
-                );
-              }
-
-            }
-          }
         }
 
         // return Collection.find({_id: random && random._id}

@@ -59,26 +59,8 @@
       <input id="showmode" title="aka let's gro!" type="checkbox" checked="{{isModeSpectacleChecked}}" /><br />
       <label for="josebove" title="Prendre le pouvoir / Démarrer le spectacle - ou prendre la main sur le déroulé des évènements">Entrée Public</label> 
       <input id="josebove" title="aka José Bové!" type="checkbox" checked="{{isPowerToTheAdminChecked}}" /><br />
-
-      <!--<label for="startSpectacle" title="ou démarrer le Spectacle">Démarrer/arrêter le spectacle</label>
-      <input id="startSpectacle" title="aka start the show!" type="checkbox" checked="{{isTheShowStarted}}" /><br />-->
       compteur = <span id="currentCompteur">{{compteurAdmin}}</span> <input id="adminCompteur" name="adminCompteur" placeholder="compteur" value="{{compteurAdmin}}" size="3" /><input type="button" id="setCompteur" value="change"><br />
 
-      <!--<label for="SUPERinterrupt" title="ou mode parking pour les SALM pas jacky">SUPERinterrupt</label> 
-      <input id="SUPERinterrupt" title="aka Parking SALM!" type="checkbox" checked="{{isSUPERinterruptChecked}}" /><br />-->
-
-      <!--<label for="forcehangup" title="ou forcer le raccrochage après la prochaine note">Raccrocher les tél</label>
-      <input id="forcehangup" title="aka hang up!" type="checkbox" checked="{{isForceHangupChecked}}" /><br />
-      <br />-->
-      <!--SUPERinterrupt = <br />
-      <button type="button" class="add-SUPERinterrupt" value="salm">parking ON salm</button>
-      <button type="button" class="add-SUPERinterrupt" value="jacky_one">parking ON jacky_one</button>
-      <button type="button" class="add-SUPERinterrupt" value="jacky_lt">parking ON jacky_lt</button><br />
-      en cours de parking :<br />
-      {{#each whoIsSUPERinterrupted}}
-        {{this}} <button class="remove-SUPERinterrupt" type="submit" value="{{this}}">x</button>
-      {{/each}}
-      -->
       <input type="button" id="resetSUPERinterrupt" value="go to bookmark" title="reset SUPERinterrupt / go to bookmark" />
       <input type="text" id="whereSUPERinterrupt" placeholder="bookmark?" value="liaison_tel"/>
       <br />
@@ -88,58 +70,7 @@
         <span>noirPanic</span><br />
       </div>
       <br />
-      <!--<h4 class="page-header">compteurs</h4>
-
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th class="text-center">Role</th>
-              <th class="text-center">X</th>
-            </tr>
-          </thead>
-          <tbody>
-          {{#each compteurs}}
-          <tr>
-            <td>{{_id}}</td>
-            <td>{{roles.[0]}}</td>
-            <td>
-              {{#if isCurrentUser _id}}
-              no
-              {{else}}
-              {{> quickRemoveButton collection="superGlobals" _id=_id onError=quickRemoveButtonOnError onSuccess=quickRemoveButtonOnSuccess beforeRemove=quickRemoveButtonBeforeRemove class="btn btn-danger"}}
-              {{/if}}
-            </td>
-          </tr>
-          {{/each}}
-          </tbody>
-        </table>
-        <form id="addcompteur">
-          <table class="table table-bordered">
-            <tbody>
-            <tr>
-              <td class="text-left text-middle"><input id="newCompteur" name="compteurName" placeholder="compteur pour role" /></td>
-              <td>
-                <button type="submit">Add</button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </form>
-      compteurs<br />
-      {{#each dataArray compteurs}}
-          {{this.key}}.
-          {{#each dataArray this.value}}
-            {{this.key}}: {{this.value}}<br />
-          {{/each}}
-          <br />
-      {{/each}}
-      -->
-      <!--<br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />-->
+     
       <button id="next">next</button>
 
    <form>
@@ -147,10 +78,8 @@
     <button type="button" id="whoShowLightButton">BIM</button> 
   </form> 
 
-    <button id="removeClicAdmin">removeClicAdmin</button> 
-    <button id="logScoreAdmin">logScoreAdmin</button> 
-    <button class="winners">CALC WINNERS</button> 
-    <button id="armKeyboard"> ARM KEYBOARD</button>
+    <button id="adminSetCourseOff">adminSetCourseOff</button>
+    <button id="adminSetCourseOn">adminSetCourseOn</button>
     <button id="noirDeFin"> NOIR DE FIN</button>
     <button id="scoreG"> SCOREG</button>
     <button id="scoreD"> SCORED</button>

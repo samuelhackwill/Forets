@@ -10,8 +10,6 @@ ambiances = new Meteor.Collection('ambiances');
 
 loteries = new Meteor.Collection('loteries');
 
-PhoneNumbers = new Meteor.Collection('phoneNumbers');
-
 score = new Meteor.Collection("score");
 
 SpeedTest = new Meteor.Collection("speedTest");
@@ -19,6 +17,7 @@ SpeedTest = new Meteor.Collection("speedTest");
 PosRunner = new Meteor.Collection("posRunner");
 
 FukinScore = new Meteor.Collection("fukinScore");
+HallOfFame = new Meteor.Collection("hallofame");
 
 var Schemas = {};
 
@@ -298,42 +297,6 @@ Schemas.loteries = new SimpleSchema({
 });
 
 
-Schemas.phoneNumbers = new SimpleSchema({
-
-    "number": {
-        type: String,
-        label: "Numéro de téléphone"
-    },
-    "calls": {
-        type: Number,
-        label: "Appels",
-        defaultValue: 0
-    },
-    "representation": {
-        type: String,
-        label: "representation",
-        defaultValue: ""
-    },
-    "created": {
-      type: Date,
-      label: "Date de création",
-      autoValue: function() {
-        if ( this.isInsert ) {
-          return new Date;
-        } 
-      }
-    },
-    "updated": {
-      type: Date,
-      label: "Date de modification",
-      autoValue: function() {
-        if ( this.isUpdate || this.isInsert || this.isInsert ) {
-          return new Date;
-        } 
-      }
-    }
-
-});
 
 //attachons les schema à nos collections
 ContenusEcran.attachSchema(Schemas.ContenusEcran);
@@ -341,7 +304,6 @@ superGlobals.attachSchema(Schemas.superGlobals);
 representations.attachSchema(Schemas.representations);
 ambiances.attachSchema(Schemas.ambiances);
 loteries.attachSchema(Schemas.loteries);
-PhoneNumbers.attachSchema(Schemas.phoneNumbers);
 
 
 //permissions
@@ -363,31 +325,17 @@ ContenusEcran.allow({
 superGlobals.allow({
   insert: function () {
 
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
     return true; 
 
   },
   update: function () {
 
-    var loggedInUser = Meteor.user()
 
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
     return true; 
 
   },
   remove: function () {
 
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
     return true; 
 
   }
@@ -488,6 +436,18 @@ FukinScore.allow({
   }
 });
 
+HallOfFame.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
+
 Postit.allow({
   insert:function(){
     return true;
@@ -525,38 +485,6 @@ PosRunner.allow({
 });
 
 loteries.allow({
-  insert: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-  },
-  update: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-  },
-  remove: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-
-  }
-});
-
-
-PhoneNumbers.allow({
   insert: function () {
 
     var loggedInUser = Meteor.user()

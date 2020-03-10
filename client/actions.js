@@ -120,6 +120,7 @@ action = function(type, params){
     break
 
     case "fukinlogscore":
+    console.log("inserting the shit out the score", speedScore)
     FukinScore.insert({name:Session.get("localName"), score:speedScore})
     break
 
@@ -152,10 +153,10 @@ action = function(type, params){
     break
 
     case "logScore":
-    superMegaInterrupt=true
+    // superMegaInterrupt=true
     speedScore = dateFinish - dateStart
     console.log("speedScore", speedScore)
-    Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
+    // Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
     break
 
     case "startRace":

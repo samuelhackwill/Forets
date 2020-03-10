@@ -15,6 +15,8 @@ Template.videoproj.onCreated(function() {
     this.subscribe('allSpeedTest');
     this.subscribe('allscore');
     this.subscribe('allFukinScore');
+    this.subscribe('allHallOfFame');
+    this.subscribe('allSuperGlobals');
   });
 
 });
@@ -131,14 +133,14 @@ Template.videoproj.onRendered(function () {
 
 // CUSTOM KEYUP POUR AVIGNON!!!
 
-startRace = function(){
-  __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-  superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-}
+// startRace = function(){
+//   __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+//   superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+// }
 
 initiateTheShitOutOfThisProgram = function(who){
-     __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-    superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+    //  __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+    // superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
 
 
     _did = PosRunner.find({name:"gauche"}).fetch()[0]._id
@@ -252,8 +254,30 @@ var nextEvent = function(){
       _cycle = 1
     }
 
+    if(superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet==false){
+
     PosRunner.update(__id, {$set:{"posX":_posX+1},})
     PosRunner.update(__id, {$set:{"cycle":_cycle},})
+
+    victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
+    _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
+    _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
+
+    }
+
+
+    if(_progressG>690 || _progressD>690 && victory==false){
+      console.log("victory de quelqu'un")
+      __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
+      superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
+
+      document.getElementById("victory").style.opacity="1"
+
+      setTimeout(function(){
+        document.getElementById("victory").style.opacity="0"
+      },3000)
+
+    }
 
 
     // document.getElementById("runningGuy").style.background="url('/img/running guy-"+compteurAnim+".png'"
@@ -269,31 +293,42 @@ var nextEvent = function(){
 
   Template.videoproj.helpers({
 
+    victoryOnOff(){
+
+      console.log("updating victoryONOFF")
+
+      if(FukinScore.findOne({ winTrigger: { $exists: true}}).winTrigger==false){
+        __id = PosRunner.findOne({ winTrigger: { $exists: true}})._id
+        PosRunner.update(__id, {$set:{"winTrigger":false},})
+        return "SPACEBAR ATHLETE!"
+      }else{
+        return "TEAM SIESTE."
+      }
+
+      // est ce que tu es le premier a gagner? si oui = "YES" sinon = "OH DOMMAGE"
+
+      // if( ){
+      //   return 1
+      // }else{
+      //   return 0
+      // }
+    },
+
     courseOnOff(){
       victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
 
-      if(victory){
-        return 0
-      }else{
+      if(victory==false){
+        console.log("courseOnOff returning 1")
         return 1
+      }else{
+        console.log("courseOnOff returning 0")
+        return 0
       }
     },
 
     progressG(){
       _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
-      victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
 
-      if(_progressG>690 && victory==false){
-        console.log("victory gauche")
-        __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-        superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-        document.getElementById("victory").style.opacity="1"
-
-        setTimeout(function(){
-          document.getElementById("victory").style.opacity="0"
-        },3000)
-
-      }
 
         return _progressG
         //omg pour l'instant c'est des pourcentages de la taille en pixels du viewport... qui est différent en fonction des machines.
@@ -302,21 +337,7 @@ var nextEvent = function(){
 
     progressD(){
       _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
-      victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
 
-      if(_progressD>690 && victory==false){
-        console.log("victory droite")
-        __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-        superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-
-        document.getElementById("victory").style.opacity="1"
-
-        
-        setTimeout(function(){
-          document.getElementById("victory").style.opacity="0"
-        },3000)
-
-      }
         return _progressD
         //omg pour l'instant c'est des pourcentages de la taille en pixels du viewport... qui est différent en fonction des machines.
         // donc faudra faire mieux
