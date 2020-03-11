@@ -265,16 +265,16 @@ var nextEvent = function(){
       _cycle = 1
     }
 
-    if(superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet==false){
+    // if(superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet==false){
 
     PosRunner.update(__id, {$set:{"posX":_posX+1},})
     PosRunner.update(__id, {$set:{"cycle":_cycle},})
 
-    victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
+    // victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
     _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
     _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
 
-    }
+    // }
 
 
     if(_progressG>690 || _progressD>690 && victory==false){
