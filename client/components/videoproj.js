@@ -149,6 +149,19 @@ Template.videoproj.onRendered(function () {
 //   superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
 // }
 
+setDeceleratingTimeout = function(callback, factor, times){
+  var internalCallback = function(tick, counter){
+    return function(){
+      if (--tick >= 0){
+        window.setTimeout(internalCallback, ++counter * factor);
+        callback();
+
+      }
+    }
+  }(times, 0) ;
+  window.setTimeout(internalCallback, factor);
+};
+
 initiateTheShitOutOfThisProgram = function(who){
     //  __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
     // superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
@@ -257,18 +270,33 @@ var nextEvent = function(){
 
     __id = PosRunner.find({name:Session.get("localName")}).fetch()[0]._id
     _posX = PosRunner.find({name:Session.get("localName")}).fetch()[0].posX
-    _cycle = PosRunner.find({name:Session.get("localName")}).fetch()[0].cycle
+    // _cycle = PosRunner.find({name:Session.get("localName")}).fetch()[0].cycle
 
-    if(_cycle<12){
-      _cycle = _cycle+1
-    }else{
-      _cycle = 1
-    }
+    // if(_cycle<12){
+    //   _cycle = _cycle+1
+    // }else{
+    //   _cycle = 1
+    // }
+
+    setDeceleratingTimeout(function()
+      {
+      
+      document.getElementById("sprite"+yeecount).style.zIndex=infiniteZindex
+
+      if(yeecount<11){
+        yeecount ++
+      }else{
+        yeecount = 1;
+      }
+
+      infiniteZindex ++
+      },20,5);
+
 
     // if(superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet==false){
 
     PosRunner.update(__id, {$set:{"posX":_posX+1},})
-    PosRunner.update(__id, {$set:{"cycle":_cycle},})
+    // PosRunner.update(__id, {$set:{"cycle":_cycle},})
 
     // victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
     _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
@@ -302,7 +330,7 @@ var nextEvent = function(){
 yeehaw = function(){
   document.getElementById("sprite"+yeecount).style.zIndex=infiniteZindex
 
-  if(yeecount<12){
+  if(yeecount<11){
     yeecount ++
   }else{
     yeecount = 1;
