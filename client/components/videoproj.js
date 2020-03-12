@@ -1,8 +1,9 @@
-// call function yeehaw with setinterval so see the guy running
-// 80 feels natural
-// 5 does not
-// a voir comment on combine avec un keystroke pour que ça soit plus joli qu'à la belonne
+// TODO : implémenter un calculateur de fréquence de stroke
+// pour accélérer ou ralentir le cycle de course
+// ainsi que de faire avance le gonze plus ou moins vite
+// (plus tu tapes vite, plus il va vite)
 
+// a terme : si pas d'appui pendant une demi seconde, le personnage retourne au repos
 
 var caughtUp = false;
 var intervalReload;
@@ -280,16 +281,11 @@ var nextEvent = function(){
 
     setDeceleratingTimeout(function()
       {
-      
-      document.getElementById("sprite"+yeecount).style.zIndex=infiniteZindex
-
-      if(yeecount<11){
-        yeecount ++
-      }else{
-        yeecount = 1;
-      }
-
-      infiniteZindex ++
+        yeehaw()
+        // et c'est là qu'il faudrait que ce fameux 20
+        // deviene une variable qui augmente ou diminue
+        // en fonction du rythme de pression sur la spacebar
+        // ainsi que le déplacement en nombre de pixels
       },20,5);
 
 
