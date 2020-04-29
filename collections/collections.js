@@ -17,7 +17,10 @@ SpeedTest = new Meteor.Collection("speedTest");
 PosRunner = new Meteor.Collection("posRunner");
 
 FukinScore = new Meteor.Collection("fukinScore");
+
 HallOfFame = new Meteor.Collection("hallofame");
+
+ViewSwitcher = new Meteor.Collection("viewSwitcher")
 
 var Schemas = {};
 

@@ -1,0 +1,52 @@
+<head>
+  <title>JACKY</title>
+  <meta charset="utf-8">
+</head>
+
+<template name="covid19">
+
+	<div id="victory" style="opacity:0">{{victoryOnOff}}</div>
+
+	<div id="progressBar" style="opacity: {{courseOnOff}};"></div>
+
+<!-- i should be using {{#each}} but fuck this
+ -->
+
+ <div id="runnersGrid">
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ 	<div class="testRunner"></div>
+ </div>
+
+
+ 	<div id="testRunningGuy" style="transform: translateX({{progressG}}px)">
+		<div id="sprite1"></div>	
+		<div id="sprite2"></div>	
+		<div id="sprite3"></div>	
+		<div id="sprite4"></div>	
+		<div id="sprite5"></div>	
+		<div id="sprite6"></div>	
+		<div id="sprite7"></div>	
+		<div id="sprite8"></div>	
+		<div id="sprite9"></div>	
+		<div id="sprite10"></div>	
+		<div id="sprite11"></div>	
+		<div id="sprite12"></div>
+	</div>	
+<!-- 
+
+	<div id="runningGuyG" style="opacity: {{courseOnOff}}; transform: translateX({{progressG}}px); background-image: url({{whichImageG}});">
+	</div>
+
+	<div id="runningGuyD" style="opacity: {{courseOnOff}}; transform: translateX({{progressD}}px); background-image: url({{whichImageD}});"></div>
+
+ 	<span id="arr" style="opacity: {{courseOnOff}}; transform: translateX({{whichVous}}px"> &darr; vous</span> -->
+
+  {{> screen}}
+
+</template>

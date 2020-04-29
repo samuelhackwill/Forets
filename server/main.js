@@ -13,6 +13,10 @@ Meteor.publish('allPostits', function(){
   return Postit.find();
 });
 
+Meteor.publish('allViewSwitcher', function(){
+  return ViewSwitcher.find();
+});
+
 Meteor.publish('allFukinScore', function(){
   return FukinScore.find();
 });
@@ -55,6 +59,11 @@ Meteor.publish( 'users', function() {
   }
 });
 
+Meteor.startup(function () {
+
+  console.log("hey my friend fuck YOYU")
+  console.log(ViewSwitcher.findOne())
+});
 
 
 // ICI TOUS LES EVENEMENTS DE DDP
@@ -483,7 +492,7 @@ Meteor.methods({
         case 'modeSpectacle':
           console.log('modeSpectacle', obj.value);
           if(typeof(obj.value) === "boolean") {
-            console.log('modeSpectacle2', obj.value, superGlobals.findOne({ modeSpectacle: { $exists: true}}));
+            // console.log('modeSpectacle2', obj.value, superGlobals.findOne({ modeSpectacle: { $exists: true}}));
             var modeSpectacle = superGlobals.findOne({ modeSpectacle: { $exists: true}});
             if(modeSpectacle) {
               console.log('modeSpectacle3 mise a jour');
@@ -500,9 +509,9 @@ Meteor.methods({
           break;
 
         case 'spectacleStarted':
-          console.log('spectacleStarted', obj.value);
+          // console.log('spectacleStarted', obj.value);
           if(typeof(obj.value) === "boolean") {
-            console.log('spectacleStarted2', obj.value, superGlobals.findOne({ spectacleStarted: { $exists: true}}));
+            // console.log('spectacleStarted2', obj.value, superGlobals.findOne({ spectacleStarted: { $exists: true}}));
             var spectacleStarted = superGlobals.findOne({ spectacleStarted: { $exists: true}});
             if(spectacleStarted) {
               console.log('spectacleStarted3 mise a jour');
@@ -519,9 +528,9 @@ Meteor.methods({
           break;
 
         case 'forceHangup':
-          console.log('forceHangup', obj.value);
+          // console.log('forceHangup', obj.value);
           if(typeof(obj.value) === "boolean") {
-            console.log('forceHangup2', obj.value, superGlobals.findOne({ forceHangup: { $exists: true}}));
+            // console.log('forceHangup2', obj.value, superGlobals.findOne({ forceHangup: { $exists: true}}));
             var forceHangup = superGlobals.findOne({ forceHangup: { $exists: true}});
             if(forceHangup) {
               console.log('forceHangup3 mise a jour');
@@ -536,209 +545,6 @@ Meteor.methods({
             // superGlobals.upsert({modeSpectacle: obj.value}, { filter: false });
           }
           break;
-
-        case 'cuppasInc':
-          var thecuppasCount = superGlobals.findOne({ cuppasCount: { $exists: true}});
-          if(thecuppasCount){
-            if(thecuppasCount.cuppasCount || thecuppasCount.cuppasCount < 1) {
-              console.log('un thé supplémentaire en cours de préparation');
-              console.log(thecuppasCount)
-              //mise à jour
-              superGlobals.update(thecuppasCount._id, { $inc: { "cuppasCount": 1 } }, { filter: false });
-            }
-          } else {
-            console.log('le premier thé est en cours de préparation');
-            //création
-            superGlobals.insert({cuppasCount: 1}, { filter: false });
-          }
-          //calculons le prochain pas / décompte à atteindre pour allumer une bûche
-          var nbBuches = 6;
-          // var coeffRandom = getRandomArbitrary(0.2,1.8);
-          var coeffRandom = getRandomArbitrary(0.3,3);
-          console.log("coeffRandom", coeffRandom);
-          var buches = superGlobals.findOne({ buchesCount: { $exists: true}});
-          if(buches){
-            console.log('il y a des buches', buches);
-            var buchesArray = buches.buchesCount; 
-            console.log('le tableau de buches', buchesArray);
-            if(buchesArray && buchesArray.length > 0 && buchesArray.length <= nbBuches) {
-              var buchesAllumees = buchesArray.filter(function(buche){ return buche; }).length;
-              var nbBuchRestantes = nbBuches - buchesAllumees;
-              console.log("nbBuchRestantes", nbBuchRestantes);
-              //get cuppasCount - volontaires en cours
-              var cuppasCount = superGlobals.findOne({ cuppasCount: { $exists: true}});
-              var theCuppasCount = (cuppasCount) ? cuppasCount.cuppasCount : 0;
-              //get nextBuche - compteur avant prochain allumage
-              var nextBuche = superGlobals.findOne({ nextBucheAllumage: { $exists: true}});
-              var nextBucheAllumage = (nextBuche) ? nextBuche.nextBucheAllumage : 0;
-              if(cuppasCount) {
-                var valPasSuivant = (nbBuchRestantes==0) ? 0 : (theCuppasCount - nbBuchRestantes) / nbBuchRestantes * coeffRandom;
-                console.log("valPasSuivant", "(theCuppasCount"+theCuppasCount+" - nbBuchRestantes"+nbBuchRestantes+") / nbBuchRestantes"+nbBuchRestantes+" * coeffRandom"+coeffRandom+" = "+valPasSuivant);
-                console.log("valPasSuivant rounded", Math.round(valPasSuivant));
-                //enregistrons le nouveau prochain allumage (selon le pas qui vient d'être calculé)
-                var newNextBucheAllumage = (valPasSuivant<0) ? 0 : Math.round(valPasSuivant)
-                console.log("prochain allumage", "nextBucheAllumage="+newNextBucheAllumage);
-                superGlobals.update(nextBuche._id, { $set: { "nextBucheAllumage": newNextBucheAllumage } }, { filter: false });
-              } else console.log("no cuppasCount?.");
-            }
-          }
-
-        break
-        case 'finishCuppa':
-          var nbBuches = 6;
-          var buches = superGlobals.findOne({ buchesCount: { $exists: true}});
-          if(buches){
-            console.log('il y a des buches', buches);
-            var buchesArray = buches.buchesCount; 
-            console.log('le tableau de buches', buchesArray);
-            if(buchesArray && buchesArray.length > 0 && buchesArray.length <= nbBuches) {
-              var buchesAllumees = buchesArray.filter(function(buche){ return buche; }).length;
-              console.log("buches déjà allumées", buchesAllumees);
-
-              //get cuppasCount - volontaires en cours
-              var cuppasCount = superGlobals.findOne({ cuppasCount: { $exists: true}});
-              var theCuppasCount = (cuppasCount) ? cuppasCount.cuppasCount : 0;
-              var nextBuche = superGlobals.findOne({ nextBucheAllumage: { $exists: true}});
-              var nextBucheAllumage = (nextBuche) ? nextBuche.nextBucheAllumage : 0;
-              console.log("theCuppasCount", theCuppasCount);
-              console.log("nextBucheAllumage", nextBucheAllumage);
-              if(null != nextBucheAllumage && nextBucheAllumage == 0) { //on a atteint le nombre voulu pour le prochain allumage
-                console.log("on a atteint le nombre voulu pour le prochain allumage");
-                //calculons le prochain pas / décompte à atteindre pour allumer une bûche
-                // var coeffRandom = getRandomArbitrary(0.2,1.8);
-                var coeffRandom = getRandomArbitrary(0.3,3);
-                console.log("coeffRandom", coeffRandom);
-                var nbBuchRestantes = nbBuches - buchesAllumees;
-                var valPasSuivant = (nbBuchRestantes==0) ? 0 : (theCuppasCount - nbBuchRestantes) / nbBuchRestantes * coeffRandom;
-                console.log("valPasSuivant", "(theCuppasCount"+theCuppasCount+" - nbBuchRestantes"+nbBuchRestantes+") / nbBuchRestantes"+nbBuchRestantes+" * coeffRandom"+coeffRandom+" = "+valPasSuivant);
-                console.log("valPasSuivant rounded", Math.round(valPasSuivant));
-                //enregistrons le nouveau prochain allumage (selon le pas qui vient d'être calculé)
-                var newNextBucheAllumage = (valPasSuivant<0) ? 0 : Math.round(valPasSuivant);
-                console.log("prochain allumage", "nextBucheAllumage"+nextBucheAllumage+"-Math.round(valPasSuivant)"+Math.round(valPasSuivant)+"="+newNextBucheAllumage);
-                superGlobals.update(nextBuche._id, { $set: { "nextBucheAllumage": newNextBucheAllumage } }, { filter: false });
-                //allumons une bûche en plus
-                var buchesCountDefault = [];
-                for (var i = 0; i < nbBuches; i++) {
-                  buchesCountDefault.push( (i <= buchesAllumees) ? true : false);
-                }
-                // for (var i = 0; i < buchesAllumees+1; i++) {
-                //   if(i<nbBuches) buchesCountDefault[i] = true;
-                // }
-                buchesArray = buchesCountDefault;
-                console.log("buchesArray", buchesArray);
-                //mise à jour
-                superGlobals.update(buches._id, { $set: { "buchesCount": buchesArray } }, { filter: false });
-                var args = {buches: buchesAllumees+1}
-                em.emit('adminFireBuche', args);
-              } else {
-                console.log("on a pas encore atteint le prochain allumage");
-              }
-              //dans tous les cas, quelqu'un a fini de préparer un thé, décrémentons le nombre de tasses
-              Meteor.call('setSuperGlobal', {name: 'cuppasDec'});
-            }
-          } else {
-            console.log('où sont les bûches ?');
-            //création
-            // superGlobals.insert({cuppasCount: 1}, { filter: false });
-          }
-
-        break
-
-        case 'cuppasReset':
-          //remise à zéro des tasses de thé
-          var thecuppasCount = superGlobals.findOne({ cuppasCount: { $exists: true}});
-          if(thecuppasCount){
-            if(thecuppasCount.cuppasCount) {
-              console.log('remise à zéro des tasses de thé');
-              //mise à jour
-              superGlobals.update(thecuppasCount._id, { $set: { "cuppasCount": 0 } }, { filter: false });
-            }
-            console.log('ben euh ya bien une collection mais elle est vide');
-          } else {
-            console.log('ben euh ya rien en fait');
-            //création
-            superGlobals.insert({cuppasCount: 0}, { filter: false });
-          }
-          //remise à zéro (en fait 8) des bûches
-          var buchesCount = superGlobals.findOne({ buchesCount: { $exists: true}});
-          var nbBuches = 6;
-          var buchesCountDefault = [];
-          for (var i = 0; i < nbBuches; i++) {
-            buchesCountDefault.push(false);
-          }
-          console.log("buchesCount", buchesCount);
-          if(buchesCount){
-            if(buchesCount.buchesCount) {
-              console.log('remise à zéro des bûches');
-              //mise à jour
-
-              superGlobals.update(buchesCount._id, { $set: { "buchesCount": buchesCountDefault } }, { filter: false });
-            }
-            console.log('ben euh ya bien une collection mais elle est vide');
-          } else {
-            console.log('ben euh ya rien en fait');
-            //création
-            superGlobals.insert({buchesCount: buchesCountDefault}, { filter: false });
-          }
-          //remise à zéro du compteur de la prochaine bûche à allumer
-          var nextBuche = superGlobals.findOne({ nextBucheAllumage: { $exists: true}});
-          console.log("nextBuche", nextBuche);
-          if(nextBuche){
-            if(null !== nextBuche.nextBucheAllumage) {
-              console.log('remise à zéro de l\'allumage des bûches');
-              //mise à jour
-              superGlobals.update(nextBuche._id, { $set: { "nextBucheAllumage": 0 } }, { filter: false });
-            }
-            console.log('ben euh ya bien une collection mais elle est vide');
-          } else {
-            console.log('ben euh ya rien en fait');
-            //création
-            superGlobals.insert({nextBucheAllumage: 0}, { filter: false });
-          }
-
-        break
-
-        case 'cuppasDec':
-          var thecuppasCount = superGlobals.findOne({ cuppasCount: { $exists: true}});
-          if(thecuppasCount){
-            if(thecuppasCount.cuppasCount && thecuppasCount.cuppasCount > 0) {
-              console.log('un thé supplémentaire est prêt!');
-              //mise à jour
-              superGlobals.update(thecuppasCount._id, { $inc: { "cuppasCount": -1 } }, { filter: false });
-            }
-          } else {
-            console.log('on peut pas enlever des thés parce que yen a pas');
-            //création
-          }
-          //décrémentons le nextBucheAllumage de 1
-          var nextBuche = superGlobals.findOne({ nextBucheAllumage: { $exists: true}});
-          if(nextBuche){
-            if(nextBuche.nextBucheAllumage && nextBuche.nextBucheAllumage > 0) {
-              console.log('décrémentons le prochain allumage de bûche');
-              //mise à jour
-              superGlobals.update(nextBuche._id, { $inc: { "nextBucheAllumage": -1 } }, { filter: false });
-            }
-          } else {
-            console.log('on peut pas décrémenter le prochain allumage de bûche parce que yen a pas');
-            //création
-          }
-
-          break
-
-        case 'ambiance':
-          var ambiance = superGlobals.findOne({ whichAmbiance: { $exists: true}});
-          if(ambiance){
-            if(ambiance.whichAmbiance) {
-              console.log('changement d\'ambiance');
-              //mise à jour
-              superGlobals.update(ambiance._id, { $set: { "whichAmbiance": obj.value } }, { filter: false });
-            }
-            console.log('ben euh ya bien une collection mais elle est vide');
-          } else {
-            console.log('ben euh ya rien en fait');
-            //création
-            superGlobals.insert({whichAmbiance: obj.value}, { filter: false });
-          }
 
         case 'compteurAdmin':
           console.log('compteurAdmin', obj.value);

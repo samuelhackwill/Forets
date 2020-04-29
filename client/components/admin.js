@@ -17,6 +17,7 @@ Template.admin.onCreated(function() {
   //subscribe à la collection contenus écran
   this.autorun(() => {
     this.subscribe('allSuperGlobals');
+    this.subscribe('allViewSwitcher');
     this.subscribe('allRepresentations');
     this.subscribe('allContenusEcran');
     this.subscribe('allLoteries');
