@@ -20,7 +20,9 @@ FukinScore = new Meteor.Collection("fukinScore");
 
 HallOfFame = new Meteor.Collection("hallofame");
 
-ViewSwitcher = new Meteor.Collection("viewSwitcher")
+ViewSwitcher = new Meteor.Collection("viewSwitcher");
+
+Bonhomme = new Meteor.Collection("bonhomme");
 
 var Schemas = {};
 
@@ -537,6 +539,18 @@ Meteor.users.allow({
     if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
       throw new Meteor.Error(403, "Access denied")
     }
+    return true;
+  }
+});
+
+Bonhomme.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
     return true;
   }
 });

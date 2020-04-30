@@ -9,10 +9,19 @@
 
 	<div id="progressBar" style="opacity: {{courseOnOff}};"></div>
 
-<!-- i should be using {{#each}} but fuck this
- -->
-
  <div> show status {{whichRace}}</div>
+
+
+ <div id="runnersGrid">
+
+
+{{#each bonhomme}}
+	<div class="testRunner"><span>{{_id}}{{poule}}</span><span id="vous">{{vous}}</span></div>
+{{/each}}
+
+</div>
+
+<!-- 
 
  <div id="runnersGrid">
  	<div class="testRunner"></div>
@@ -40,6 +49,9 @@
 		<div id="sprite11"></div>	
 		<div id="sprite12"></div>
 	</div>	
+
+ -->
+
 <!-- 
 
 	<div id="runningGuyG" style="opacity: {{courseOnOff}}; transform: translateX({{progressG}}px); background-image: url({{whichImageG}});">

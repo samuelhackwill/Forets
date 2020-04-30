@@ -13,6 +13,10 @@ Meteor.publish('allPostits', function(){
   return Postit.find();
 });
 
+Meteor.publish('allBonhommes', function(){
+  return Bonhomme.find();
+});
+
 Meteor.publish('allViewSwitcher', function(){
   return ViewSwitcher.find();
 });
@@ -63,14 +67,15 @@ Meteor.startup(function () {
 
   if(ViewSwitcher.findOne()===undefined){
     console.log("VIEWSWITCHER IS EMPTY, INSERTING NOW")
-    ViewSwitcher.insert({"name":"courseSolo", "activated":true})
+    ViewSwitcher.insert({"name":"noCourse", "activated":true})
+    ViewSwitcher.insert({"name":"courseSolo", "activated":false})
     ViewSwitcher.insert({"name":"coursePoule", "activated":false})
     ViewSwitcher.insert({"name":"courseFinale", "activated":false})
   }
 });
 
 
-// ICI TOUS LES EVENEMENTS DE DDP
+// ICI TOUS LES EVENEMENTS  DDP
 if (Meteor.isServer) {
   process.env.HTTP_FORWARDED_COUNT = 1;
   Meteor.publish(null, function() {
@@ -309,8 +314,6 @@ if (Meteor.isServer) {
   });
 
   
-
-
   
   // This code only runs on the server
   Meteor.publish('superGlobals', function tasksPublication() {
@@ -318,7 +321,6 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
-
     scoreGAdmin:function(){
       em.emit("scoreGServer")
     },

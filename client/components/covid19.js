@@ -19,6 +19,7 @@ Template.covid19.onCreated(function() {
   //subscribe à la collection representations
   this.autorun(() => {
     this.subscribe('allRepresentations');
+    this.subscribe('allBonhommes');
     this.subscribe('allViewSwitcher');
     this.subscribe('allContenusEcran');
     this.subscribe('allPosRunner');
@@ -28,6 +29,18 @@ Template.covid19.onCreated(function() {
     this.subscribe('allHallOfFame');
     this.subscribe('allSuperGlobals');
   });
+
+  console.log("how many times is this shit created?")
+
+  $(window).bind('beforeunload', function() {
+        closingWindow();
+    });
+  // ici toute la logique cookies & id blublu
+
+  poules = ["lents", "rapides"]
+  randomPoule = poules[Math.floor(Math.random() * poules.length)];
+
+  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : "", anime : "", poule : randomPoule, haswonpoule : ""})
 
 });
 
@@ -46,16 +59,6 @@ Template.covid19.onRendered(function () {
     console.log('srt spectacle covid19 rendered');
     console.log('data ?', data);
     console.log('ContenusEcran ?', ContenusEcran.find().fetch());
-    // if(data) {
-    //   catchUpWithTheShow();
-    // }
-
-    //
-    // rawTextToJson();
-  // console.log(Template.instance());
-    // zoupageJSON(dataFromDB, data);
-    // autonext(2000);
-      // Meteor.setInterval(yeehaw(), 100);
 
   });
 
@@ -65,48 +68,8 @@ Template.covid19.onRendered(function () {
 
   $(document.body).addClass('covid19');
 
-  // function catchUpWithTheShow(){
-  //   console.log('catchUpWithTheShow caughtUp?', caughtUp);
-  //   if(!caughtUp) {
-  //     caughtUp = true;
-  //     console.log("checking compteur", compteur, "cookie.compteur", cookies.get('compteur'), modeSpectacle);
-  //     //si on est en mode spectacle, que l'admin a le pouvoir
-  //     var isPowerToThePeople = getSuperGlobal('powerToThePeople');
-  //     if(modeSpectacle && !isPowerToThePeople) {
-  //       //et si il y a un compteur enregistré
-  //       var compteurAdmin = getSuperGlobal('compteurAdmin');
-  //       console.log("checking compteurAdmin", compteurAdmin);
-
-  //       if(null !== compteurAdmin) compteur = parseInt(compteurAdmin);
-  //       if(compteur != -1) {
-  //         //revenir où on était dans le spectacle
-  //         next();
-  //       }
-
-  //       //ambiance?
-  //       var whichAmbiance = getSuperGlobal("whichAmbiance", "");
-  //       if(whichAmbiance != "") { //il y a une ambiance en cours
-  //         //passons à cette ambiance
-  //         var newAmbiance = ambiances.findOne({name: whichAmbiance});
-  //         if(newAmbiance) {
-  //           console.log("set Ambiance", newAmbiance.value)
-  //           changeImg(newAmbiance.value)
-  //         }
-  //       }
-  //     }
-      
-  //   }
-
-  // }
-
-
   em.addListener('salmnext', function(what) {
     console.log('salm next!', what);
-    // compteur = what.compteur;
-    //enregistrons le compteur dans un cookie
-    // if(what.compteur && cookies.get('compteur') != what.compteur) cookies.set('compteur', what.compteur);
-    // var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
-    // var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : [];
     var isSUPERinterrupt = getSuperGlobal("SUPERinterrupt", []);
     var userRoles = Roles.getRolesForUser(Meteor.user());
     if(userRoles.length == 0) userRoles.push("salm");
@@ -143,13 +106,6 @@ Template.covid19.onRendered(function () {
     unstop();
   }); 
 
-
-// CUSTOM KEYUP POUR AVIGNON!!!
-
-// startRace = function(){
-//   __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-//   superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-// }
 
 setDeceleratingTimeout = function(callback, factor, times){
   var internalCallback = function(tick, counter){
@@ -270,15 +226,9 @@ var nextEvent = function(){
     next();
     console.log("keyup, ", compteur)
 
-    __id = PosRunner.find({name:Session.get("localName")}).fetch()[0]._id
-    _posX = PosRunner.find({name:Session.get("localName")}).fetch()[0].posX
-    // _cycle = PosRunner.find({name:Session.get("localName")}).fetch()[0].cycle
 
-    // if(_cycle<12){
-    //   _cycle = _cycle+1
-    // }else{
-    //   _cycle = 1
-    // }
+    _posX = Bonhomme.find({_id:playerId}).fetch()[0].posX
+
 
     setDeceleratingTimeout(function()
       {
@@ -289,38 +239,8 @@ var nextEvent = function(){
         // ainsi que le déplacement en nombre de pixels
       },20,5);
 
+    Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
 
-    // if(superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet==false){
-
-    PosRunner.update(__id, {$set:{"posX":_posX+1},})
-    // PosRunner.update(__id, {$set:{"cycle":_cycle},})
-
-    // victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
-    _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
-    _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
-
-    // }
-
-
-    if(_progressG>690 || _progressD>690 && victory==false){
-      console.log("victory de quelqu'un")
-      __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-      superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-
-      document.getElementById("victory").style.opacity="1"
-
-      setTimeout(function(){
-        document.getElementById("victory").style.opacity="0"
-      },3000)
-
-    }
-
-
-    // document.getElementById("runningGuy").style.background="url('/img/running guy-"+compteurAnim+".png'"
-    // make compteur anim a reactive var ou quoi...
-
-    // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
-    // ça avance tout seul avec un délai)
   }
 }
 
@@ -338,8 +258,38 @@ yeehaw = function(){
 
 // i know this is stupid but don't have time
 
+closingWindow = function(){
+  Bonhomme.remove({_id:playerId})
+}
+
 
   Template.covid19.helpers({
+
+    bonhomme(){
+      if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="noCourse") {
+        return
+      }    
+
+      if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="courseSolo") {
+        return Bonhomme.find({_id : playerId})// just one guy, but the full object so we can access all its proprieties
+      }    
+
+      if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="coursePoule") {
+        return Bonhomme.find({poule : randomPoule}, {sort : {arrivedAt : 1}}) // à mettre à jour avec le mécanisme des poules
+      }
+
+      if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="courseFinale") {
+        return // just the poule winners
+      }
+    },
+
+    vous(){
+      if(playerId===this._id){
+        return "<-VOUS"
+      }else{
+        return
+      }
+    },
 
     whichRace(){
       return ViewSwitcher.find({"activated":true}).fetch()[0].name
@@ -403,17 +353,5 @@ yeehaw = function(){
     whichImageD(){
       _whichImageD = PosRunner.find({name:"droite"}).fetch()[0].cycle
       return "\'/img/running guy-"+_whichImageD+".png\'"
-    },
-
-    whichVous(){
-      _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
-      _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
-
-      if(Session.get("localName")=="gauche"){
-        return _progressG+39
-      }else{
-        return _progressD+39
-      }
     }
-
   });

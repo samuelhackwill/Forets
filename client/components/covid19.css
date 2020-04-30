@@ -27,6 +27,10 @@ top:170px !important;
 text-align:center;
 }
 
+#vous{
+	color:red;
+}
+
 body.covid19 #arr{
 	position: fixed;
 	top: 63%;
