@@ -487,6 +487,18 @@ PosRunner.allow({
   }
 });
 
+ViewSwitcher.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
+
 loteries.allow({
   insert: function () {
 

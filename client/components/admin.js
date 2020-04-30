@@ -398,6 +398,11 @@ Template.admin.onRendered(function () {
 
 
 Template.showtime.helpers({
+  ViewSwitchers:function(){
+    return ViewSwitcher.find({})
+  },
+
+
   isPowerToTheAdminChecked:function(){
     // var powerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}});
     // var isPowerToThePeople = (powerToThePeople) ? powerToThePeople.powerToThePeople : true;
@@ -461,6 +466,22 @@ Template.showtime.helpers({
 });
 
 Template.showtime.events({
+
+  'click .viewSwitcher' : function(e){
+    console.log(e.target.id)
+    fetched = ViewSwitcher.find({}).fetch()
+
+    // you know what? can't be arsed
+
+    for(i=fetched.length-1; i>-1; i--){
+    // uncheck all the other checkboxes
+      ViewSwitcher.update(fetched[i]._id, {$set:{"activated":false},})
+    }
+
+    // change the db for the checked checkbox
+    ViewSwitcher.update(ViewSwitcher.find({"name":e.target.id}).fetch()[0]._id, {$set:{"activated":!ViewSwitcher.find({"name":e.target.id}).fetch()[0].activated},})
+
+  },
 
 
 

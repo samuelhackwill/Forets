@@ -90,10 +90,14 @@
 <!-- for each part in database
   make a reactive checkbox for the admin m
  -->
-<label class="container">One
-<input type="checkbox" checked={{isItPartOne}}> <!-- là faut du meteor -->
+
+ {{#each ViewSwitchers}}
+<label class="container"> {{name}}
+<input type="checkbox" class="viewSwitcher" id={{name}} checked={{activated}}> <!-- là faut du meteor -->
 <span class="checkmark"></span>
 </label>
+{{/each}}
+
 </div>
 
 </template>

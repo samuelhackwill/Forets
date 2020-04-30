@@ -61,8 +61,12 @@ Meteor.publish( 'users', function() {
 
 Meteor.startup(function () {
 
-  console.log("hey my friend fuck YOYU")
-  console.log(ViewSwitcher.findOne())
+  if(ViewSwitcher.findOne()===undefined){
+    console.log("VIEWSWITCHER IS EMPTY, INSERTING NOW")
+    ViewSwitcher.insert({"name":"courseSolo", "activated":true})
+    ViewSwitcher.insert({"name":"coursePoule", "activated":false})
+    ViewSwitcher.insert({"name":"courseFinale", "activated":false})
+  }
 });
 
 

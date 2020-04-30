@@ -341,6 +341,10 @@ yeehaw = function(){
 
   Template.covid19.helpers({
 
+    whichRace(){
+      return ViewSwitcher.find({"activated":true}).fetch()[0].name
+    },
+
     victoryOnOff(){
 
       console.log("updating victoryONOFF")
