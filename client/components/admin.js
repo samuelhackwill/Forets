@@ -471,6 +471,8 @@ Template.showtime.events({
     console.log(e.target.id)
     fetched = ViewSwitcher.find({}).fetch()
 
+    Meteor.call("restartBonhommes")
+
     // you know what? can't be arsed
 
     for(i=fetched.length-1; i>-1; i--){

@@ -321,6 +321,16 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
+    killBonhommes:function(){
+      Bonhomme.remove({})
+    },
+
+
+    restartBonhommes:function(){
+      Bonhomme.update({}, {$set: {posX: 0}}, {multi: true});
+    },
+
+
     scoreGAdmin:function(){
       em.emit("scoreGServer")
     },

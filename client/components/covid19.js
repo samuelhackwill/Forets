@@ -9,9 +9,12 @@ var caughtUp = false;
 var intervalReload;
 Session.set("localName", "");
 yeecount = 1;
-infiniteZindex = 0;
+zob = ""
 
 compteurAnim=1;
+
+animationRate = 20;
+// en fait 80 c'est pas mal
 
 
 Template.covid19.onCreated(function() {
@@ -40,7 +43,7 @@ Template.covid19.onCreated(function() {
   poules = ["lents", "rapides"]
   randomPoule = poules[Math.floor(Math.random() * poules.length)];
 
-  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : "", anime : "", poule : randomPoule, haswonpoule : ""})
+  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, anime : "", poule : randomPoule, haswonpoule : ""})
 
 });
 
@@ -48,20 +51,18 @@ Template.covid19.onCreated(function() {
 
 Template.covid19.onRendered(function () {
 
-
   this.autorun(() => {
     let ready = Template.instance().subscriptionsReady();
     if (!ready){ return; }
     let contnus = ContenusEcran.find().fetch();
-    console.log("contnus", contnus, data);
+    // console.log("contnus", contnus, data);
     // data = ContenusEcran.findOne({name: "ce_jeudi_no_comment"}).data
     data = ContenusEcran.findOne({name: "data_test"}).data
-    console.log('srt spectacle covid19 rendered');
-    console.log('data ?', data);
-    console.log('ContenusEcran ?', ContenusEcran.find().fetch());
+    // console.log('srt spectacle covid19 rendered');
+    // console.log('data ?', data);
+    // console.log('ContenusEcran ?', ContenusEcran.find().fetch());
 
   });
-
 
 
 
@@ -120,23 +121,6 @@ setDeceleratingTimeout = function(callback, factor, times){
   window.setTimeout(internalCallback, factor);
 };
 
-initiateTheShitOutOfThisProgram = function(who){
-    //  __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-    // superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-
-
-    _did = PosRunner.find({name:"gauche"}).fetch()[0]._id
-    _gid = PosRunner.find({name:"droite"}).fetch()[0]._id
-    
-    PosRunner.update(_did, {$set:{"posX":0},})
-    PosRunner.update(_did, {$set:{"cycle":1},})
-
-    PosRunner.update(_gid, {$set:{"posX":0},})
-    PosRunner.update(_gid, {$set:{"cycle":1},})
-
-    Session.set("localName", who)
-}
-
   
   $(document.body).on('keyup', function(e) {
 
@@ -150,20 +134,6 @@ initiateTheShitOutOfThisProgram = function(who){
     // 51 = 3
 
     if(e.keyCode == '32') nextEvent();
-
-
-    if(e.keyCode == '48'){
-      document.getElementById("srt").innerHTML="miracle des dieux :<br/>aucun bug"
-    }    
-    if(e.keyCode == '49'){
-      document.getElementById("srt").innerHTML="pas de prise RJ45<br/>(bug lvl 1)"
-    }    
-    if(e.keyCode == '50'){
-      document.getElementById("srt").innerHTML="conflit DHCP<br/>(!bug lvl 3!)"
-    }
-    if(e.keyCode == '51'){
-      document.getElementById("srt").innerHTML=""
-    }
   });
 
 });
@@ -222,38 +192,64 @@ var nextEvent = function(){
   console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
   if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
     window.clearTimeout(autonextcontainer)
+    window.clearTimeout(zob)
     compteur +=1
     next();
     console.log("keyup, ", compteur)
 
 
-    _posX = Bonhomme.find({_id:playerId}).fetch()[0].posX
+    _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
+    Bonhomme.update(playerId, {$set:{"posX":_posX+5},})
 
 
-    setDeceleratingTimeout(function()
+
+    zob = setDeceleratingTimeout(function()
       {
-        yeehaw()
+        imageCycler(playerId)
         // et c'est là qu'il faudrait que ce fameux 20
         // deviene une variable qui augmente ou diminue
         // en fonction du rythme de pression sur la spacebar
         // ainsi que le déplacement en nombre de pixels
-      },20,5);
-
-    Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
+      },animationRate,3);
 
   }
 }
 
-yeehaw = function(){
-  document.getElementById("sprite"+yeecount).style.zIndex=infiniteZindex
+imageCycler = function(who){
+
+  // en vrai ça devrait fonctionner comme ça : quand tu appuies sur la barre espace
+  // ça correspond à quand le pied touche le sol
+  // et ça cycle les autres images comme ça peut
+  // mais pas avec un set timeout tout laid
+
+
+  domelements = document.getElementById(who).children
+
+    console.log(yeecount+1, "YEE hide this guy")
+  domelements.item(yeecount+1).style.opacity=0
+
+
+    console.log(yeecount+2, "YEE show this guy")
+  domelements.item(yeecount+2).style.opacity=1
+
+
+
+
 
   if(yeecount<11){
+    if(yeecount==1){
+      console.log(13 + "YEE hide this guy also ")
+      domelements.item(13).style.opacity=0
+    }
     yeecount ++
   }else{
     yeecount = 1;
   }
 
-  infiniteZindex ++
+}
+
+everybodyCycle = function(){
+  console.log("everybody cycle now!")
 }
 
 // i know this is stupid but don't have time
@@ -285,13 +281,14 @@ closingWindow = function(){
 
     vous(){
       if(playerId===this._id){
-        return "<-VOUS"
+        return "V"
       }else{
         return
       }
     },
 
     whichRace(){
+      console.log("WHICH RACE TRIGGERED")
       return ViewSwitcher.find({"activated":true}).fetch()[0].name
     },
 
@@ -327,31 +324,4 @@ closingWindow = function(){
         return 0
       }
     },
-
-    progressG(){
-      _progressG = (PosRunner.find({name:"gauche"}).fetch()[0].posX)*5
-
-
-        return _progressG
-        //omg pour l'instant c'est des pourcentages de la taille en pixels du viewport... qui est différent en fonction des machines.
-        // donc faudra faire mieux
-    },    
-
-    progressD(){
-      _progressD = (PosRunner.find({name:"droite"}).fetch()[0].posX)*5
-
-        return _progressD
-        //omg pour l'instant c'est des pourcentages de la taille en pixels du viewport... qui est différent en fonction des machines.
-        // donc faudra faire mieux
-    },
-
-    whichImageG(){
-      _whichImageG = PosRunner.find({name:"gauche"}).fetch()[0].cycle
-      return "\'/img/running guy-"+_whichImageG+".png\'"
-    },
-
-    whichImageD(){
-      _whichImageD = PosRunner.find({name:"droite"}).fetch()[0].cycle
-      return "\'/img/running guy-"+_whichImageD+".png\'"
-    }
   });
