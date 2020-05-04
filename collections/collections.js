@@ -6,17 +6,7 @@ ContenusEcran = new Meteor.Collection('contenusEcran');
 
 representations = new Meteor.Collection('representations');
 
-ambiances = new Meteor.Collection('ambiances');
-
-loteries = new Meteor.Collection('loteries');
-
-score = new Meteor.Collection("score");
-
-SpeedTest = new Meteor.Collection("speedTest");
-
-PosRunner = new Meteor.Collection("posRunner");
-
-FukinScore = new Meteor.Collection("fukinScore");
+Winners = new Meteor.Collection("winners");
 
 HallOfFame = new Meteor.Collection("hallofame");
 
@@ -25,24 +15,6 @@ ViewSwitcher = new Meteor.Collection("viewSwitcher");
 Bonhomme = new Meteor.Collection("bonhomme");
 
 var Schemas = {};
-
-Schemas.score = new SimpleSchema({
-  type : {
-    type:String,
-    label:"Type",
-    max:200,
-  },
-
-  value : {
-    type: Number,
-    label: "Score",
-  }, 
-
-   pseudo : {
-    type: String,
-    label: "quiça",
-  }
-});
 
 Schemas.ContenusEcran = new SimpleSchema({
 
@@ -226,89 +198,11 @@ Schemas.representations = new SimpleSchema({
 });
 
 
-Schemas.ambiances = new SimpleSchema({
-
-    name: {
-          type: String,
-          label: "Nom",
-          max: 200
-    },
-    value: {
-          type: String,
-          label: "Valeur",
-          max: 200
-    },
-    "created": {
-      type: Date,
-      label: "Date de création",
-      autoValue: function() {
-        if ( this.isInsert ) {
-          return new Date;
-        } 
-      }
-    },
-    "updated": {
-      type: Date,
-      label: "Date de modification",
-      autoValue: function() {
-        if ( this.isUpdate || this.isInsert || this.isInsert ) {
-          return new Date;
-        } 
-      }
-    }
-
-});
-
-
-Schemas.loteries = new SimpleSchema({
-
-    name: {
-      type: String,
-      label: "Nom",
-      max: 200
-    },
-    ids: {
-      type: [String],
-      label: "ids des participants",
-      max: 200,
-      optional: true
-    },
-    messages: {
-      type: [Object],
-      label: "messages à envoyer et à qui",
-      max: 200,
-      optional: true,
-      blackbox: true
-    },
-    "created": {
-      type: Date,
-      label: "Date de création",
-      autoValue: function() {
-        if ( this.isInsert ) {
-          return new Date;
-        } 
-      }
-    },
-    "updated": {
-      type: Date,
-      label: "Date de modification",
-      autoValue: function() {
-        if ( this.isUpdate || this.isInsert || this.isInsert ) {
-          return new Date;
-        } 
-      }
-    }
-
-});
-
-
 
 //attachons les schema à nos collections
 ContenusEcran.attachSchema(Schemas.ContenusEcran);
 superGlobals.attachSchema(Schemas.superGlobals);
 representations.attachSchema(Schemas.representations);
-ambiances.attachSchema(Schemas.ambiances);
-loteries.attachSchema(Schemas.loteries);
 
 
 //permissions
@@ -381,65 +275,6 @@ representations.allow({
 
 
 
-//permissions
-ambiances.allow({
-  insert: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-  },
-  update: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-  },
-  remove: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-
-  }
-});
-
-
-
-//permissions
-
-SpeedTest.allow({
-  insert:function(){
-    return true;
-  },
-  update:function(){
-    return true;
-  },
-  remove:function(){
-    return true;
-  }
-});
-
-FukinScore.allow({
-  insert:function(){
-    return true;
-  },
-  update:function(){
-    return true;
-  },
-  remove:function(){
-    return true;
-  }
-});
 
 HallOfFame.allow({
   insert:function(){
@@ -465,30 +300,6 @@ Postit.allow({
   }
 });
 
-score.allow({
-  insert:function(){
-    return true;
-  },
-  update:function(){
-    return true;
-  },
-  remove:function(){
-    return true;
-  }
-});
-
-PosRunner.allow({
-  insert:function(){
-    return true;
-  },
-  update:function(){
-    return true;
-  },
-  remove:function(){
-    return true;
-  }
-});
-
 ViewSwitcher.allow({
   insert:function(){
     return true;
@@ -498,37 +309,6 @@ ViewSwitcher.allow({
   },
   remove:function(){
     return true;
-  }
-});
-
-loteries.allow({
-  insert: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-  },
-  update: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-  },
-  remove: function () {
-
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    return true; 
-
   }
 });
 
@@ -544,6 +324,17 @@ Meteor.users.allow({
 });
 
 Bonhomme.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
+Winners.allow({
   insert:function(){
     return true;
   },

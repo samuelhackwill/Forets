@@ -10,6 +10,9 @@ var intervalReload;
 Session.set("localName", "");
 yeecount = 1;
 zob = ""
+playerHasWonLocaly = false;
+
+communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Verel-de-Montbel","Yenne"]
 
 compteurAnim=1;
 
@@ -19,18 +22,21 @@ animationRate = 20;
 
 Template.covid19.onCreated(function() {
 
+  pseudos = ["ant", "mar", "cam", "tom", "ale", "jea", "ali", "jul", "XXX", "zor", "GRO", "zob"]
+randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
+communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Verel-de-Montbel","Yenne"]
+randomcommune= communes[Math.floor(Math.random() * communes.length)];
+
+
   //subscribe à la collection representations
   this.autorun(() => {
     this.subscribe('allRepresentations');
     this.subscribe('allBonhommes');
     this.subscribe('allViewSwitcher');
     this.subscribe('allContenusEcran');
-    this.subscribe('allPosRunner');
-    this.subscribe('allSpeedTest');
-    this.subscribe('allscore');
-    this.subscribe('allFukinScore');
     this.subscribe('allHallOfFame');
     this.subscribe('allSuperGlobals');
+    this.subscribe('allWinners');
   });
 
   console.log("how many times is this shit created?")
@@ -43,7 +49,7 @@ Template.covid19.onCreated(function() {
   poules = ["lents", "rapides"]
   randomPoule = poules[Math.floor(Math.random() * poules.length)];
 
-  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, anime : "", poule : randomPoule, haswonpoule : ""})
+  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", })
 
 });
 
@@ -88,13 +94,12 @@ Template.covid19.onRendered(function () {
     } 
   }); 
 
-  em.addListener('scoreGServer', function() {
-    $('#srt').html("la personne de gauche a mis "+FukinScore.findOne({name:"gauche"}).score/1000+" secondes à parcourir le texte.")
-  }); 
+  em.addListener("victoryAnimation", function(what){
+    console.log("hey, victoryAnimation!")
+// animate victory,
+// timeout to hide the div & empty the DB
 
-  em.addListener('scoreDServer', function() {
-    $('#srt').html("la personne de droite a mis "+FukinScore.findOne({name:"droite"}).score/1000+" secondes à parcourir le texte.")
-  }); 
+  });
 
   em.addListener('salmrefreshpage', function(what) {
     console.log('salm refresh page!', what);
@@ -199,9 +204,21 @@ var nextEvent = function(){
 
 
     _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
-    Bonhomme.update(playerId, {$set:{"posX":_posX+5},})
 
+    if(_posX>97){
+      whichrace = ViewSwitcher.find({"activated":true}).fetch()[0].name
 
+      if(playerHasWonLocaly){
+        return
+      }else{
+        Meteor.call("endRace", {context : whichrace, who : Bonhomme.find({_id:playerId}).fetch()[0]})
+        console.log("HEYYY you've won.") 
+        playerHasWonLocaly=true; 
+      }
+
+    }else{
+      Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
+    }
 
     zob = setDeceleratingTimeout(function()
       {
@@ -261,9 +278,22 @@ closingWindow = function(){
 
   Template.covid19.helpers({
 
+    // pseudo(){
+    //   return randompseudo
+    // },
+
+
+    // commune(){
+    //   return randomcommune
+    // },
+
     bonhomme(){
       if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="noCourse") {
         return
+      }    
+
+      if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="freeForAll") {
+        return Bonhomme.find({})
       }    
 
       if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="courseSolo") {
@@ -292,36 +322,15 @@ closingWindow = function(){
       return ViewSwitcher.find({"activated":true}).fetch()[0].name
     },
 
-    victoryOnOff(){
-
-      console.log("updating victoryONOFF")
-
-      if(FukinScore.findOne({ winTrigger: { $exists: true}}).winTrigger==false){
-        __id = PosRunner.findOne({ winTrigger: { $exists: true}})._id
-        PosRunner.update(__id, {$set:{"winTrigger":false},})
-        return "SPACEBAR ATHLETE!"
-      }else{
-        return "TEAM SIESTE."
-      }
-
-      // est ce que tu es le premier a gagner? si oui = "YES" sinon = "OH DOMMAGE"
-
-      // if( ){
-      //   return 1
-      // }else{
-      //   return 0
-      // }
+    winner(){
+      return Winners.find({})
     },
 
-    courseOnOff(){
-      victory = superGlobals.findOne({ isItVictoryYet: { $exists: true}}).isItVictoryYet
+    winnerOnOff(){
+      // 0 no one has won yet
+      // 1 yaaay we have a winner to the first race
+      // 2 ok now let's move on
+      if(Winners.find({"status":0})||Winners.find({"status":2})){return 0}else{return 1}
 
-      if(victory==false){
-        console.log("courseOnOff returning 1")
-        return 1
-      }else{
-        console.log("courseOnOff returning 0")
-        return 0
-      }
-    },
+    }
   });

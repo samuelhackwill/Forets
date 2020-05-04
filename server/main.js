@@ -9,6 +9,10 @@ glisseContainer = null
 indexPostit = 0
 servColor = "red"
 
+Meteor.publish('allWinners', function(){
+  return Winners.find();
+});
+
 Meteor.publish('allPostits', function(){
   return Postit.find();
 });
@@ -21,22 +25,6 @@ Meteor.publish('allViewSwitcher', function(){
   return ViewSwitcher.find();
 });
 
-Meteor.publish('allFukinScore', function(){
-  return FukinScore.find();
-});
-
-Meteor.publish('allSpeedTest', function(){
-  return SpeedTest.find();
-});
-
-Meteor.publish('allPosRunner', function(){
-  return PosRunner.find();
-});
-
-Meteor.publish('allScore', function(){
-  return score.find();
-});
-
 Meteor.publish('allContenusEcran', function () {
   return ContenusEcran.find();
 });
@@ -46,13 +34,6 @@ Meteor.publish('allSuperGlobals', function () {
 Meteor.publish('allRepresentations', function () {
   return representations.find();
 });
-Meteor.publish('allAmbiances', function () {
-  return ambiances.find();
-});
-Meteor.publish('allLoteries', function () {
-  return loteries.find();
-});
-
 Meteor.publish( 'users', function() {
   let isAdmin = Roles.userIsInRole( this.userId, 'admin' );
 
@@ -68,6 +49,7 @@ Meteor.startup(function () {
   if(ViewSwitcher.findOne()===undefined){
     console.log("VIEWSWITCHER IS EMPTY, INSERTING NOW")
     ViewSwitcher.insert({"name":"noCourse", "activated":true})
+    ViewSwitcher.insert({"name":"freeForAll", "activated":false})
     ViewSwitcher.insert({"name":"courseSolo", "activated":false})
     ViewSwitcher.insert({"name":"coursePoule", "activated":false})
     ViewSwitcher.insert({"name":"courseFinale", "activated":false})
@@ -92,7 +74,7 @@ if (Meteor.isServer) {
   });
 
 
-  UserStatus.events.on("connectionLogin", function(fields) { console.log("connectionLogin", fields); });
+  // UserStatus.events.on("connectionLogin", function(fields) { console.log("connectionLogin", fields); });
 
 
   em.addListener('showScoreAdmin', function(params){
@@ -161,14 +143,6 @@ if (Meteor.isServer) {
       console.log("WAITING CLIENT!")
     });
 
-    em.addListener('showSpeedWinnerAdmin', function(args){
-      em.emit('showSpeedWinnerServer', args)
-    });   
-
-     em.addListener('showMoneyWinnerAdmin', function(args){
-      em.emit('showMoneyWinnerServer', args)
-    });
-
 
 
   em.addListener('adminnext', function(/* client */) {
@@ -188,70 +162,6 @@ if (Meteor.isServer) {
     }
   });
 
-  em.addListener('ca_va_peter', function(/* client */) {
-    // console.log("ca_va_peter cote serveur");
-    em.emit('ca_va_peter_client')
-  });
-
-  em.addListener('new_ambiance', function(params) {
-    // console.log("new_ambiance cote serveur ", params);
-    Meteor.call('setSuperGlobal', {name: 'ambiance', value: params.key});
-    em.emit('new_ambiance_client')
-
-  });
-
-  em.addListener('adminstartstream', function(/* client */) {
-    // console.log('ADMIN START STREAM', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    // set client ça marche pas côté serveur
-    var args = arguments[0];
-    if(args) {
-      em.emit('salmstartstream', args);
-    }
-  });
-
-  em.addListener('adminshowtheone', function(/* client */) {
-    // console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    // var args = arguments[0];
-    // if(args) {
-      em.emit('salmtheoneshow');
-    // }
-  });
-  em.addListener('adminhidetheone', function(/* client */) {
-    // console.log('ADMIN HIDE THE ONE', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    // var args = arguments[0];
-    // if(args) {
-      em.emit('salmtheonehide');
-    // }
-  });
-
-  em.addListener('adminshowtheone-single-training', function(/* client */) {
-    // console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    // var args = arguments[0];
-    // if(args) {
-      em.emit('salmtheoneshow-single-training');
-    // }
-  });
-  em.addListener('adminshowtheone-multi-training', function(/* client */) {
-    // console.log('ADMIN SHOW THE ONE', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    // var args = arguments[0];
-    // if(args) {
-      em.emit('salmtheoneshow-multi-training');
-    // }
-  });
-  em.addListener('adminhidetheone-training', function(/* client */) {
-    // console.log('ADMIN HIDE THE ONE', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    // var args = arguments[0];
-    // if(args) {
-      em.emit('salmtheonehide-training');
-    // }
-  });
-
 
   em.addListener('adminswitchthepower', function(what) {
     // console.log('ADMIN SWITCH THE POWER', _.toArray(arguments), arguments[0], what, em);
@@ -263,6 +173,7 @@ if (Meteor.isServer) {
       em.emit(what.powerToThePeople ? 'salmpowerpeople' : 'salmpoweradmin');
     // }
   });
+
   em.addListener('adminrefreshpage', function(/* client */) {
     // console.log('ADMIN REFRESH PAGE', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
@@ -279,28 +190,6 @@ if (Meteor.isServer) {
     var args = arguments[0];
     if(args) {
       em.emit('salmForceGoTo', args);
-    }
-  });
-
-
-  em.addListener('salmAddMeToLottery', function(/* client */) {
-    // console.log('SALM REQUEST ADD TO LOTTERY', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    var args = arguments[0];
-    if(args) {
-      // em.emit('salmForceGoTo', args);
-      Meteor.call('addUserToLottery', args);
-    }
-  });
-
-  em.addListener('salmFinishCuppa', function(/* client */) {
-    // console.log('SALM FINISH A CUP', _.toArray(arguments), arguments[0]);
-    // em.setClient({ reponse: arguments[0].reponse });
-    var args = arguments[0];
-    if(args) {
-      // em.emit('salmForceGoTo', args);
-      // Meteor.call('addUserToLottery', args);
-      Meteor.call('setSuperGlobal', {name: 'finishCuppa'});
     }
   });
 
@@ -330,22 +219,6 @@ if (Meteor.isServer) {
       Bonhomme.update({}, {$set: {posX: 0}}, {multi: true});
     },
 
-
-    scoreGAdmin:function(){
-      em.emit("scoreGServer")
-    },
-
-    scoreDAdmin:function(){
-      em.emit("scoreDServer")
-    },
-
-    noirDeFinAdmin:function(){
-      em.emit("noirFinal")
-    },
-
-    logScoreAdmin:function(){
-      em.emit("logScoreServer")
-    },
 
     logScore:function(obj){
       console.log("pseudo ,", obj.pseudo)
@@ -388,7 +261,6 @@ if (Meteor.isServer) {
     isTheStreamStarted: function(){
       return superGlobals.find();
     },
-  });
 
   // console.log('SERVER', this.UserConnections, UserStatus, UserStatus.connections);
 
@@ -397,10 +269,6 @@ if (Meteor.isServer) {
   //   // modifier.$set = modifier.$set || {};
   //   // modifier.$set.modifiedAt = Date.now();
   // });
-}
-
-
-Meteor.methods({
 
   /**
   * enregistre un nouveau contenu écran
@@ -409,6 +277,19 @@ Meteor.methods({
   * @param {String} name Nom du contenu écran
   * @param {String} data Données du contenu écran
   */
+
+  endRace : function(obj){
+    console.log("endRace", obj)
+
+    em.emit("victoryAnimation")
+
+
+    // log highscore
+    // update winnersDatabase
+    // DEMANDER a la personne si elle a eu l'impression de gagner?
+    // pour checker cette bonne vieille histoire de latence
+  },
+
   adminSetCourseOff: function(){
     console.log("setting victory off")
       __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
@@ -657,28 +538,6 @@ Meteor.methods({
     }
   },
 
-  newAmbiance: function (obj) {
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    console.log("newAmbiance", obj);
-    ambiances.insert(obj, { filter: false });
-  },
-  editAmbiances: function (args) {
-    var loggedInUser = Meteor.user()
-
-    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
-      throw new Meteor.Error(403, "Access denied")
-    }
-    console.log("editAmbiance", args);
-    ambiances.update(args._id, 
-      { $set: args.obj },
-      { filter: false }
-    );
-  },
-
   createUserFromAdmin: function(email,password,role){
     console.log('createUserFromAdmin', email,password,role);
     var id = Accounts.createUser({ email: email, password: password });
@@ -715,108 +574,6 @@ Meteor.methods({
       Roles.addUsersToRoles(id, [role]);
     }
   }*/
-  addUserToLottery: function(args){
-
-    console.log("addUserToLottery server", args);
-    var lotteryName = args.lotteryName;
-    if(lotteryName != "") {
-      var lottery = loteries.findOne({name: lotteryName});
-      console.log("lottery", lottery);
-      if(!lottery) {
-        //créer la loterie
-        var lotteryId = loteries.insert({name: lotteryName, ids: []});
-      } else {
-        var lotteryId = lottery._id;
-      }
-      console.log("lotteryId", lotteryId);
-      if(args.sessionId != "") {
-        lottery = loteries.findOne({_id: lotteryId});
-        if(lottery) {
-          if(lottery.ids.indexOf(args.sessionId) === -1) {
-            console.log('id pas déjà dans la loterie, ajoutons le');
-            loteries.update(lotteryId, { $push: { ids: args.sessionId }});
-          } else {
-            console.log('cet id est deja dans la loterie');
-          }
-        }
-      }
-      
-    }
-  },
-
-
-  chooseRandomONE: function(args){
-
-    console.log("chooseRandomONE server", args);
-    var nbPeopleToChoose = 1;
-    var lotteryId = args._id;
-    if(lotteryId != "") {
-
-      var lottery = loteries.findOne({_id: lotteryId});
-      console.log("lottery", lottery);
-      if(!lottery) {
-        //créer la loterie
-        console.log("couldn't find lottery");
-      } else {
-
-        var random = _.sample(lottery.ids, nbPeopleToChoose);
-        console.log("random", random);
-        var messages = [];
-        for(i=0;i<random.length;i++){
-          var obj = {};
-          obj[random[i]] = 'showMeTheButtons';
-          messages.push(obj);
-        }
-        if(messages.length>0){
-          console.log('update lottery messages', messages);
-          loteries.update(lottery._id, 
-            {  $set: { messages: messages} },
-            { filter: false }
-          );
-        }
-
-        // return Collection.find({_id: random && random._id}
-        // var lotteryId = lottery._id;
-      }
-      
-    }
-  },
-  chooseEverybodyTea: function(args){
-
-    console.log("chooseEverybodyTea server", args);
-    // var nbPeopleToChoose = 1;
-    var lotteryId = args._id;
-    if(lotteryId != "") {
-
-      var lottery = loteries.findOne({_id: lotteryId});
-      console.log("lottery", lottery);
-      if(!lottery) {
-        //créer la loterie
-        console.log("couldn't find lottery");
-      } else {
-
-        var teaPeople = lottery.ids;
-        console.log("teaPeople", teaPeople);
-        var messages = [];
-        for(i=0;i<teaPeople.length;i++){
-          var obj = {};
-          obj[teaPeople[i]] = 'addCuppasButtons';
-          messages.push(obj);
-        }
-        if(messages.length>0){
-          console.log('update lottery messages', messages);
-          loteries.update(lottery._id, 
-            {  $set: { messages: messages} },
-            { filter: false }
-          );
-        }
-
-        // return Collection.find({_id: random && random._id}
-        // var lotteryId = lottery._id;
-      }
-      
-    }
-  },
 
   retrieveMessage: function(lotteryId, userCookie){
     if(lotteryId && userCookie) {
@@ -841,3 +598,5 @@ Meteor.methods({
   }
 
 });
+
+}

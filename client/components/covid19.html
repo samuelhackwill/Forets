@@ -5,20 +5,34 @@
 
 <template name="covid19">
 
-	<div id="victory" style="opacity:0">{{victoryOnOff}}</div>
+	<div id="victory" style="opacity:{{winnerOnOff}}">
+	{{#each winner}}
+		<div id="winner">
+			VICTOIRE DE <br/>
+			<div> {{commune}} </div>
+			<div> {{pseudo}} </div>
+			<div> {{score}} </div>
+		</div>
+	{{/each}}
+	</div>
 
-	<div id="progressBar" style="opacity: {{courseOnOff}};"></div>
 
  <div> show status {{whichRace}}</div>
 
 
  <div id="runnersGrid">
 
+ 	<div id="sam">
+ 		<div id="blabla">
+ 			mais bon vous aurez compris que c'était moi qui faisais défiler le texte
+ 		</div>
+ 	</div>
+
 
 {{#each bonhomme}}
-	<div class="testRunner" id={{_id}} style="transform: translateX({{posX}}px)">
-		<div id="commune">DULLIN</div>
-		<div id="pseudo">ANT</div>
+	<div class="testRunner" id={{_id}} style="transform: translateX({{posX}}vw)">
+		<div id="commune">{{commune}}</div>
+		<div id="pseudo">{{pseudo}}</div>
 		<div class="sprite{{vous}}1"></div>	
 		<div class="sprite{{vous}}2"></div>	
 		<div class="sprite{{vous}}3"></div>	
@@ -32,8 +46,8 @@
 		<div class="sprite{{vous}}11"></div>	
 		<div class="sprite{{vous}}12"></div>
 	</div>
-	<div class="grosTest"></div>
-{{/each}}
+<!-- 	<div class="grosTest"></div>
+ -->{{/each}}
 
 </div>
 
