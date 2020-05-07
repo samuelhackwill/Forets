@@ -12,7 +12,13 @@ yeecount = 1;
 zob = ""
 playerHasWonLocaly = false;
 
+pseudos = ["ant", "mar", "cam", "tom", "ale", "jea", "ali", "jul", "XXX", "zor", "GRO", "zob"]
+randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
 communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Verel-de-Montbel","Yenne"]
+randomcommune= communes[Math.floor(Math.random() * communes.length)];
+
+testSpeed = [50, 100, 105, 130, 180, 200, 210, 400]
+randomTestSpeed = testSpeed[Math.floor(Math.random() * testSpeed.length)];
 
 compteurAnim=1;
 
@@ -21,11 +27,6 @@ animationRate = 20;
 
 
 Template.covid19.onCreated(function() {
-
-  pseudos = ["ant", "mar", "cam", "tom", "ale", "jea", "ali", "jul", "XXX", "zor", "GRO", "zob"]
-randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
-communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Verel-de-Montbel","Yenne"]
-randomcommune= communes[Math.floor(Math.random() * communes.length)];
 
 
   //subscribe à la collection representations
@@ -75,6 +76,40 @@ Template.covid19.onRendered(function () {
 
   $(document.body).addClass('covid19');
 
+  em.addListener("autoRunAll", function(){
+
+    setInterval(function(){
+
+    _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
+
+    if(_posX>86){
+      whichrace = ViewSwitcher.find({"activated":true}).fetch()[0].name
+
+      if(playerHasWonLocaly){
+        return
+      }else{
+        Meteor.call("endRace", {context : whichrace, who : Bonhomme.find({_id:playerId}).fetch()[0]})
+        console.log("HEYYY you've won.") 
+        playerHasWonLocaly=true; 
+      }
+
+    }else{
+      Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
+    }
+
+    zob = setDeceleratingTimeout(function()
+      {
+        imageCycler(playerId)
+        // et c'est là qu'il faudrait que ce fameux 20
+        // deviene une variable qui augmente ou diminue
+        // en fonction du rythme de pression sur la spacebar
+        // ainsi que le déplacement en nombre de pixels
+      },animationRate,3);
+
+    },randomTestSpeed)
+
+  });
+
   em.addListener('salmnext', function(what) {
     console.log('salm next!', what);
     var isSUPERinterrupt = getSuperGlobal("SUPERinterrupt", []);
@@ -96,9 +131,7 @@ Template.covid19.onRendered(function () {
 
   em.addListener("victoryAnimation", function(what){
     console.log("hey, victoryAnimation!")
-// animate victory,
-// timeout to hide the div & empty the DB
-
+    document.getElementById("sav").style.display="block"
   });
 
   em.addListener('salmrefreshpage', function(what) {
@@ -232,6 +265,11 @@ var nextEvent = function(){
   }
 }
 
+sendPseudo = function(who, e){
+  Bonhomme.update(who, {$set:{"pseudo":e},})
+  document.getElementById("lazyStartup").style.display="none"
+}
+
 imageCycler = function(who){
 
   // en vrai ça devrait fonctionner comme ça : quand tu appuies sur la barre espace
@@ -242,11 +280,11 @@ imageCycler = function(who){
 
   domelements = document.getElementById(who).children
 
-    console.log(yeecount+1, "YEE hide this guy")
+    // console.log(yeecount+1, "YEE hide this guy")
   domelements.item(yeecount+1).style.opacity=0
 
 
-    console.log(yeecount+2, "YEE show this guy")
+    // console.log(yeecount+2, "YEE show this guy")
   domelements.item(yeecount+2).style.opacity=1
 
 
@@ -255,7 +293,7 @@ imageCycler = function(who){
 
   if(yeecount<11){
     if(yeecount==1){
-      console.log(13 + "YEE hide this guy also ")
+      // console.log(13 + "YEE hide this guy also ")
       domelements.item(13).style.opacity=0
     }
     yeecount ++
@@ -265,14 +303,13 @@ imageCycler = function(who){
 
 }
 
-everybodyCycle = function(){
-  console.log("everybody cycle now!")
-}
-
-// i know this is stupid but don't have time
-
 closingWindow = function(){
   Bonhomme.remove({_id:playerId})
+}
+
+thinksHeWon = function(who,result){
+  Bonhomme.update(who, {$set:{"croitAvoirGagné":result},})
+  document.getElementById("sav").style.display="none"
 }
 
 
@@ -293,7 +330,7 @@ closingWindow = function(){
       }    
 
       if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="freeForAll") {
-        return Bonhomme.find({})
+        return Bonhomme.find({},{sort : {arrivedAt : 1}})
       }    
 
       if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="courseSolo") {
@@ -330,7 +367,7 @@ closingWindow = function(){
       // 0 no one has won yet
       // 1 yaaay we have a winner to the first race
       // 2 ok now let's move on
-      if(Winners.find({"status":0})||Winners.find({"status":2})){return 0}else{return 1}
+      if(Winners.find({})){return 1}else{return 0}
 
     }
   });

@@ -4,6 +4,24 @@
 </head>
 
 <template name="covid19">
+	<div ></div>
+	<div id="lazyStartup">
+		
+			pseudo : <input type="text" id="pseudoInput" maxlength="3" size="3">
+			<input type="button" name="send" value="OK" onclick="sendPseudo(playerId, document.getElementById('pseudoInput').value)">
+	</div>
+
+			<div id="sav"> vous pensiez qui c'était vous qui aviez gagné?
+			<input type="button" name="oui" value="oui" onclick="thinksHeWon(playerId, 'oui')">
+			<input type="button" name="non" value="non" onclick="thinksHeWon(playerId, 'non')">
+			</div>
+
+ <div id="runnersGrid">
+
+ 	<div id="sam">
+ 		<div id="blabla">
+ 			mais bon vous aurez compris que c'était moi qui faisais défiler le texte
+ 		</div>
 
 	<div id="victory" style="opacity:{{winnerOnOff}}">
 	{{#each winner}}
@@ -16,41 +34,40 @@
 	{{/each}}
 	</div>
 
-
- <div> show status {{whichRace}}</div>
-
-
- <div id="runnersGrid">
-
- 	<div id="sam">
- 		<div id="blabla">
- 			mais bon vous aurez compris que c'était moi qui faisais défiler le texte
- 		</div>
- 	</div>
+ </div>
 
 
 {{#each bonhomme}}
-	<div class="testRunner" id={{_id}} style="transform: translateX({{posX}}vw)">
-		<div id="commune">{{commune}}</div>
-		<div id="pseudo">{{pseudo}}</div>
-		<div class="sprite{{vous}}1"></div>	
-		<div class="sprite{{vous}}2"></div>	
-		<div class="sprite{{vous}}3"></div>	
-		<div class="sprite{{vous}}4"></div>	
-		<div class="sprite{{vous}}5"></div>	
-		<div class="sprite{{vous}}6"></div>	
-		<div class="sprite{{vous}}7"></div>	
-		<div class="sprite{{vous}}8"></div>	
-		<div class="sprite{{vous}}9"></div>	
-		<div class="sprite{{vous}}10"></div>	
-		<div class="sprite{{vous}}11"></div>	
-		<div class="sprite{{vous}}12"></div>
+	<div class="testRunner" id={{_id}}>
+		<div class="personne" style="transform: translateX({{posX}}vw)">
+			<div id="commune">{{commune}}</div>
+			<div id="pseudo">{{pseudo}}</div>
+			<div class="sprite{{vous}}1"></div>	
+			<div class="sprite{{vous}}2"></div>	
+			<div class="sprite{{vous}}3"></div>	
+			<div class="sprite{{vous}}4"></div>	
+			<div class="sprite{{vous}}5"></div>	
+			<div class="sprite{{vous}}6"></div>	
+			<div class="sprite{{vous}}7"></div>	
+			<div class="sprite{{vous}}8"></div>	
+			<div class="sprite{{vous}}9"></div>	
+			<div class="sprite{{vous}}10"></div>	
+			<div class="sprite{{vous}}11"></div>	
+			<div class="sprite{{vous}}12"></div>
+		</div>
+
+		<div class="terrain">
+			<div class="number">{{@index}}</div>
+			<div class="separator"></div>			
+		</div>
+
+
 	</div>
+
 <!-- 	<div class="grosTest"></div>
  -->{{/each}}
 
 </div>
-
 <!-- 
 
  <div id="runnersGrid">

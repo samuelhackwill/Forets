@@ -472,6 +472,7 @@ Template.showtime.events({
     fetched = ViewSwitcher.find({}).fetch()
 
     Meteor.call("restartBonhommes")
+    Meteor.call("getRidOfWinners")
 
     // you know what? can't be arsed
 

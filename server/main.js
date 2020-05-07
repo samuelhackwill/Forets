@@ -210,6 +210,11 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
+    autoRun:function(){
+      em.emit("autoRunAll")
+    },
+
+
     killBonhommes:function(){
       Bonhomme.remove({})
     },
@@ -217,6 +222,10 @@ if (Meteor.isServer) {
 
     restartBonhommes:function(){
       Bonhomme.update({}, {$set: {posX: 0}}, {multi: true});
+    },
+
+    getRidOfWinners:function(){
+      Winners.remove({})
     },
 
 
@@ -279,16 +288,22 @@ if (Meteor.isServer) {
   */
 
   endRace : function(obj){
-    console.log("endRace", obj)
+  em.emit("victoryAnimation")
 
-    em.emit("victoryAnimation")
+    if (Winners.findOne()) {
 
+// update their score and return
+      return
 
-    // log highscore
-    // update winnersDatabase
-    // DEMANDER a la personne si elle a eu l'impression de gagner?
-    // pour checker cette bonne vieille histoire de latence
-  },
+    }else{
+      Bonhomme.update(obj.who, {$set:{haswonpoule:true},})
+      Winners.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo})
+        // log highscore
+        // update winnersDatabase
+        // DEMANDER a la personne si elle a eu l'impression de gagner?
+        // pour checker cette bonne vieille histoire de latence
+    }
+},
 
   adminSetCourseOff: function(){
     console.log("setting victory off")
