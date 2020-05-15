@@ -17,7 +17,16 @@ randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
 communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Verel-de-Montbel","Yenne"]
 randomcommune= communes[Math.floor(Math.random() * communes.length)];
 
-testSpeed = [50, 100, 105, 130, 180, 200, 210, 400]
+testSpeed = [50, 52, 56, 60, 61, 65, 105, 107, 130, 134, 200, 250]
+// hmmm quand les appels à la DB sont trop proches les uns des autres pour
+// deux clients ça fout grave la merde mammen.
+// il faut que je pose la question à un specialiste de meteor.
+// meteor boards ou stack overflow
+
+// ça marchait mieux quand j'avais que quatre valeurs dans le tableau
+// testSpeed = [50, 100, 150, 200]
+
+
 randomTestSpeed = testSpeed[Math.floor(Math.random() * testSpeed.length)];
 
 compteurAnim=1;
@@ -36,6 +45,7 @@ Template.covid19.onCreated(function() {
     this.subscribe('allViewSwitcher');
     this.subscribe('allContenusEcran');
     this.subscribe('allHallOfFame');
+    this.subscribe('allTimer');
     this.subscribe('allSuperGlobals');
     this.subscribe('allWinners');
   });
@@ -50,7 +60,7 @@ Template.covid19.onCreated(function() {
   poules = ["lents", "rapides"]
   randomPoule = poules[Math.floor(Math.random() * poules.length)];
 
-  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", })
+  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", score:{"firstRun":0, "pouleRun":0, "ffaRun":0} })
 
 });
 
@@ -75,6 +85,26 @@ Template.covid19.onRendered(function () {
 
 
   $(document.body).addClass('covid19');
+
+  // em.addListener("startLocalTimers", function(){
+
+
+  //     timerDecimales = 0
+  //     timerUnites = 0
+
+  //       timer = setInterval(function(){
+  //       timerDecimales = timerDecimales+1
+  //       if (timerDecimales > 99) {
+  //         timerDecimales = 0
+  //         timerUnites = timerUnites +1
+  //       }      
+  //       document.getElementById("localTime").innerHTML = timerUnites + ":" + timerDecimales
+  //     },10)
+
+  // });
+
+// tous les timers sont désynchronisés ça pue
+
 
   em.addListener("autoRunAll", function(){
 
@@ -132,6 +162,11 @@ Template.covid19.onRendered(function () {
   em.addListener("victoryAnimation", function(what){
     console.log("hey, victoryAnimation!")
     document.getElementById("sav").style.display="block"
+  });
+
+  em.addListener("endRaceAnimation", function(what){
+    console.log("hey, the race is finished!")
+    document.getElementById("halloffame").style.display="block"
   });
 
   em.addListener('salmrefreshpage', function(what) {
@@ -278,14 +313,18 @@ imageCycler = function(who){
   // mais pas avec un set timeout tout laid
 
 
-  domelements = document.getElementById(who).children
+  domelements = document.getElementById(who).children[0]
+  console.log("domelements ", domelements)
+  // domelements2 = domelements[0].children
+  // console.log("domelements2 ", domelements2)
+
 
     // console.log(yeecount+1, "YEE hide this guy")
-  domelements.item(yeecount+1).style.opacity=0
+  domelements.children[yeecount+1].style.opacity=0
 
 
     // console.log(yeecount+2, "YEE show this guy")
-  domelements.item(yeecount+2).style.opacity=1
+  domelements.children[yeecount+2].style.opacity=1
 
 
 
@@ -294,7 +333,7 @@ imageCycler = function(who){
   if(yeecount<11){
     if(yeecount==1){
       // console.log(13 + "YEE hide this guy also ")
-      domelements.item(13).style.opacity=0
+      domelements.children[13].style.opacity=0
     }
     yeecount ++
   }else{
@@ -323,6 +362,14 @@ thinksHeWon = function(who,result){
     // commune(){
     //   return randomcommune
     // },
+
+    HallOfFameList(){
+      return HallOfFame.find({},{sort : {score : 1}})
+    },
+
+    timerShow(){
+      return Timer.find({})
+    },
 
     bonhomme(){
       if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="noCourse") {

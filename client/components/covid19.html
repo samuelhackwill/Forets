@@ -6,6 +6,16 @@
 <template name="covid19">
 	<div ></div>
 	<div id="lazyStartup">
+
+<!-- 		{{#each timerShow}}timer : {{time}}{{/each}}
+ -->
+ 			timer <span id="localTime">0:00</span>
+
+			<input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
+			<input type="button" name="startRun" value="startRun" onclick="Meteor.call('startRun', Bonhomme.find({}).fetch().length)">
+			<input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
+			<input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
+			<input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
 		
 			pseudo : <input type="text" id="pseudoInput" maxlength="3" size="3">
 			<input type="button" name="send" value="OK" onclick="sendPseudo(playerId, document.getElementById('pseudoInput').value)">
@@ -64,37 +74,28 @@
 
 	</div>
 
-<!-- 	<div class="grosTest"></div>
- -->{{/each}}
+	{{/each}}
 
 </div>
-<!-- 
 
- <div id="runnersGrid">
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- 	<div class="testRunner"></div>
- </div>
-
-
- 	<div id="testRunningGuy" style="transform: translateX({{progressG}}px)">
-	</div>	
-
- -->
-
-<!-- 
-
-	<div id="runningGuyG" style="opacity: {{courseOnOff}}; transform: translateX({{progressG}}px); background-image: url({{whichImageG}});">
+	<div id="halloffame">
+		<table>
+			<tr>
+				<th>Course:</th>
+				<th>Commune:</th>
+				<th>Pseudo:</th>
+				<th>Time(ms):</th>
+			</tr>
+			{{#each HallOfFameList}}
+			<tr>
+				<th>{{whichCourse}}</th>
+				<th>{{commune}}</th>
+				<th>{{pseudo}}</th>
+				<th>{{score}}</th>
+			</tr>	
+			{{/each}}
+		</table>
 	</div>
-
-	<div id="runningGuyD" style="opacity: {{courseOnOff}}; transform: translateX({{progressD}}px); background-image: url({{whichImageD}});"></div>
-
- 	<span id="arr" style="opacity: {{courseOnOff}}; transform: translateX({{whichVous}}px"> &darr; vous</span> -->
 
   {{> screen}}
 

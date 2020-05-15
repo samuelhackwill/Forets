@@ -9,8 +9,22 @@ glisseContainer = null
 indexPostit = 0
 servColor = "red"
 
+timer = 0
+timerDecimales = 0
+timerUnites = 0
+
+howmanyBonhommes = 0
+
 Meteor.publish('allWinners', function(){
   return Winners.find();
+});
+
+Meteor.publish('allTimer', function(){
+  return Timer.find();
+});
+
+Meteor.publish('allHallOfFame', function(){
+  return HallOfFame.find();
 });
 
 Meteor.publish('allPostits', function(){
@@ -53,6 +67,11 @@ Meteor.startup(function () {
     ViewSwitcher.insert({"name":"courseSolo", "activated":false})
     ViewSwitcher.insert({"name":"coursePoule", "activated":false})
     ViewSwitcher.insert({"name":"courseFinale", "activated":false})
+  }
+
+  if(Timer.findOne()===undefined){
+    console.log("TIMER IS EMPTY, INSERTING NOW")
+    Timer.insert({"time":""})
   }
 });
 
@@ -212,8 +231,39 @@ if (Meteor.isServer) {
   Meteor.methods({
     autoRun:function(){
       em.emit("autoRunAll")
+    },    
+
+    startRun:function(_howmanyBonhommes){
+
+      // em.emit("startLocalTimers")
+
+      // tous les timers sont désynchronisés si on fait ça...
+
+      howmanyBonhommes = _howmanyBonhommes
+
+      timerDecimales = 0
+      timerUnites = 0
+
+      if(timer!=0){Meteor.clearInterval(timer); console.log("clear the old timer")}
+
+      timer = Meteor.setInterval(function(){
+        timerDecimales = timerDecimales+1
+        if (timerDecimales > 99) {
+          timerDecimales = 0
+          timerUnites = timerUnites +1
+        }
+      //   console.log("timer ", timerUnites, ":", timerDecimales)
+      //   Timer.update(Timer.findOne({})._id, {$set:{"time":timerUnites+":"+timerDecimales},})
+      
+      // y'a pas moyen, ça ralentit tous les autres accès à la db
+      
+      },10)
+    
     },
 
+    stopRun:function(){
+      Meteor.clearInterval(timer)
+    },
 
     killBonhommes:function(){
       Bonhomme.remove({})
@@ -288,35 +338,29 @@ if (Meteor.isServer) {
   */
 
   endRace : function(obj){
-  em.emit("victoryAnimation")
+
+    console.log(" endRace ", obj.who.commune, obj.who.pseudo, " ", timerUnites, ":", timerDecimales, "conc ", (timerUnites*1000)+timerDecimales*10)
+    HallOfFame.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo, "whichCourse":obj.context, "score":(timerUnites*1000)+timerDecimales*10})
+    
+    howmanyBonhommes = howmanyBonhommes-1
+
+    if(howmanyBonhommes==0){
+      console.log("this was the last mf!")
+      Meteor.call("stopRun")
+      em.emit("endRaceAnimation")
+    }
+
+    em.emit("victoryAnimation")
+
+    // tout ce qui se passe en dessous n'advient qu'une foy
 
     if (Winners.findOne()) {
-
-// update their score and return
       return
-
     }else{
       Bonhomme.update(obj.who, {$set:{haswonpoule:true},})
       Winners.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo})
-        // log highscore
-        // update winnersDatabase
-        // DEMANDER a la personne si elle a eu l'impression de gagner?
-        // pour checker cette bonne vieille histoire de latence
     }
 },
-
-  adminSetCourseOff: function(){
-    console.log("setting victory off")
-      __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-      superGlobals.update(__id, {$set:{"isItVictoryYet":true},})
-  },
-  
-  adminSetCourseOn: function(){
-    console.log("setting victory on")
-      __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
-      superGlobals.update(__id, {$set:{"isItVictoryYet":false},})
-  },
-
 
   newContenuEcran: function (obj) {
     var loggedInUser = Meteor.user()

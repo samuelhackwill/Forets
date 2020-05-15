@@ -10,6 +10,8 @@ Winners = new Meteor.Collection("winners");
 
 HallOfFame = new Meteor.Collection("hallofame");
 
+Timer = new Meteor.Collection("timer");
+
 ViewSwitcher = new Meteor.Collection("viewSwitcher");
 
 Bonhomme = new Meteor.Collection("bonhomme");
@@ -277,6 +279,18 @@ representations.allow({
 
 
 HallOfFame.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
+  }
+});
+
+Timer.allow({
   insert:function(){
     return true;
   },

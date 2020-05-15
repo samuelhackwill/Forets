@@ -27,6 +27,24 @@ top:170px !important;
 text-align:center;
 }
 
+#halloffame{
+	display:none;
+	background-color:beige;
+	overflow: scroll;
+	z-index:100000000;
+	position: fixed;
+	height: 500px;
+	width: 500px;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%)
+}
+
+table{
+	border-spacing: 15px;
+border-collapse: inherit;
+}
+
 #debuging{
 	position:absolute;
 	left:150px;

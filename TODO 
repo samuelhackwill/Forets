@@ -1,16 +1,20 @@
 TODO : 
 
-⭕ logique de fin de match :
-	⭕ écran de victoire
-	⭕ log du score
+✅ écrire une fonction pour chercker la vitesse/latence et comment chaque ordi a l'impression d'être le plus rapidos
 
-⭕ les scores de la fin
+✅ terrain (ligne d'arivée)
+
+🕒 logique de fin de match :
+	✅ écran de victoire
+	🕒 log du score
+
+◻ les scores de la fin
 
 ✅ fond des bonhommes transparent
 
-⭕ texte
-⭕ narrateur (?)
+◻ texte
+◻ narrateur (?)
 
 ✅ faire courir tout le monde (éventuellement y'a seulement le joueur 1 qui court avec un rythme non automatique!)
 
-⭕ meilleure animation course (full reactive)
+◻ meilleure animation course (full reactive)
