@@ -17,17 +17,18 @@ randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
 communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Verel-de-Montbel","Yenne"]
 randomcommune= communes[Math.floor(Math.random() * communes.length)];
 
-testSpeed = [50, 52, 56, 60, 61, 65, 105, 107, 130, 134, 200, 250]
+// testSpeed = [50, 52, 56, 60, 61, 65, 105, 107, 130, 134, 200, 250]
 // hmmm quand les appels à la DB sont trop proches les uns des autres pour
 // deux clients ça fout grave la merde mammen.
 // il faut que je pose la question à un specialiste de meteor.
 // meteor boards ou stack overflow
 
-// ça marchait mieux quand j'avais que quatre valeurs dans le tableau
+// ça marchait mieux quand j'avais que quatre valeurs dans le tableau je crois
+// ou peut être c'est lié au fait que je faisais moins d'appels à la DB? hm
 // testSpeed = [50, 100, 150, 200]
 
 
-randomTestSpeed = testSpeed[Math.floor(Math.random() * testSpeed.length)];
+// randomTestSpeed = testSpeed[Math.floor(Math.random() * testSpeed.length)];
 
 compteurAnim=1;
 
@@ -124,8 +125,8 @@ Template.covid19.onRendered(function () {
       }
 
     }else{
-      Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
-    }
+      Meteor.call("stepServerSide", playerId)    
+}
 
     zob = setDeceleratingTimeout(function()
       {
@@ -136,7 +137,7 @@ Template.covid19.onRendered(function () {
         // ainsi que le déplacement en nombre de pixels
       },animationRate,3);
 
-    },randomTestSpeed)
+    },parseInt(Session.get("testSpeed")))
 
   });
 
@@ -270,34 +271,36 @@ var nextEvent = function(){
     next();
     console.log("keyup, ", compteur)
 
-
-    _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
-
-    if(_posX>97){
-      whichrace = ViewSwitcher.find({"activated":true}).fetch()[0].name
-
-      if(playerHasWonLocaly){
-        return
-      }else{
-        Meteor.call("endRace", {context : whichrace, who : Bonhomme.find({_id:playerId}).fetch()[0]})
-        console.log("HEYYY you've won.") 
-        playerHasWonLocaly=true; 
-      }
-
-    }else{
-      Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
-    }
-
-    zob = setDeceleratingTimeout(function()
-      {
-        imageCycler(playerId)
-        // et c'est là qu'il faudrait que ce fameux 20
-        // deviene une variable qui augmente ou diminue
-        // en fonction du rythme de pression sur la spacebar
-        // ainsi que le déplacement en nombre de pixels
-      },animationRate,3);
-
+    Meteor.call("stepServerSide", playerId)
   }
+
+  //   _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
+
+  //   if(_posX>97){
+  //     whichrace = ViewSwitcher.find({"activated":true}).fetch()[0].name
+
+  //     if(playerHasWonLocaly){
+  //       return
+  //     }else{
+  //       Meteor.call("endRace", {context : whichrace, who : Bonhomme.find({_id:playerId}).fetch()[0]})
+  //       console.log("HEYYY you've won.") 
+  //       playerHasWonLocaly=true; 
+  //     }
+
+  //   }else{
+  //     Bonhomme.update(playerId, {$set:{"posX":_posX+1},})
+  //   }
+
+  //   zob = setDeceleratingTimeout(function()
+  //     {
+  //       imageCycler(playerId)
+  //       // et c'est là qu'il faudrait que ce fameux 20
+  //       // deviene une variable qui augmente ou diminue
+  //       // en fonction du rythme de pression sur la spacebar
+  //       // ainsi que le déplacement en nombre de pixels
+  //     },animationRate,3);
+
+  // }
 }
 
 sendPseudo = function(who, e){

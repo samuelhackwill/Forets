@@ -273,7 +273,6 @@ body.covid19 #arr{
 #commune{
 z-index: 10000000 !important;
 background-color:white;
-border-color: red;
 border-style: solid;
 border-radius: 5px;
 width: max-content;
@@ -284,6 +283,14 @@ left: 50%;
 position: absolute;
 transform: translate(-50%, -16px);
 border-width: 2px;
+}
+
+.commune{
+border-color: red;
+}
+
+.communeV{
+border-color: black;
 }
 
 #pseudo{

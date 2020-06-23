@@ -2,6 +2,16 @@
 // ContenusEcran.before.insert(function (userId, doc) {
 //   doc.createdAt = new Date();
 // });
+
+
+// var bonhommeQuery = Bonhomme.find();
+// bonhommeQuery.observeChanges({
+//   changed:function(id, fields){
+//     console.log("bonhomme updated ", id, fields)
+//   }
+// })
+
+
 ratsRace = 0
 namesRace = []
 
@@ -229,6 +239,17 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
+    stepServerSide:function(who){
+      Bonhomme.update(who, {$inc:{"posX":1},})
+    },
+
+// Tickets.update(
+//         {_id: ticketId}, 
+//         { $set: {title: ticket.title, content: ticket.content}},
+//         { $inc: {counterEdit: 1 }}
+//         )
+
+
     autoRun:function(){
       em.emit("autoRunAll")
     },    
@@ -267,6 +288,10 @@ if (Meteor.isServer) {
 
     killBonhommes:function(){
       Bonhomme.remove({})
+    },
+
+    forceRefresh:function(){
+      em.emit("salmrefreshpage")
     },
 
 
