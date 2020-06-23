@@ -239,8 +239,22 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
+
+    removeOneGuy:function(who){
+      delete posTable[who]
+      streamer.emit('message', posTable);
+    },
+
+    addGuyToPosTable:function(who){
+      posTable[who]=0
+      streamer.emit('message', posTable);
+    },
+
     stepServerSide:function(who){
-      Bonhomme.update(who, {$inc:{"posX":1},})
+      // Bonhomme.update(who, {$inc:{"posX":1},})
+      oldValue = posTable[who]
+      posTable[who] = oldValue +1 
+      streamer.emit('message', posTable);
     },
 
 // Tickets.update(

@@ -11,6 +11,7 @@ Session.set("localName", "");
 yeecount = 1;
 zob = ""
 playerHasWonLocaly = false;
+timer = ""
 
 pseudos = ["ant", "mar", "cam", "tom", "ale", "jea", "ali", "jul", "XXX", "zor", "GRO", "zob"]
 randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
@@ -61,7 +62,11 @@ Template.covid19.onCreated(function() {
   poules = ["lents", "rapides"]
   randomPoule = poules[Math.floor(Math.random() * poules.length)];
 
+  // insère un nouveau player dans la db
   playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", score:{"firstRun":0, "pouleRun":0, "ffaRun":0} })
+
+  // insère ta posx dans le tableau de vérité
+  Meteor.call("addGuyToPosTable", playerId)
 
 });
 
@@ -109,33 +114,33 @@ Template.covid19.onRendered(function () {
 
   em.addListener("autoRunAll", function(){
 
-    setInterval(function(){
+    timer = setInterval(function(){
 
-    _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
+    // _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
 
-    if(_posX>86){
-      whichrace = ViewSwitcher.find({"activated":true}).fetch()[0].name
+    // if(_posX>86){
+    //   whichrace = ViewSwitcher.find({"activated":true}).fetch()[0].name
 
-      if(playerHasWonLocaly){
-        return
-      }else{
-        Meteor.call("endRace", {context : whichrace, who : Bonhomme.find({_id:playerId}).fetch()[0]})
-        console.log("HEYYY you've won.") 
-        playerHasWonLocaly=true; 
-      }
+    //   if(playerHasWonLocaly){
+    //     return
+    //   }else{
+    //     Meteor.call("endRace", {context : whichrace, who : Bonhomme.find({_id:playerId}).fetch()[0]})
+    //     console.log("HEYYY you've won.") 
+    //     playerHasWonLocaly=true; 
+    //   }
 
-    }else{
+    // }else{
       Meteor.call("stepServerSide", playerId)    
-}
+// }
 
-    zob = setDeceleratingTimeout(function()
-      {
-        imageCycler(playerId)
-        // et c'est là qu'il faudrait que ce fameux 20
-        // deviene une variable qui augmente ou diminue
-        // en fonction du rythme de pression sur la spacebar
-        // ainsi que le déplacement en nombre de pixels
-      },animationRate,3);
+    // zob = setDeceleratingTimeout(function()
+    //   {
+    //     imageCycler(playerId)
+    //     // et c'est là qu'il faudrait que ce fameux 20
+    //     // deviene une variable qui augmente ou diminue
+    //     // en fonction du rythme de pression sur la spacebar
+    //     // ainsi que le déplacement en nombre de pixels
+    //   },animationRate,3);
 
     },parseInt(Session.get("testSpeed")))
 
@@ -181,6 +186,20 @@ Template.covid19.onRendered(function () {
     unstop();
   }); 
 
+  redrawPlayers=function(posTable){
+    // console.log("redrawy", posTable)
+    $.each(posTable, function(key, value){
+      // console.log("redraw ", key, value)
+      // console.log(document.getElementById(""+key))
+      var doesPlayerExist = document.getElementById(""+key)
+
+      if(doesPlayerExist!==null){
+        doesPlayerExist.style.transform="translateX("+value+"vw)"
+      }
+    
+    })
+  };
+
 
 setDeceleratingTimeout = function(callback, factor, times){
   var internalCallback = function(tick, counter){
@@ -213,7 +232,7 @@ setDeceleratingTimeout = function(callback, factor, times){
 });
 
 next = function(){
-  console.log('next', compteur, data[compteur]);
+  // console.log('next', compteur, data[compteur]);
   var currentData = data[compteur]
   var type = currentData["type"]
   var params = currentData["text"]
@@ -263,13 +282,13 @@ var nextEvent = function(){
 
   // var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
   var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
-  console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
+  // console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
   if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
     window.clearTimeout(autonextcontainer)
     window.clearTimeout(zob)
     compteur +=1
     next();
-    console.log("keyup, ", compteur)
+    // console.log("keyup, ", compteur)
 
     Meteor.call("stepServerSide", playerId)
   }
@@ -347,6 +366,7 @@ imageCycler = function(who){
 
 closingWindow = function(){
   Bonhomme.remove({_id:playerId})
+  Meteor.call("removeOneGuy", playerId)
 }
 
 thinksHeWon = function(who,result){
