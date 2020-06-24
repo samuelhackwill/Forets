@@ -269,34 +269,6 @@ if (Meteor.isServer) {
       em.emit("autoRunAll")
     },    
 
-    startRun:function(_howmanyBonhommes){
-
-      // em.emit("startLocalTimers")
-
-      // tous les timers sont désynchronisés si on fait ça...
-
-      howmanyBonhommes = _howmanyBonhommes
-
-      timerDecimales = 0
-      timerUnites = 0
-
-      if(timer!=0){Meteor.clearInterval(timer); console.log("clear the old timer")}
-
-      timer = Meteor.setInterval(function(){
-        timerDecimales = timerDecimales+1
-        if (timerDecimales > 99) {
-          timerDecimales = 0
-          timerUnites = timerUnites +1
-        }
-      //   console.log("timer ", timerUnites, ":", timerDecimales)
-      //   Timer.update(Timer.findOne({})._id, {$set:{"time":timerUnites+":"+timerDecimales},})
-      
-      // y'a pas moyen, ça ralentit tous les autres accès à la db
-      
-      },10)
-    
-    },
-
     stopRun:function(){
       em.emit("stopRunServer")
     },
