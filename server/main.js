@@ -250,12 +250,42 @@ if (Meteor.isServer) {
       streamer.emit('message', posTable);
     },
 
-    stepServerSide:function(who){
+    requestStepServerSide: function(who){
+      console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
+      stepQueue.push(who);
+      console.log('requestStepServerSide stepQueue 2 ', stepQueue)
+
+    },
+
+    killTimerSteps: function(){
+      console.log("killTimerSteps stopping timer steps")
+      Meteor.clearInterval(timerSteps); 
+    },
+
+    startTimerSteps: function(){
+      console.log("startTimerSteps starting timer steps")
+      timerSteps = Meteor.setInterval(function(){
+        console.log("timerSteps!", stepQueue)
+        if(stepQueue.length > 0) {
+          console.log("timerSteps! call stepServerSide")
+          Meteor.call('stepServerSide')
+        }
+      },timerStepsInterval);
+    },
+
+    // stepServerSide:function(who){
+    stepServerSide:function(){
+      console.log("stepServerSide!")
       // Bonhomme.update(who, {$inc:{"posX":1},})
-      oldValue = posTable[who]
-      posTable[who] = oldValue +1 
+      updates = 0;
+      for (var i = 0; i < stepQueue.length; i++) {
+        stepQueue[i]
+        typeof posTable[stepQueue[i]] === 'undefined' ? posTable[stepQueue[i]] = 1 : posTable[stepQueue[i]]++;
+        updates++;
+      }
+      stepQueue = []
       streamer.emit('message', posTable);
-      console.log("send message!")
+      console.log("send message! "+updates+" positions updated")
     },
 
 // Tickets.update(

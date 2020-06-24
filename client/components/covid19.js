@@ -133,7 +133,8 @@ Template.covid19.onRendered(function () {
     //   }
 
     // }else{
-      Meteor.call("stepServerSide", playerId)    
+      // Meteor.call("stepServerSide", playerId)    
+      Meteor.call("requestStepServerSide", playerId)    
 // }
 
     // zob = setDeceleratingTimeout(function()
@@ -192,7 +193,7 @@ Template.covid19.onRendered(function () {
   redrawPlayers=function(posTable){
     // console.log("redrawy", posTable)
     $.each(posTable, function(key, value){
-      // console.log("redraw ", key, value)
+      console.log("redraw ", key, value)
       // console.log(document.getElementById(""+key))
       var doesPlayerExist = document.getElementById(""+key)
 
@@ -284,17 +285,18 @@ next = function(){
 var nextEvent = function(){
 
   // var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
-  var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
+  // var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
   // console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
-  if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
-    window.clearTimeout(autonextcontainer)
-    window.clearTimeout(zob)
-    compteur +=1
-    next();
+  // if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
+    // window.clearTimeout(autonextcontainer)
+    // window.clearTimeout(zob)
+    // compteur +=1
+    // next();
     // console.log("keyup, ", compteur)
 
-    Meteor.call("stepServerSide", playerId)
-  }
+    // Meteor.call("stepServerSide", playerId)
+    Meteor.call("requestStepServerSide", playerId)
+  // }
 
   //   _posX = parseInt(Bonhomme.find({_id:playerId}).fetch()[0].posX)
 
