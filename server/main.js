@@ -23,6 +23,10 @@ timer = 0
 timerDecimales = 0
 timerUnites = 0
 
+stepQueue = []
+timerStepsInterval = 100
+timerSteps = '';
+
 howmanyBonhommes = 0
 
 Meteor.publish('allWinners', function(){
@@ -251,9 +255,9 @@ if (Meteor.isServer) {
     },
 
     requestStepServerSide: function(who){
-      console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
+      // console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
       stepQueue.push(who);
-      console.log('requestStepServerSide stepQueue 2 ', stepQueue)
+      // console.log('requestStepServerSide stepQueue 2 ', stepQueue)
 
     },
 
@@ -263,19 +267,19 @@ if (Meteor.isServer) {
     },
 
     startTimerSteps: function(){
-      console.log("startTimerSteps starting timer steps")
+      // console.log("startTimerSteps starting timer steps")
       timerSteps = Meteor.setInterval(function(){
-        console.log("timerSteps!", stepQueue)
-        if(stepQueue.length > 0) {
-          console.log("timerSteps! call stepServerSide")
+        // console.log("timerSteps!", stepQueue)
+        // if(stepQueue.length > 0) {
+          // console.log("timerSteps! call stepServerSide")
           Meteor.call('stepServerSide')
-        }
+        // }
       },timerStepsInterval);
     },
 
     // stepServerSide:function(who){
     stepServerSide:function(){
-      console.log("stepServerSide!")
+      // console.log("stepServerSide!")
       // Bonhomme.update(who, {$inc:{"posX":1},})
       updates = 0;
       for (var i = 0; i < stepQueue.length; i++) {

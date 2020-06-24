@@ -16,8 +16,6 @@ if(Meteor.isClient) {
 
 if (Meteor.isServer) {
 
-  stepQueue = []
-  timerStepsInterval = 100
 
   streamer.allowRead('all');
   streamer.allowWrite('all');

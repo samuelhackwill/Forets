@@ -84,8 +84,10 @@ Template.covid19.onRendered(function () {
   });
 
   em.addListener("autoRunAll", function(){
+    console.log('AUTO RUN ALL')
     timer = setInterval(function(){ 
-      Meteor.call("requestStepServerSide", playerId)    
+      Meteor.call("requestStepServerSide", playerId)
+      console.log('keypress robot', playerId)    
     },parseInt(Session.get("testSpeed")))
   });
 
@@ -179,14 +181,14 @@ redrawPlayers=function(posTable){
   $.each(posTable, function(key, value){
     // console.log("redraw ", key, value)
     // console.log(document.getElementById(""+key))
-    if(value>600){
+    if(key == playerId && value>90){
       clearInterval(timer);
       return
     }else{
       var doesPlayerExist = document.getElementById(""+key)
 
       if(doesPlayerExist!==null){
-        doesPlayerExist.style.transform="translateX("+value+"px)"
+        doesPlayerExist.style.transform="translateX("+value+"vw)"
       }
     }
   })
