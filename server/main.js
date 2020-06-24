@@ -255,6 +255,7 @@ if (Meteor.isServer) {
       oldValue = posTable[who]
       posTable[who] = oldValue +1 
       streamer.emit('message', posTable);
+      console.log("send message!")
     },
 
 // Tickets.update(
@@ -297,7 +298,7 @@ if (Meteor.isServer) {
     },
 
     stopRun:function(){
-      Meteor.clearInterval(timer)
+      em.emit("stopRunServer")
     },
 
     killBonhommes:function(){

@@ -111,6 +111,9 @@ Template.covid19.onRendered(function () {
 
 // tous les timers sont désynchronisés ça pue
 
+  em.addListener("stopRunServer", function(){
+    clearInterval(timer);
+  });
 
   em.addListener("autoRunAll", function(){
 
