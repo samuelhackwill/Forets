@@ -1,4 +1,5 @@
 const { gsap } = require("gsap/dist/gsap");
+timeline = gsap.timeline();
 // TODO : implémenter un calculateur de fréquence de stroke
 // pour accélérer ou ralentir le cycle de course
 // ainsi que de faire avance le gonze plus ou moins vite
@@ -75,7 +76,20 @@ Template.covid19.onRendered(function () {
 
   this.autorun(() => {
     let ready = Template.instance().subscriptionsReady();
-    if (!ready){ return; }
+    if (!ready){ return; }else{
+      setTimeout(function(){
+        console.log("ready!")
+        var players = $('.wordcontainer');
+        console.log('players', players);
+        $.each(players, function(i,player){
+          console.log(player, $(player).attr('id'));
+          var timelinePlayer = gsap.timeline();
+          timelinePlayer.to(player, {id: $(player).attr('id'), left: "100%", duration: 20}).timeScale(0.1);
+          timeline.add(timelinePlayer, 0);
+        });
+        timeline.play();
+      },3000)
+    }
   });
 
   $(document.body).addClass('covid19');
@@ -106,6 +120,7 @@ Template.covid19.onRendered(function () {
     console.log('salm refresh page!', what);
     location.reload();
   });
+
 
 });
 
@@ -186,10 +201,20 @@ redrawPlayers=function(posTable){
       clearInterval(timer);
       return
     }else{
-      var doesPlayerExist = document.getElementById(""+key)
+      var doesPlayerExist = document.getElementById("player"+key)
+
+      console.log(timeline.getTweensOf('#player'+key, true));
+      var playerTween = timeline.getTweensOf('#player'+key, true);
+
+      console.log("timelinePlayer ", timelinePlayer)
+      var timelinePlayer = playerTween[0].parent;
+      var timeScale = timelinePlayer.timeScale();
+      var newTimeScale = newTimeScale+value[1]*0.1;
+      gsap.to(timelinePlayer, 0.25, {timeScale: newTimeScale});
+
 
       if(doesPlayerExist!==null){
-        doesPlayerExist.style.transform="translateX("+value[0]+"vw)"
+        // doesPlayerExist.style.transform="translateX("+value[0]+"vw)"
       }
     }
   })
@@ -225,13 +250,6 @@ $(document.body).on('keyup', function(e) {
 });
 
 var nextEvent = function(){
-
-  console.log(timeline.getTweensOf('#player-1', true));
-  var playerOneTimeline = timeline.getChildren(true, false, true)[0];
-  var timeScale = playerOneTimeline.timeScale();
-  var newTimeScale = timeScale+0.02 >= 1 ? 1 : timeScale+0.02;
-  console.log(timeScale, ' -> ', newTimeScale);
-  gsap.to(playerOneTimeline, 0.25, {timeScale: newTimeScale});
 
   Meteor.call("requestStepServerSide", playerId)
 }

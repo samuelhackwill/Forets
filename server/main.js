@@ -287,6 +287,7 @@ if (Meteor.isServer) {
 
     // First modify acceleration of all players
 
+    if(posTable){
       for (var i = 0; i < stepQueue.length; i++) {
         if(posTable[stepQueue[i]] === 'undefined'){ 
           posTable[stepQueue[i]][1] = 0
@@ -294,10 +295,12 @@ if (Meteor.isServer) {
         }else{
           // posTable[stepQueue[i]][0]++;
           // increment posX
-          posTable[stepQueue[i]][1]++;
+          console.log("does posTable existe? ", posTable[stepQueue[i]])
+          posTable[stepQueue[toString(i)]][1]++;
           // increment acceleration
         }
       }
+    }
 
       stepQueue = []
 

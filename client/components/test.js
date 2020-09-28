@@ -1,7 +1,6 @@
 const { gsap } = require("gsap/dist/gsap");
 
 
-$(document.body).addClass('test');
 
 
 derouleur = function(){
@@ -27,6 +26,8 @@ timeline = gsap.timeline();
 
 
 Template.test.onRendered(function () {
+  
+  $(document.body).addClass('test');
   console.log(timeline);
 
   var players = $('.wordcontainer');

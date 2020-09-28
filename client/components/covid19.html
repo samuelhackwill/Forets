@@ -88,38 +88,45 @@ enfin disons que ça aurait été chouette si c'était pas juste quelqu'un se fa
 		{{/each}}
 		</div>
 
- </div>
+	 </div>
 
+	<div id="the_track">
+		{{#each bonhomme}}
+		    <div id="player{{_id}}" class="wordcontainer">
+		      <div class="brasARR">
+		        <div class="spriteback1"></div>
+		        <div class="spriteback2"></div>
+		        <div class="spriteback3"></div>
+		        <div class="spriteback4"></div>
+		        <div class="spriteback5"></div>
+		        <div class="spriteback6"></div>
+		        <div class="spriteback7"></div>
+		        <div class="spriteback8"></div>
+		        <div class="spriteback9"></div>
+		        <div class="spriteback10"></div>
+		        <div class="spriteback11"></div>
+		        <div class="spriteback12"></div>
+		      </div>
 
-{{#each bonhomme}}
-	<div class="testRunner" id={{_id}}>{{_id}}
-		<div class="personne">
-			<div id="commune" class="commune{{vous}}">{{commune}}</div>
-			<div id="pseudo">{{pseudo}}</div>
-			<div class="sprite{{vous}}1"></div>	
-			<div class="sprite{{vous}}2"></div>	
-			<div class="sprite{{vous}}3"></div>	
-			<div class="sprite{{vous}}4"></div>	
-			<div class="sprite{{vous}}5"></div>	
-			<div class="sprite{{vous}}6"></div>	
-			<div class="sprite{{vous}}7"></div>	
-			<div class="sprite{{vous}}8"></div>	
-			<div class="sprite{{vous}}9"></div>	
-			<div class="sprite{{vous}}10"></div>	
-			<div class="sprite{{vous}}11"></div>	
-			<div class="sprite{{vous}}12"></div>
-		</div>
+		      espace
 
-		<div class="terrain">
-			<div class="number">{{@index}}</div>
-			<div class="separator"></div>			
-		</div>
-
-
+		      <div class="brasAVT">
+		        <div class="spritefront1"></div>
+		        <div class="spritefront2"></div>
+		        <div class="spritefront3"></div>
+		        <div class="spritefront4"></div>
+		        <div class="spritefront5"></div>
+		        <div class="spritefront6"></div>
+		        <div class="spritefront7"></div>
+		        <div class="spritefront8"></div>
+		        <div class="spritefront9"></div>
+		        <div class="spritefront10"></div>
+		        <div class="spritefront11"></div>
+		        <div class="spritefront12"></div>
+		      </div>
+		    </div>
+		{{/each}}
 	</div>
-
-	{{/each}}
-
 </div>
 
 	<div id="halloffame">
