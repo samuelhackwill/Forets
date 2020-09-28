@@ -25,7 +25,11 @@ timerUnites = 0
 
 stepQueue = []
 timerStepsInterval = 100
+// 1 update / sec (1000)
 timerSteps = '';
+
+minAcceleration = 1
+// +1 posX/sec at 100 Hz
 
 howmanyBonhommes = 0
 
@@ -250,13 +254,14 @@ if (Meteor.isServer) {
     },
 
     addGuyToPosTable:function(who){
-      posTable[who]=0
+      posTable[who]=[0,0]
+      // la première valeur est la posX, la seconde est l'accélération
       streamer.emit('message', posTable);
     },
 
     requestStepServerSide: function(who){
-      // console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
       stepQueue.push(who);
+      console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
       // console.log('requestStepServerSide stepQueue 2 ', stepQueue)
 
     },
@@ -279,17 +284,40 @@ if (Meteor.isServer) {
 
     // stepServerSide:function(who){
     stepServerSide:function(){
-      // console.log("stepServerSide!")
-      // Bonhomme.update(who, {$inc:{"posX":1},})
-      // updates = 0;
+
+    // First modify acceleration of all players
+
       for (var i = 0; i < stepQueue.length; i++) {
-        stepQueue[i]
-        typeof posTable[stepQueue[i]] === 'undefined' ? posTable[stepQueue[i]] = 1 : posTable[stepQueue[i]]++;
-        // updates++;
+        if(posTable[stepQueue[i]] === 'undefined'){ 
+          posTable[stepQueue[i]][1] = 0
+          // if undefined reset posX
+        }else{
+          // posTable[stepQueue[i]][0]++;
+          // increment posX
+          posTable[stepQueue[i]][1]++;
+          // increment acceleration
+        }
       }
+
       stepQueue = []
+
+      // slow down everybody of 1, 10 times per second
+      allGuysId = Object.keys(posTable)
+      for (var i = 0; i < allGuysId.length; i++) {
+        if(posTable[allGuysId[i]][1]>minAcceleration){
+          // if someone is already at minimum acceleration, don't slow him down
+          posTable[allGuysId[i]][1]--;
+        }
+        posTable[allGuysId[i]][0]=posTable[allGuysId[i]][0]+posTable[allGuysId[i]][1]*0.1
+      }
+
+
+      // go through the posTable and calculate the posX offset
+
+
+      console.log("posTable updated! ", posTable)
+
       streamer.emit('message', posTable);
-      // console.log("send message! "+updates+" positions updated")
     },
 
 // Tickets.update(
@@ -303,7 +331,7 @@ if (Meteor.isServer) {
       allGuysId = Object.keys(posTable)
 
       for (var i = allGuysId.length - 1; i >= 0; i--) {
-        posTable[allGuysId[i]] = 0
+        posTable[allGuysId[i]] = [0,0]
       }
       streamer.emit('message', posTable);
     },

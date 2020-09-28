@@ -181,14 +181,14 @@ redrawPlayers=function(posTable){
   $.each(posTable, function(key, value){
     // console.log("redraw ", key, value)
     // console.log(document.getElementById(""+key))
-    if(key == playerId && value>90){
+    if(key == playerId && value[0]>90){
       clearInterval(timer);
       return
     }else{
       var doesPlayerExist = document.getElementById(""+key)
 
       if(doesPlayerExist!==null){
-        doesPlayerExist.style.transform="translateX("+value+"vw)"
+        doesPlayerExist.style.transform="translateX("+value[0]+"vw)"
       }
     }
   })
