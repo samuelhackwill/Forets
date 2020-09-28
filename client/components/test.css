@@ -1,0 +1,209 @@
+body.test .container{
+}
+
+body.test #greenbackground{
+	width: 2000px;
+	height: 25vh;
+	position: absolute;
+	top:0px;
+	left: 0px;
+	background-color: lightgreen;
+}
+
+body.test .trackverticalline:nth-child(1){
+	left: 50px!important;
+}
+body.test .trackverticalline:nth-child(2){
+	left: 100px!important;
+}
+body.test .trackverticalline:nth-child(3){
+	left: 150px!important;
+}
+body.test .trackverticalline:nth-child(4){
+	left: 200px!important;
+}
+body.test .trackverticalline:nth-child(5){
+	left: 250px!important;
+}
+body.test .trackverticalline:nth-child(6){
+	left: 300px!important;
+}
+
+
+body.test .trackverticalline{
+	width: 2px;
+	height:100%;
+	position: absolute;
+	background-color: black;
+	transform: skew(4deg) translateX(80vw);
+	transition: transform 5s linear;
+
+	left:350px;
+}
+
+.animateEnd{
+	transform: skew(-1deg) translateX(-30vw);
+}
+
+body.test #players{
+	font-family: Helvetica;
+	top:26vh;
+	line-height:5vh;
+	list-style-type:none;
+	font-size: 5vh;
+	position: absolute;
+	left: 100px;
+	animation: upndown .35s infinite;
+}
+
+body.test .brasARR{
+	top:150%;
+	left:50%;
+	transform:translateX(-50%);
+	position: relative;
+	width:6vh;
+	height:6vh;
+}
+
+body.test .brasAVT{
+	top:-40%;
+	left:50%;
+	transform:translateX(-50%);
+	position: relative;
+	width:6vh;
+	height:6vh;
+}
+
+body.test .wordcontainer{
+	float: right;
+	text-align: center;
+	width: min-content;
+	clear:both;
+	margin-bottom:-45%;
+}
+
+body.test .wordcontainer:nth-child(1){
+	float: right;
+	text-align: center;
+	width: min-content;
+	clear:both;
+	margin-bottom:-45%;
+	animation: leftright 10s infinite linear;
+}
+
+body.test .wordcontainer:nth-child(3){
+	float: right;
+	text-align: center;
+	width: min-content;
+	clear:both;
+	margin-bottom:-45%;
+	animation: leftright 6s infinite linear;
+}
+
+body.test .wordcontainer:nth-child(5){
+	float: right;
+	text-align: center;
+	width: min-content;
+	clear:both;
+	margin-bottom:-45%;
+	animation: leftright 10.5s infinite linear;
+}
+
+body.test .wordcontainer:nth-child(7){
+	float: right;
+	text-align: center;
+	width: min-content;
+	clear:both;
+	margin-bottom:-45%;
+	animation: leftright 13s infinite linear;
+}
+
+
+body.test .spriteback1{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 1.png');animation: mymove1 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback2{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 2.png');animation: mymove2 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback3{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 3.png');animation: mymove3 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback4{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 4.png');animation: mymove4 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback5{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 5.png');animation: mymove5 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback6{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 6.png');animation: mymove6 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback7{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 7.png');animation: mymove7 1s infinite linear; background-size: 200%; background-position:center; 
+}
+body.test .spriteback8{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 8.png');animation: mymove8 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback9{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 9.png');animation: mymove9 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback10{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 10.png');animation: mymove10 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback11{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 11.png');animation: mymove11 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spriteback12{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/back 12.png');animation: mymove12 1s infinite linear; background-size: 200%; background-position:center;
+}
+
+
+
+
+
+
+body.test .spritefront1{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 1.png');animation: mymove1 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront2{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 2.png');animation: mymove2 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront3{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 3.png');animation: mymove3 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront4{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 4.png');animation: mymove4 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront5{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 5.png');animation: mymove5 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront6{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 6.png');animation: mymove6 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront7{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 7.png');animation: mymove7 1s infinite linear; background-size: 200%; background-position:center; 
+}
+body.test .spritefront8{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 8.png');animation: mymove8 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront9{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 9.png');animation: mymove9 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront10{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 10.png');animation: mymove10 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront11{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 11.png');animation: mymove11 1s infinite linear; background-size: 200%; background-position:center;
+}
+body.test .spritefront12{width:inherit;height:inherit;position:absolute;top:inherit;
+background-image: url('img/front 12.png');animation: mymove12 1s infinite linear; background-size: 200%; background-position:center;
+}
+
+@keyframes upndown {
+  0%, 100%  {transform: translateY(5px);}
+  50% {transform: translateY(0px);}
+}
+
+@keyframes leftright {
+  0%, 100%  {transform: translateX(0vw);}
+  99% {transform: translateX(80vw);}
+}

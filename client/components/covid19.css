@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "runnerFont";
+    src:  url("runnerFont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 ul.admin_menu {
   list-style-type: none;
   display: inline-block;
@@ -86,10 +94,6 @@ body.covid19 #arr{
 #sam{
 	width:100px;
 	height:97px;
-	border-style: solid;
-	border-width: 2px;
-	border-color:green;
-
 }
 
 @keyframes mymove1 {
@@ -141,85 +145,93 @@ body.covid19 #arr{
   92.41%,	100.00% {opacity: 1;}
 }
 
-#runnersGrid div:nth-of-type(18) {
-	grid-column: 1 / span 2;
-	grid-row: 1 / span 3;
-	z-index: 82;
+#dominiquesRunners div:nth-of-type(1){
+	transform: translate(2px,-2px);
 }
+#dominiquesRunners div:nth-of-type(2){
+	transform: translate(4px,-4px);
+}
+#dominiquesRunners div:nth-of-type(3){
+	transform: translate(6px,-6px);
+}
+#dominiquesRunners div:nth-of-type(4){
+	transform: translate(8px,-8px);
+}
+
 #runnersGrid div:nth-of-type(17) {
 	grid-column: 2 / span 2;
-	grid-row: 3 / span 3;
+	grid-row: 1 / span 3;
 	z-index: 83;
 }
 #runnersGrid div:nth-of-type(16) {
 	grid-column: 1 / span 2;
-	grid-row: 5 / span 3;
+	grid-row: 3 / span 3;
 	z-index: 84;
 }
 #runnersGrid div:nth-of-type(15) {
 	grid-column: 2 / span 2;
-	grid-row: 7 / span 3;
+	grid-row: 5 / span 3;
 	z-index: 85;
 }
 #runnersGrid div:nth-of-type(14) {
 	grid-column: 1 / span 2;
-	grid-row: 9 / span 3;
+	grid-row: 7 / span 3;
 	z-index: 86;
 }
 #runnersGrid div:nth-of-type(13) {
 	grid-column: 2 / span 2;
-	grid-row: 11 / span 3;
+	grid-row: 9 / span 3;
 	z-index: 87;
 }
 #runnersGrid div:nth-of-type(12) {
 	grid-column: 1 / span 2;
-	grid-row: 13 / span 3;
+	grid-row: 11 / span 3;
 	z-index: 88;
 }
 #runnersGrid div:nth-of-type(11) {
 	grid-column: 2 / span 2;
-	grid-row: 15 / span 3;
+	grid-row: 13 / span 3;
 	z-index: 89;
 }
 #runnersGrid div:nth-of-type(10) {
 	grid-column: 1 / span 2;
-	grid-row: 17 / span 3;
+	grid-row: 15 / span 3;
 	z-index: 90;
 }
 #runnersGrid div:nth-of-type(9) {
 	grid-column: 2 / span 2;
-	grid-row: 19 / span 3;
+	grid-row: 17 / span 3;
 	z-index: 91;
 }
 #runnersGrid div:nth-of-type(8) {
 	grid-column: 1 / span 2;
-	grid-row: 21 / span 3;
+	grid-row: 19 / span 3;
 	z-index: 92;
 }
 #runnersGrid div:nth-of-type(7) {
 	grid-column: 2 / span 2;
-	grid-row: 23 / span 3;
+	grid-row: 21 / span 3;
 	z-index: 93;
 }
 
 #runnersGrid div:nth-of-type(6) {
 	grid-column: 1 / span 2;
-	grid-row: 25 / span 3;
+	grid-row: 23 / span 3;
 	z-index: 94;
 }
 #runnersGrid div:nth-of-type(5) {
 	grid-column: 2 / span 2;
-	grid-row: 27 / span 3;
+	grid-row: 25 / span 3;
 	z-index: 95;
 }
 #runnersGrid div:nth-of-type(4) {
 	grid-column: 1 / span 2;
-	grid-row: 29 / span 3;
+	grid-row: 27 / span 3;
 	z-index: 96;
 }
 #runnersGrid div:nth-of-type(3) {
 	grid-column: 2 / span 2;
-	grid-row: 31 / span 3;
+	grid-row: 29 / span 3;
 	z-index: 97;
 }
 
@@ -227,12 +239,12 @@ body.covid19 #arr{
 
 #runnersGrid div:nth-of-type(2) {
 	grid-column: 1 / span 2;
-	grid-row: 33 / span 3;
+	grid-row: 31 / span 3;
 	z-index: 98;
 }
 #runnersGrid div:nth-of-type(1) {
 	grid-column: 2 / span 2;
-	grid-row: 35 / span 3;
+	grid-row: 33 / span 3;
 	z-index: 99;
 }
 
@@ -309,6 +321,31 @@ border-width: 2px;
 
 #commune:hover{
 opacity:0;
+}
+
+body.covid19 .spriteSam{
+	height: 100px;
+	width: 100px;
+	background-image: url('img/sam.gif');
+	background-size: contain;
+}
+
+body.covid19 #dominiquesRunners{
+	font-family: runnerFont;
+	line-height: initial;
+	position: absolute;
+}
+
+body.covid19 .dominiqueRunner{
+	position: inherit;
+	top: 0px;
+	left: 0px;
+}
+
+body.covid19 #dominiquesRace{
+	line-height: 50px;
+	padding: 50px;
+	margin-top:50px;
 }
 
 body.covid19 .sprite1{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;

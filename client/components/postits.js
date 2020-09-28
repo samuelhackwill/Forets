@@ -23,9 +23,6 @@ move=null
 //     }, 32);
 // }
 
-$(document.body).addClass('postit');
-
-
 Template.postits.onCreated(function() {
 
   //subscribe à la collection representations

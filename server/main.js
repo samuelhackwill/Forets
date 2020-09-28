@@ -262,12 +262,12 @@ if (Meteor.isServer) {
     },
 
     killTimerSteps: function(){
-      console.log("killTimerSteps stopping timer steps")
+      console.log("Streamer stopped.")
       Meteor.clearInterval(timerSteps); 
     },
 
     startTimerSteps: function(){
-      // console.log("startTimerSteps starting timer steps")
+      console.log("Streamer running...")
       timerSteps = Meteor.setInterval(function(){
         // console.log("timerSteps!", stepQueue)
         // if(stepQueue.length > 0) {
@@ -281,15 +281,15 @@ if (Meteor.isServer) {
     stepServerSide:function(){
       // console.log("stepServerSide!")
       // Bonhomme.update(who, {$inc:{"posX":1},})
-      updates = 0;
+      // updates = 0;
       for (var i = 0; i < stepQueue.length; i++) {
         stepQueue[i]
         typeof posTable[stepQueue[i]] === 'undefined' ? posTable[stepQueue[i]] = 1 : posTable[stepQueue[i]]++;
-        updates++;
+        // updates++;
       }
       stepQueue = []
       streamer.emit('message', posTable);
-      console.log("send message! "+updates+" positions updated")
+      // console.log("send message! "+updates+" positions updated")
     },
 
 // Tickets.update(
@@ -297,6 +297,16 @@ if (Meteor.isServer) {
 //         { $set: {title: ticket.title, content: ticket.content}},
 //         { $inc: {counterEdit: 1 }}
 //         )
+
+    resetPosition:function(){
+
+      allGuysId = Object.keys(posTable)
+
+      for (var i = allGuysId.length - 1; i >= 0; i--) {
+        posTable[allGuysId[i]] = 0
+      }
+      streamer.emit('message', posTable);
+    },
 
 
     autoRun:function(){
@@ -309,6 +319,7 @@ if (Meteor.isServer) {
 
     killBonhommes:function(){
       Bonhomme.remove({})
+      posTable = {}
     },
 
     forceRefresh:function(){
