@@ -10,6 +10,37 @@ body.test #greenbackground{
 	background-color: lightgreen;
 }
 
+body.test #the_track {
+	border: 5px solid blue;
+	width: 100vw;
+	height: 50vh;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	padding-left: 5vw;
+	padding-right: 5vw;
+	box-sizing: border-box;
+}
+
+body.test .mark {
+	position: absolute;
+	height: 100%;
+	width: 4px;
+	background: red;
+	top: 0;
+}
+body.test .mark { left: 0; }
+body.test .mark-10 { left: 10%; }
+body.test .mark-20 { left: 20%; }
+body.test .mark-30 { left: 30%; }
+body.test .mark-40 { left: 40%; }
+body.test .mark-50 { left: 50%; }
+body.test .mark-60 { left: 60%; }
+body.test .mark-70 { left: 70%; }
+body.test .mark-80 { left: 80%; }
+body.test .mark-90 { left: 90%; }
+body.test .mark-100 { left: 100%; }
+
 body.test .trackverticalline:nth-child(1){
 	left: 50px!important;
 }
@@ -47,13 +78,13 @@ body.test .trackverticalline{
 
 body.test #players{
 	font-family: Helvetica;
-	top:26vh;
+	/* top:26vh; */
 	line-height:5vh;
 	list-style-type:none;
 	font-size: 5vh;
-	position: absolute;
-	left: 100px;
-	animation: upndown .35s infinite;
+	/* position: absolute; */
+	/* left: 100px; */
+	/* animation: upndown .35s infinite; */
 }
 
 body.test .brasARR{
@@ -75,48 +106,25 @@ body.test .brasAVT{
 }
 
 body.test .wordcontainer{
-	float: right;
+	/* float: right; */
+	position: absolute;
+	left: 0;
+	top: 0;
 	text-align: center;
 	width: min-content;
 	clear:both;
-	margin-bottom:-45%;
+	border: 1px solid green;
 }
-
-body.test .wordcontainer:nth-child(1){
-	float: right;
-	text-align: center;
-	width: min-content;
-	clear:both;
-	margin-bottom:-45%;
-	animation: leftright 10s infinite linear;
-}
-
-body.test .wordcontainer:nth-child(3){
-	float: right;
-	text-align: center;
-	width: min-content;
-	clear:both;
-	margin-bottom:-45%;
-	animation: leftright 6s infinite linear;
-}
-
-body.test .wordcontainer:nth-child(5){
-	float: right;
-	text-align: center;
-	width: min-content;
-	clear:both;
-	margin-bottom:-45%;
-	animation: leftright 10.5s infinite linear;
-}
-
-body.test .wordcontainer:nth-child(7){
-	float: right;
-	text-align: center;
-	width: min-content;
-	clear:both;
-	margin-bottom:-45%;
-	animation: leftright 13s infinite linear;
-}
+body.test .wordcontainer:nth-child(1) { top: 0; }
+body.test .wordcontainer:nth-child(2) { top: 10%; }
+body.test .wordcontainer:nth-child(3) { top: 30%; }
+body.test .wordcontainer:nth-child(4) { top: 40%; }
+body.test .wordcontainer:nth-child(5) { top: 50%; }
+body.test .wordcontainer:nth-child(6) { top: 60%; }
+body.test .wordcontainer:nth-child(7) { top: 70%; }
+body.test .wordcontainer:nth-child(8) { top: 80%; }
+body.test .wordcontainer:nth-child(9) { top: 90%; }
+body.test .wordcontainer:nth-child(10) { top: 100%; }
 
 
 body.test .spriteback1{width:inherit;height:inherit;position:absolute;top:inherit;
@@ -138,7 +146,7 @@ body.test .spriteback6{width:inherit;height:inherit;position:absolute;top:inheri
 background-image: url('img/back 6.png');animation: mymove6 1s infinite linear; background-size: 200%; background-position:center;
 }
 body.test .spriteback7{width:inherit;height:inherit;position:absolute;top:inherit;
-background-image: url('img/back 7.png');animation: mymove7 1s infinite linear; background-size: 200%; background-position:center; 
+background-image: url('img/back 7.png');animation: mymove7 1s infinite linear; background-size: 200%; background-position:center;
 }
 body.test .spriteback8{width:inherit;height:inherit;position:absolute;top:inherit;
 background-image: url('img/back 8.png');animation: mymove8 1s infinite linear; background-size: 200%; background-position:center;
@@ -180,7 +188,7 @@ body.test .spritefront6{width:inherit;height:inherit;position:absolute;top:inher
 background-image: url('img/front 6.png');animation: mymove6 1s infinite linear; background-size: 200%; background-position:center;
 }
 body.test .spritefront7{width:inherit;height:inherit;position:absolute;top:inherit;
-background-image: url('img/front 7.png');animation: mymove7 1s infinite linear; background-size: 200%; background-position:center; 
+background-image: url('img/front 7.png');animation: mymove7 1s infinite linear; background-size: 200%; background-position:center;
 }
 body.test .spritefront8{width:inherit;height:inherit;position:absolute;top:inherit;
 background-image: url('img/front 8.png');animation: mymove8 1s infinite linear; background-size: 200%; background-position:center;

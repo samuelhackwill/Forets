@@ -1,3 +1,4 @@
+const { gsap } = require("gsap/dist/gsap");
 // TODO : implémenter un calculateur de fréquence de stroke
 // pour accélérer ou ralentir le cycle de course
 // ainsi que de faire avance le gonze plus ou moins vite
@@ -85,9 +86,9 @@ Template.covid19.onRendered(function () {
 
   em.addListener("autoRunAll", function(){
     console.log('AUTO RUN ALL')
-    timer = setInterval(function(){ 
+    timer = setInterval(function(){
       Meteor.call("requestStepServerSide", playerId)
-      console.log('keypress robot', playerId)    
+      console.log('keypress robot', playerId)
     },parseInt(Session.get("testSpeed")))
   });
 
@@ -104,7 +105,7 @@ Template.covid19.onRendered(function () {
   em.addListener('salmrefreshpage', function(what) {
     console.log('salm refresh page!', what);
     location.reload();
-  }); 
+  });
 
 });
 
@@ -130,15 +131,15 @@ Template.covid19.helpers({
   bonhomme(){
     if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="noCourse") {
       return
-    }    
+    }
 
     if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="freeForAll") {
       return Bonhomme.find({},{sort : {arrivedAt : 1}})
-    }    
+    }
 
     if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="courseSolo") {
       return Bonhomme.find({_id : playerId})// just one guy, but the full object so we can access all its proprieties
-    }    
+    }
 
     if (ViewSwitcher.find({"activated":true}).fetch()[0].name==="coursePoule") {
       return Bonhomme.find({poule : randomPoule}, {sort : {arrivedAt : 1}}) // à mettre à jour avec le mécanisme des poules
@@ -224,6 +225,14 @@ $(document.body).on('keyup', function(e) {
 });
 
 var nextEvent = function(){
+
+  console.log(timeline.getTweensOf('#player-1', true));
+  var playerOneTimeline = timeline.getChildren(true, false, true)[0];
+  var timeScale = playerOneTimeline.timeScale();
+  var newTimeScale = timeScale+0.02 >= 1 ? 1 : timeScale+0.02;
+  console.log(timeScale, ' -> ', newTimeScale);
+  gsap.to(playerOneTimeline, 0.25, {timeScale: newTimeScale});
+
   Meteor.call("requestStepServerSide", playerId)
 }
 
