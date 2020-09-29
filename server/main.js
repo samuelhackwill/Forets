@@ -24,7 +24,7 @@ timerDecimales = 0
 timerUnites = 0
 
 stepQueue = []
-timerStepsInterval = 100
+timerStepsInterval = 1000
 // 1 update / sec (1000)
 timerSteps = '';
 
@@ -286,21 +286,12 @@ if (Meteor.isServer) {
     stepServerSide:function(){
 
     // First modify acceleration of all players
+      console.log(stepQueue)
 
-    if(posTable){
       for (var i = 0; i < stepQueue.length; i++) {
-        if(posTable[stepQueue[i]] === 'undefined'){ 
-          posTable[stepQueue[i]][1] = 0
-          // if undefined reset posX
-        }else{
-          // posTable[stepQueue[i]][0]++;
-          // increment posX
-          console.log("does posTable existe? ", posTable[stepQueue[i]])
-          posTable[stepQueue[toString(i)]][1]++;
-          // increment acceleration
-        }
+        console.log("check dat posTable ", posTable[stepQueue[i]], "posT : ", posTable, "stepqueeueu : ", stepQueue[i])
+        posTable[stepQueue[i]][1]++
       }
-    }
 
       stepQueue = []
 
@@ -311,11 +302,11 @@ if (Meteor.isServer) {
           // if someone is already at minimum acceleration, don't slow him down
           posTable[allGuysId[i]][1]--;
         }
+        // go through the posTable and calculate the posX offset
         posTable[allGuysId[i]][0]=posTable[allGuysId[i]][0]+posTable[allGuysId[i]][1]*0.1
       }
 
 
-      // go through the posTable and calculate the posX offset
 
 
       console.log("posTable updated! ", posTable)
@@ -341,7 +332,8 @@ if (Meteor.isServer) {
 
 
     autoRun:function(){
-      em.emit("autoRunAll")
+      console.log(posTable)
+      em.emit("autoRunAll", posTable)
     },    
 
     stopRun:function(){

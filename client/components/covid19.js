@@ -41,6 +41,8 @@ animationRate = 20;
 
 Template.covid19.onCreated(function() {
 
+  Meteor.call("killBonhommes")
+
 
   //subscribe à la collection representations
   this.autorun(() => {
@@ -66,7 +68,13 @@ Template.covid19.onCreated(function() {
   playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", score:{"firstRun":0, "pouleRun":0, "ffaRun":0} })
 
   // insère ta posx dans le tableau de vérité
-  Meteor.call("addGuyToPosTable", playerId)
+  Meteor.call("addGuyToPosTable", playerId, (error, result)=>{
+    if (error) {
+      console.log("error ",error)
+    }else{
+      console.log("result ",result)
+    }
+  })
 
 });
 
@@ -75,21 +83,6 @@ Template.covid19.onCreated(function() {
 Template.covid19.onRendered(function () {
 
   this.autorun(() => {
-    let ready = Template.instance().subscriptionsReady();
-    if (!ready){ return; }else{
-      setTimeout(function(){
-        console.log("ready!")
-        var players = $('.wordcontainer');
-        console.log('players', players);
-        $.each(players, function(i,player){
-          console.log(player, $(player).attr('id'));
-          var timelinePlayer = gsap.timeline();
-          timelinePlayer.to(player, {id: $(player).attr('id'), left: "100%", duration: 20}).timeScale(0.1);
-          timeline.add(timelinePlayer, 0);
-        });
-        timeline.play();
-      },3000)
-    }
   });
 
   $(document.body).addClass('covid19');
@@ -98,12 +91,31 @@ Template.covid19.onRendered(function () {
     clearInterval(timer);
   });
 
-  em.addListener("autoRunAll", function(){
-    console.log('AUTO RUN ALL')
-    timer = setInterval(function(){
-      Meteor.call("requestStepServerSide", playerId)
-      console.log('keypress robot', playerId)
-    },parseInt(Session.get("testSpeed")))
+  em.addListener("autoRunAll", function(posTable){
+
+
+    allGuysId = Object.keys(posTable)
+
+    console.log("AUTORUNALL ", allGuysId)
+    for (var i = allGuysId.length - 1; i >= 0; i--) {
+      var timelinePlayer = gsap.timeline({id:allGuysId[i]});
+      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 90}).timeScale(0.1);
+      timeline.add(timelinePlayer, 0);
+      console.log("timelinePlayer ", timelinePlayer)
+      console.log("timelineScale ", timelinePlayer.timeScale())
+    }
+
+    timeline.play()
+
+
+
+    // console.log('AUTO RUN ALL')
+    // timer = setInterval(function(){
+    //   Meteor.call("requestStepServerSide", playerId)
+    //   console.log('keypress robot', playerId)
+    // },parseInt(Session.get("testSpeed")))
+
+
   });
 
   em.addListener("victoryAnimation", function(what){
@@ -193,31 +205,24 @@ Template.covid19.helpers({
 
 
 redrawPlayers=function(posTable){
-  // console.log("redrawy", posTable)
-  $.each(posTable, function(key, value){
-    // console.log("redraw ", key, value)
-    // console.log(document.getElementById(""+key))
-    if(key == playerId && value[0]>90){
-      clearInterval(timer);
-      return
-    }else{
-      var doesPlayerExist = document.getElementById("player"+key)
+  // $.each(posTable, function(key, value){
+  //   if(key == playerId && value[0]>90){
+  //     clearInterval(timer);
+  //     return
+  //   }else{
+  //     console.log("that's the key ", key)
 
-      console.log(timeline.getTweensOf('#player'+key, true));
-      var playerTween = timeline.getTweensOf('#player'+key, true);
+  //     console.log("timeline get by id ", timeline)
 
-      console.log("timelinePlayer ", timelinePlayer)
-      var timelinePlayer = playerTween[0].parent;
-      var timeScale = timelinePlayer.timeScale();
-      var newTimeScale = newTimeScale+value[1]*0.1;
-      gsap.to(timelinePlayer, 0.25, {timeScale: newTimeScale});
+  //     var timelinePlayer = timeline.getById(key);
 
+  //     console.log("timelinePlayer ", timelinePlayer)
 
-      if(doesPlayerExist!==null){
-        // doesPlayerExist.style.transform="translateX("+value[0]+"vw)"
-      }
-    }
-  })
+  //     var timeScale = timelinePlayer.timeScale();
+  //     var newTimeScale = newTimeScale+value[1]*0.1;
+  //     gsap.to(timelinePlayer, 0.25, {timeScale: newTimeScale});   
+  //   }
+  // })
 };
 
 
@@ -250,7 +255,6 @@ $(document.body).on('keyup', function(e) {
 });
 
 var nextEvent = function(){
-
   Meteor.call("requestStepServerSide", playerId)
 }
 

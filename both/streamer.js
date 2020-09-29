@@ -9,7 +9,7 @@ if(Meteor.isClient) {
   };
 
   streamer.on('message', function(message) {
-    console.log('message : ', message);
+    // console.log('message : ', message);
     redrawPlayers(message);
   });
 }
