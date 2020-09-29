@@ -23,9 +23,18 @@ ul.admin_menu li:last-child:after {
 
 /* covid19 */
 
+body.covid19 #the_scene {
+	border: 5px solid green;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+  transform: scale(0.25) translateX(-25vw);
+}
 body.covid19 #the_track {
 	border: 5px solid blue;
-	width: 100vw;
+	width: 1000vw;
 	height: 50vh;
 	position: fixed;
 	left: 0;
@@ -33,6 +42,7 @@ body.covid19 #the_track {
 	padding-left: 5vw;
 	padding-right: 5vw;
 	box-sizing: border-box;
+	margin-left: 50vw;
 }
 
 body.covid19 .mark {
@@ -192,10 +202,10 @@ body.covid19 #arr{
 
 #runnersGrid{
 /*	width: 99px;
-*/	
+*/
 	height:100vw;
 
-	display: grid;	
+	display: grid;
 	grid-template-columns: 33px 33px 80vw 33px 33px;
 	grid-auto-rows: 2.5vh;
 
@@ -302,7 +312,7 @@ body.covid19 #arr{
 
 .number{
 	position:absolute;
-	bottom:1vh;	
+	bottom:1vh;
 	left:87vw!important;
 	color: lightgrey;
 	transform:skew(20deg,20deg);
@@ -487,5 +497,3 @@ background-image: url('img/front 12.png');animation: mymove12 1s infinite linear
   0%, 100%  {transform: translateX(0vw);}
   99% {transform: translateX(80vw);}
 }
-
-

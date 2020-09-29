@@ -102,6 +102,9 @@ Template.covid19.onRendered(function () {
       console.log("timelinePlayer ", timelinePlayer)
       console.log("timelineScale ", timelinePlayer.timeScale())
     }
+    var timelineTrack = gsap.timeline({id:'track'});
+    timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180}).timeScale(0.1);
+    timeline.add(timelineTrack, 0);
 
     timeline.play()
 
@@ -218,7 +221,12 @@ redrawPlayers=function(posTable){
 
       var timeScale = timelinePlayer.timeScale();
       var newTimeScale = timeScale+value[1]*0.1;
-      gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale});   
+      gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale});
+
+      if(key == playerId) {
+        var timelineTrack = timeline.getById('track');
+        gsap.to(timelineTrack, 0.05, {timeScale: newTimeScale});
+      }
     }
   })
 };
