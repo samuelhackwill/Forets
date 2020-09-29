@@ -28,7 +28,7 @@ timerStepsInterval = 100
 // 1 update / sec (1000)
 timerSteps = '';
 
-minAcceleration = 0.1
+minAcceleration = 0.05
 maxAcceleration = 1.3
 // +1 posX/sec at 100 Hz
 
