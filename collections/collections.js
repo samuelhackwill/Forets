@@ -1,5 +1,7 @@
 superGlobals = new Meteor.Collection('superGlobals');
 
+FukinScore = new Meteor.Collection("fukinScore");
+
 Postit = new Mongo.Collection("postits")
 
 ContenusEcran = new Meteor.Collection('contenusEcran');
@@ -220,6 +222,18 @@ ContenusEcran.allow({
     }
     return true; 
 
+  }
+});
+
+FukinScore.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
+    return true;
   }
 });
 

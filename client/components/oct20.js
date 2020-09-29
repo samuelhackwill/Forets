@@ -8,13 +8,6 @@ timelineTrack = gsap.timeline({id:'track'});
 isBeforeFinish = false;
 // booleenne pour stopper la camera de chaque joueur
 
-isItReaderTime = false;
-isItDownTime = false;
-isItRaceTime = true;
-isItScoreTime = false;
-
-
-
 var caughtUp = false;
 var intervalReload;
 Session.set("localName", "");
@@ -33,15 +26,65 @@ compteurAnim=1;
 animationRate = 20;
 // en fait 80 c'est pas mal
 
+Template.loading.onCreated(function(){
+	Session.set("dynamicRender", "reader")
+})
+
+Template.reader.onCreated(function(){
+    compteur=0;
+    Session.set("spaceBarEffect", 1)
+})
+
+Template.reader.onRendered(function(){
+
+  this.autorun(() =>{
+    this.subscribe("allFukinScore");
+    this.subscribe("allContenusEcran", {
+      onReady: function () {     
+        let contnus = ContenusEcran.find().fetch();
+        data = ContenusEcran.findOne({name: "data_test"}).data
+        var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
+        console.log("isItPowerToThePeople", isItPowerToThePeople);
+       },
+      onError: function () { console.log("onError", arguments); }
+    });
+  })
+  em.addListener('salmnext', function(what) {
+    console.log('salm next!', what);
+    // compteur = what.compteur;
+    var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
+    var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : [];
+    console.log("salm next : isSUPERinterrupt", isSUPERinterrupt);
+    var found = jQuery.inArray('salm', isSUPERinterrupt);
+    if (found >= 0) {
+      //ce role est dans le parking !
+    } else {
+      //ce role n'est pas dans le parking, faisons un next
+      console.log('pas dans le parking, faisons un next')
+      compteur = what.compteur;
+      next();
+    } 
+  }); 
+
+  em.addListener('salmForceGoTo', function(what) {
+    console.log('salm salmForceGoTo!', what);
+    // compteur = what.compteur;
+    gotobookmark(what.bookmark);
+  }); 
+
+  em.addListener('goToRace', function(){
+  	console.log("go to race event")
+    Blaze.render("raceTrack");
+  })
+})
+
 
 Template.raceTrack.onCreated(function() {
 
   //subscribe à la collection representations
   this.autorun(() => {
-    // this.subscribe('allRepresentations');
     this.subscribe('allBonhommes');
     this.subscribe('allViewSwitcher');
-    // this.subscribe('allContenusEcran');
     this.subscribe('allHallOfFame');
     // this.subscribe('allTimer');
     this.subscribe('allSuperGlobals');
@@ -243,21 +286,43 @@ setDeceleratingTimeout = function(callback, factor, times){
 
 
 $(document.body).on('keyup', function(e) {
-
   e = e || window.event
-  // KEYCODE 32 IS SPACEBAR
-  // KEYCIODE 78 IS "n"
-
-  // 48 = 0
-  // 49 = 1
-  // 50 = 2
-  // 51 = 3
-
-  if(e.keyCode == '32') nextEvent();
+  if(e.keyCode == '32') spaceBarPress(e);
 });
 
-var nextEvent = function(){
-  Meteor.call("requestStepServerSide", playerId)
+var spaceBarPress = function(e){
+
+  console.log("space bar press ", Session.get("spaceBarEffect"))
+
+  // en fonction de où t'es, fais des choses différentes
+  
+  // Session.set("spaceBarEffect", 0) = do nothing
+  // Session.set("spaceBarEffect", 1) = reader text next
+  // Session.set("spaceBarEffect", 2) = make loading widget run
+  // Session.set("spaceBarEffect", 3) = make word run (for raceTrack)
+  // Session.set("spaceBarEffect", 4) = public applause!
+  
+  switch(Session.get("spaceBarEffect")){
+    case 0 :
+    return
+    break;
+
+    case 1:
+      nextEvent();
+    break;
+
+    case 2:
+      console.log("make widget run!")
+    break;  
+
+    case 3:
+      Meteor.call("requestStepServerSide", playerId)
+    break;
+
+    case 4:
+      console.log("applause!")
+    break;
+  }
 }
 
 sendPseudo = function(who, e){
@@ -288,8 +353,6 @@ imageCycler = function(who){
 
 
 
-
-
   if(yeecount<11){
     if(yeecount==1){
       // console.log(13 + "YEE hide this guy also ")
@@ -300,6 +363,76 @@ imageCycler = function(who){
     yeecount = 1;
   }
 
+}
+var nextEvent = function(){
+
+  // var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
+  var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
+  console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
+  if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
+    window.clearTimeout(autonextcontainer)
+    compteur +=1
+    next();
+    // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
+    // ça avance tout seul avec un délai)
+  }
+}
+
+
+next = function(){
+
+  console.log('next', compteur, data[compteur]);
+  currentData = data[compteur]
+  type = currentData["type"]
+  params = currentData["text"]
+
+  while(data[compteur]["type"]!="text"){
+      // tant que data[compteur] est une balise, ben continue à executer les instructions s'il te plaît
+      action(type, params)
+      if((data[compteur]["type"]!="text")||(data[compteur]["text"]=="")){
+        // euh alors ça je sais pas pourquoi ça marche mais ça permet d'éviter des situations où, arrivé à un bookmark
+        // il sautait deux lignes au lieu d'une
+        compteur+=1;
+        next();
+      }
+    }
+
+    if((type=="text")&&(params!="")){
+      //document.getElementById("srt").innerHTML = params
+        if(params=="***"){
+        // ça c'est pour caler des blancs
+        //document.getElementById("srt").innerHTML = ""
+
+       // VERSION MTL MON GARS
+        //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
+        //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        // }else{
+        //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
+        //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        // }
+       // END MTL
+
+          // version game hédé
+          // $('#srt').append($('<ul/>').html(params))
+          // $('#srt').scrollTop($('#srt')[0].scrollHeight);
+
+          // version avignon du cul mon gars
+          $('#srt').append($('<span/>').html("\ \ \ \ \ "))
+          $('#srt').append($('<br/>'))
+          $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        }else{
+          $('#srt').append($('<span/>').html(params))
+          $('#srt').append($('<br/>'))
+          $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        }
+        // }
+      // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
+      // bon ben c'est ici qu'il faudrait faire un truc
+    }
+  };
+
+emitGoToRace = function(){
+	Blaze.render("raceTrack", document.body)
 }
 
 closingWindow = function(){
