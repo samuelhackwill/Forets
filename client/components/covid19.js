@@ -1,14 +1,14 @@
 const { gsap } = require("gsap/dist/gsap");
 
+// gsap globals
 timeline = gsap.timeline();
+// timeline globale de toute la scène
 timelineTrack = gsap.timeline({id:'track'});
+// timeline de la piste de course
 isBeforeFinish = false;
-// TODO : implémenter un calculateur de fréquence de stroke
-// pour accélérer ou ralentir le cycle de course
-// ainsi que de faire avance le gonze plus ou moins vite
-// (plus tu tapes vite, plus il va vite)
+// booleenne pour stopper la camera de chaque joueur
 
-// a terme : si pas d'appui pendant une demi seconde, le personnage retourne au repos
+
 
 var caughtUp = false;
 var intervalReload;
@@ -105,29 +105,27 @@ Template.covid19.onRendered(function () {
     console.log("AUTORUNALL ", allGuysId)
 
     timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180, ease: "linear"}).timeScale(0.1);
+    // .to = définit l'animation (keyframes css genre)
     timelineTrack.addLabel('before_finish', 170);
+    // ajoute un marqueur à un moment X
     timelineTrack.call(beforeFinish, [], 'before_finish');
+    // appel de la fonction beforeFinish au label before_finish
     timeline.add(timelineTrack, 0);
+    // ajoute l'animation de la track à la scène globale
 
     for (var i = allGuysId.length - 1; i >= 0; i--) {
       var timelinePlayer = gsap.timeline({id:allGuysId[i]});
+      // créé une timeline pour chaque joueur qui a le nom de l'id du guy
       timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 180, ease: "linear"}).timeScale(0.1);
+      // définit ton animation
       timeline.add(timelinePlayer, 0);
+      // ajoute à la scène globale au temps 0
       console.log("timelinePlayer ", timelinePlayer)
       console.log("timelineScale ", timelinePlayer.timeScale())
     }
 
     timeline.play()
-
-
-
-    // console.log('AUTO RUN ALL')
-    // timer = setInterval(function(){
-    //   Meteor.call("requestStepServerSide", playerId)
-    //   console.log('keypress robot', playerId)
-    // },parseInt(Session.get("testSpeed")))
-
-
+    // démarre la scène gloable
   });
 
   em.addListener("victoryAnimation", function(what){
@@ -218,29 +216,23 @@ Template.covid19.helpers({
 
 redrawPlayers=function(posTable){
   $.each(posTable, function(key, value){
-    if(key == playerId && value[0]>90){
-      clearInterval(timer);
-      return
-    }else{
-      // console.log("that's the key ", key)
-
-      // console.log("timeline get by id ", timeline)
-
       var timelinePlayer = timeline.getById(key);
-
-      // console.log("timelinePlayer ", timelinePlayer)
-
+      // choppe la timeline de chaque joueur
       var timeScale = timelinePlayer.timeScale();
+      // choppe la vitesse d'execution de l'animation d'icelle
       var newTimeScale = timeScale+value[1]*0.1;
+      // calcule la nouvelle timescale en ajoutant l'accélération
       gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale});
+      // créée une animation secondaire qui lisse le changement de timescale
       if(isBeforeFinish) {
         timelineTrack.timeScale(0);
+        // arrête l'animation quand tu arrives à la ligne d'arrivey
       } else {
         if(key == playerId) {
           gsap.to(timelineTrack, 0.05, {timeScale: newTimeScale});
+          // synchronise le mouvement de la piste sur le mouvement SEULEMENT du joueur (key = playerID)
         }
       }
-    }
   })
 };
 
