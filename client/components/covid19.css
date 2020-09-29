@@ -22,6 +22,10 @@ ul.admin_menu li:last-child:after {
 }
 
 /* covid19 */
+body.covid19 #lazyStartup {
+  z-index: 1;
+  position: relative;
+}
 
 body.covid19 #the_scene {
 	border: 5px solid green;
@@ -30,15 +34,15 @@ body.covid19 #the_scene {
 	position: fixed;
 	left: 0;
 	bottom: 0;
-  transform: scale(0.25) translateX(-25vw);
+  /* transform: scale(0.15) translateX(-25vw); */
 }
 body.covid19 #the_track {
 	border: 5px solid blue;
-	width: 1000vw;
-	height: 50vh;
+	width: 1400vw;
+	height: 400vh;
 	position: fixed;
 	left: 0;
-	bottom: 0;
+	top: 30vh;
 	padding-left: 5vw;
 	padding-right: 5vw;
 	box-sizing: border-box;
@@ -52,7 +56,7 @@ body.covid19 .mark {
 	background: red;
 	top: 0;
 }
-body.covid19 .mark { left: 0; }
+body.covid19 .mark { margin-left: 10%; left: 0; }
 body.covid19 .mark-10 { left: 10%; }
 body.covid19 .mark-20 { left: 20%; }
 body.covid19 .mark-30 { left: 30%; }
@@ -102,9 +106,9 @@ body.covid19 .trackverticalline{
 body.covid19 #players{
 	font-family: Helvetica;
 	/* top:26vh; */
-	line-height:5vh;
+	line-height:10vh;
 	list-style-type:none;
-	font-size: 5vh;
+	font-size: 10vh;
 	/* position: absolute; */
 	/* left: 100px; */
 	/* animation: upndown .35s infinite; */
@@ -139,15 +143,25 @@ body.covid19 .wordcontainer{
 	border: 1px solid green;
 }
 body.covid19 .wordcontainer:nth-child(1) { top: 0; }
-body.covid19 .wordcontainer:nth-child(2) { top: 10%; }
-body.covid19 .wordcontainer:nth-child(3) { top: 30%; }
-body.covid19 .wordcontainer:nth-child(4) { top: 40%; }
-body.covid19 .wordcontainer:nth-child(5) { top: 50%; }
-body.covid19 .wordcontainer:nth-child(6) { top: 60%; }
-body.covid19 .wordcontainer:nth-child(7) { top: 70%; }
-body.covid19 .wordcontainer:nth-child(8) { top: 80%; }
-body.covid19 .wordcontainer:nth-child(9) { top: 90%; }
-body.covid19 .wordcontainer:nth-child(10) { top: 100%; }
+body.covid19 .wordcontainer:nth-child(2) { top: 10vh; }
+body.covid19 .wordcontainer:nth-child(3) { top: 20vh; }
+body.covid19 .wordcontainer:nth-child(4) { top: 40vh; }
+body.covid19 .wordcontainer:nth-child(5) { top: 50vh; }
+body.covid19 .wordcontainer:nth-child(6) { top: 60vh; }
+body.covid19 .wordcontainer:nth-child(7) { top: 70vh; }
+body.covid19 .wordcontainer:nth-child(8) { top: 80vh; }
+body.covid19 .wordcontainer:nth-child(9) { top: 90vh; }
+body.covid19 .wordcontainer:nth-child(10) { top: 100vh; }
+body.covid19 .wordcontainer:nth-child(11) { top: 110vh; }
+body.covid19 .wordcontainer:nth-child(12) { top: 120vh; }
+body.covid19 .wordcontainer:nth-child(13) { top: 130vh; }
+body.covid19 .wordcontainer:nth-child(14) { top: 140vh; }
+body.covid19 .wordcontainer:nth-child(15) { top: 150vh; }
+body.covid19 .wordcontainer:nth-child(16) { top: 160vh; }
+body.covid19 .wordcontainer:nth-child(17) { top: 170vh; }
+body.covid19 .wordcontainer:nth-child(18) { top: 180vh; }
+body.covid19 .wordcontainer:nth-child(19) { top: 190vh; }
+body.covid19 .wordcontainer:nth-child(20) { top: 200vh; }
 
 body.covid19 #srt {
 color: white !important;

@@ -1,6 +1,8 @@
 const { gsap } = require("gsap/dist/gsap");
 
 timeline = gsap.timeline();
+timelineTrack = gsap.timeline({id:'track'});
+isBeforeFinish = false;
 // TODO : implémenter un calculateur de fréquence de stroke
 // pour accélérer ou ralentir le cycle de course
 // ainsi que de faire avance le gonze plus ou moins vite
@@ -88,6 +90,12 @@ Template.covid19.onRendered(function () {
   em.addListener("stopRunServer", function(){
     clearInterval(timer);
   });
+  function beforeFinish(){
+    console.log('BEFORE FINISH', timelineTrack);
+    timelineTrack.timeScale(0);
+    isBeforeFinish = true;
+  }
+
 
   em.addListener("autoRunAll", function(posTable){
 
@@ -95,16 +103,19 @@ Template.covid19.onRendered(function () {
     allGuysId = Object.keys(posTable)
 
     console.log("AUTORUNALL ", allGuysId)
+
+    timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180, ease: "linear"}).timeScale(0.1);
+    timelineTrack.addLabel('before_finish', 170);
+    timelineTrack.call(beforeFinish, [], 'before_finish');
+    timeline.add(timelineTrack, 0);
+
     for (var i = allGuysId.length - 1; i >= 0; i--) {
       var timelinePlayer = gsap.timeline({id:allGuysId[i]});
-      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 180}).timeScale(0.1);
+      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 180, ease: "linear"}).timeScale(0.1);
       timeline.add(timelinePlayer, 0);
       console.log("timelinePlayer ", timelinePlayer)
       console.log("timelineScale ", timelinePlayer.timeScale())
     }
-    var timelineTrack = gsap.timeline({id:'track'});
-    timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180}).timeScale(0.1);
-    timeline.add(timelineTrack, 0);
 
     timeline.play()
 
@@ -222,10 +233,12 @@ redrawPlayers=function(posTable){
       var timeScale = timelinePlayer.timeScale();
       var newTimeScale = timeScale+value[1]*0.1;
       gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale});
-
-      if(key == playerId) {
-        var timelineTrack = timeline.getById('track');
-        gsap.to(timelineTrack, 0.05, {timeScale: newTimeScale});
+      if(isBeforeFinish) {
+        timelineTrack.timeScale(0);
+      } else {
+        if(key == playerId) {
+          gsap.to(timelineTrack, 0.05, {timeScale: newTimeScale});
+        }
       }
     }
   })
