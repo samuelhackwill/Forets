@@ -240,8 +240,8 @@ if (Meteor.isServer) {
     }
   });
 
-  
-  
+
+
   // This code only runs on the server
   Meteor.publish('superGlobals', function tasksPublication() {
     return superGlobals.find();
@@ -269,7 +269,7 @@ if (Meteor.isServer) {
 
     killTimerSteps: function(){
       console.log("Streamer stopped.")
-      Meteor.clearInterval(timerSteps); 
+      Meteor.clearInterval(timerSteps);
     },
 
     startTimerSteps: function(){
@@ -322,7 +322,7 @@ if (Meteor.isServer) {
     },
 
 // Tickets.update(
-//         {_id: ticketId}, 
+//         {_id: ticketId},
 //         { $set: {title: ticket.title, content: ticket.content}},
 //         { $inc: {counterEdit: 1 }}
 //         )
@@ -341,7 +341,7 @@ if (Meteor.isServer) {
     autoRun:function(){
       console.log(posTable)
       em.emit("autoRunAll", posTable)
-    },    
+    },
 
     stopRun:function(){
       em.emit("stopRunServer")
@@ -375,8 +375,8 @@ if (Meteor.isServer) {
       if(obj.speed==0||undefined){
         return
       }else{
-        score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});  
-        score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});  
+        score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});
+        score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});
       }
 
     },
@@ -387,7 +387,7 @@ if (Meteor.isServer) {
 
     removeClicAdmin:function(){
       em.emit("removeClicEnd")
-    },  
+    },
 
     showLightCall:function(who){
       console.log("show light call ", who)
@@ -429,7 +429,7 @@ if (Meteor.isServer) {
 
     console.log(" endRace ", obj.who.commune, obj.who.pseudo, " ", timerUnites, ":", timerDecimales, "conc ", (timerUnites*1000)+timerDecimales*10)
     HallOfFame.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo, "whichCourse":obj.context, "score":(timerUnites*1000)+timerDecimales*10})
-    
+
     howmanyBonhommes = howmanyBonhommes-1
 
     if(howmanyBonhommes==0){
@@ -459,35 +459,35 @@ if (Meteor.isServer) {
     //check si deja enregistré
     var data = tryParseJSON(obj.data);
     if(data) {
-    
+
       // console.log(typeof obj.name, obj.name);
-      // console.log('valid JSON?'); 
+      // console.log('valid JSON?');
       // console.log(typeof data);
       // console.log(data instanceof Object);
 
       var contenuEcran = ContenusEcran.findOne({name: obj.name});
       // console.log("contenuEcran existe ?", contenuEcran);
-      
+
       if(contenuEcran) {
         // console.log("contenuEcran existe. mise à jour.");
-        ContenusEcran.update(contenuEcran._id, { 
+        ContenusEcran.update(contenuEcran._id, {
           $set: {
-            name: obj.name, 
-            data: data, 
-            text: obj.text 
+            name: obj.name,
+            data: data,
+            text: obj.text
           }
         }, { filter: false });
       } else {
         // console.log("nouveau contenuEcran. insertion");
         // var copie = Object.assign({}, data);
-        // console.log('true Object?'); 
+        // console.log('true Object?');
         // console.log(typeof copie);
         // console.log(copie instanceof Object);
         // console.log(copie);
         // insertion du nouveau contenu écran
-        ContenusEcran.insert({name: obj.name, data: data, text: obj.text}, { filter: false });  
+        ContenusEcran.insert({name: obj.name, data: data, text: obj.text}, { filter: false });
       }
-      
+
     }
   },
   setSuperGlobal: function(obj) {
@@ -512,7 +512,7 @@ if (Meteor.isServer) {
             // superGlobals.upsert({powerToThePeople: obj.value}, { filter: false });
           }
           break;
-          
+
         case 'SUPERinterrupt':
           // console.log('SUPERinterrupt', obj.value);
           // if(typeof(obj.value) === "boolean") {
@@ -593,7 +593,7 @@ if (Meteor.isServer) {
         case 'compteurAdmin':
           console.log('compteurAdmin', obj.value);
           if(typeof(obj.value) === "number") { //check si c'est un number
-          // if( Object.prototype.toString.call( obj.value ) === '[object Array]' ) { 
+          // if( Object.prototype.toString.call( obj.value ) === '[object Array]' ) {
             console.log('compteurAdmin2', obj.value, superGlobals.findOne({ compteurAdmin: { $exists: true}}));
             var compteurAdmin = superGlobals.findOne({ compteurAdmin: { $exists: true}});
             if(compteurAdmin) {
@@ -638,7 +638,7 @@ if (Meteor.isServer) {
       throw new Meteor.Error(403, "Access denied")
     }
     console.log("editRepresentation", args);
-    representations.update(args._id, 
+    representations.update(args._id,
       { $set: args.obj },
       { filter: false }
     );
@@ -661,12 +661,12 @@ if (Meteor.isServer) {
         console.log("anonymous user", anonParticipants);
         if(anonParticipants) {
           representations.update(
-            { "_id": obj._id }, 
+            { "_id": obj._id },
             { $inc: { "anonymousParticipants": 1 }}
           );
         } else {
-          representations.updateOne(obj._id, 
-            { "_id": obj._id, "participants.anonymous": {$exists: false}}, 
+          representations.updateOne(obj._id,
+            { "_id": obj._id, "participants.anonymous": {$exists: false}},
             { $set: { "participants.anonymous": 1 }}, { filter: false }
           );
         }
@@ -675,7 +675,7 @@ if (Meteor.isServer) {
       if(obj.old_representation) {
         console.log("remove from old representation", obj.old_representation);
         representations.update(
-          { "_id": obj.old_representation }, 
+          { "_id": obj.old_representation },
           { $inc: { "anonymousParticipants": -1 }}
         );
       }
@@ -727,9 +727,9 @@ if (Meteor.isServer) {
       var lottery = loteries.findOne({_id: lotteryId});
       if(lottery){
         console.log("retrieveMessage lottery", lottery);
-        var theMessage = _.find(lottery.messages, function(message){ 
+        var theMessage = _.find(lottery.messages, function(message){
           console.log("message", message, userCookie in message);
-          return userCookie in message; 
+          return userCookie in message;
         });
         console.log('theMessage', theMessage);
         if(theMessage) {
@@ -737,7 +737,7 @@ if (Meteor.isServer) {
         }
         // if(lottery.messages[userCookie] && lottery.messages[userCookie] != "") {
 
-          // return 
+          // return
         // }
         // var messageToReturn = lottery.messages
       }

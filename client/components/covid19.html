@@ -25,7 +25,7 @@
 		<input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
 
 
-	
+
 <!-- 		pseudo : <input type="text" id="pseudoInput" maxlength="3" size="3">
 		<input type="button" name="send" value="OK" onclick="sendPseudo(playerId, document.getElementById('pseudoInput').value)">
  -->	</div>
@@ -39,7 +39,7 @@
 	# HERE IS
 	# DOMINIQUES RACE
 	# -->
-<!-- 
+<!--
 <div id="dominiquesRace">
 
 <div id="dominiquesRunners">
@@ -48,11 +48,11 @@
 </div>
 
 <div id="texte">
-Cette présentation est dédiée à Dominique Sommeveille, mon ancien médecin traitant dans l'avant-pays savoyard. C'est quelqu'un qui n'aimait pas beaucoup l'informatique, qui n'avait pas d'ordinateur et qui travaillait uniquement avec le gros dictionnaire des médicaments là, le vidal, vous voyez? 
+Cette présentation est dédiée à Dominique Sommeveille, mon ancien médecin traitant dans l'avant-pays savoyard. C'est quelqu'un qui n'aimait pas beaucoup l'informatique, qui n'avait pas d'ordinateur et qui travaillait uniquement avec le gros dictionnaire des médicaments là, le vidal, vous voyez?
 donc je disais
 dominique. L'âge de la retraite approchait. C'est comme si une course s'était engagé entre lui et l'informatisation du monde. Qui allait arriver en premier? Allait-il pouvoir conserver ses méthodes de travail jusqu'à la fin de sa vie professionnelle?
 deux ans avant la retraite, un ordinateur est apparu sur son bureau. Était-ce lui qui s'est dit "boah merde j'ai qu'a essayer j'ai pas grand chose à perdre". Ou est-ce une directive qui est tombée d'en haut, comme un couperet?
-quoi qu'il en soit, voilà qu'après chaque consultation, il s'installe à son bureau, mains sur le clavier, yeux rivés sur l'écran. Il se tait entièrement. Je me tais aussi, je le regarde. Il tape l'ordonnance, très lentement, touche après touche, en respirant très fort avec les narines. S'écoulent comme ça deux, trois minutes, dans un silence total, très paisibles. 
+quoi qu'il en soit, voilà qu'après chaque consultation, il s'installe à son bureau, mains sur le clavier, yeux rivés sur l'écran. Il se tait entièrement. Je me tais aussi, je le regarde. Il tape l'ordonnance, très lentement, touche après touche, en respirant très fort avec les narines. S'écoulent comme ça deux, trois minutes, dans un silence total, très paisibles.
 En fait j'aimais vraiment très fort ce moment, à la fin de chaque consultation. C'était comme une petite méditation à deux.
 enfin disons que ça aurait été chouette si c'était pas juste quelqu'un se faisant tordre par la marche du progrès n'est ce pas.
 
@@ -74,7 +74,7 @@ enfin disons que ça aurait été chouette si c'était pas juste quelqu'un se fa
  		</div> -->
 
  		<div class="personne">
-			<div class="spriteSam"></div>	
+			<div class="spriteSam"></div>
  		</div>
 
 		<div id="victory" style="opacity:{{winnerOnOff}}">
@@ -89,7 +89,6 @@ enfin disons que ça aurait été chouette si c'était pas juste quelqu'un se fa
 		</div>
 
 	 </div>
-
 	<div id="the_track">
 		{{#each bonhomme}}
 		    <div id="player{{_id}}" class="wordcontainer {{vous}}">
@@ -108,7 +107,7 @@ enfin disons que ça aurait été chouette si c'était pas juste quelqu'un se fa
 		        <div class="spriteback12"></div>
 		      </div>
 
-		      {{_id}}
+		      player{{@index}}
 
 		      <div class="brasAVT">
 		        <div class="spritefront1"></div>
@@ -143,7 +142,7 @@ enfin disons que ça aurait été chouette si c'était pas juste quelqu'un se fa
 				<th>{{commune}}</th>
 				<th>{{pseudo}}</th>
 				<th>{{score}}</th>
-			</tr>	
+			</tr>
 			{{/each}}
 		</table>
 	</div>
