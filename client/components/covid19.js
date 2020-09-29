@@ -1,4 +1,5 @@
 const { gsap } = require("gsap/dist/gsap");
+
 timeline = gsap.timeline();
 // TODO : implémenter un calculateur de fréquence de stroke
 // pour accélérer ou ralentir le cycle de course
@@ -40,9 +41,6 @@ animationRate = 20;
 
 
 Template.covid19.onCreated(function() {
-
-  Meteor.call("killBonhommes")
-
 
   //subscribe à la collection representations
   this.autorun(() => {
@@ -99,7 +97,7 @@ Template.covid19.onRendered(function () {
     console.log("AUTORUNALL ", allGuysId)
     for (var i = allGuysId.length - 1; i >= 0; i--) {
       var timelinePlayer = gsap.timeline({id:allGuysId[i]});
-      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 90}).timeScale(0.1);
+      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 180}).timeScale(0.1);
       timeline.add(timelinePlayer, 0);
       console.log("timelinePlayer ", timelinePlayer)
       console.log("timelineScale ", timelinePlayer.timeScale())
@@ -205,24 +203,24 @@ Template.covid19.helpers({
 
 
 redrawPlayers=function(posTable){
-  // $.each(posTable, function(key, value){
-  //   if(key == playerId && value[0]>90){
-  //     clearInterval(timer);
-  //     return
-  //   }else{
-  //     console.log("that's the key ", key)
+  $.each(posTable, function(key, value){
+    if(key == playerId && value[0]>90){
+      clearInterval(timer);
+      return
+    }else{
+      // console.log("that's the key ", key)
 
-  //     console.log("timeline get by id ", timeline)
+      // console.log("timeline get by id ", timeline)
 
-  //     var timelinePlayer = timeline.getById(key);
+      var timelinePlayer = timeline.getById(key);
 
-  //     console.log("timelinePlayer ", timelinePlayer)
+      // console.log("timelinePlayer ", timelinePlayer)
 
-  //     var timeScale = timelinePlayer.timeScale();
-  //     var newTimeScale = newTimeScale+value[1]*0.1;
-  //     gsap.to(timelinePlayer, 0.25, {timeScale: newTimeScale});   
-  //   }
-  // })
+      var timeScale = timelinePlayer.timeScale();
+      var newTimeScale = timeScale+value[1]*0.1;
+      gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale});   
+    }
+  })
 };
 
 

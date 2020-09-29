@@ -24,11 +24,12 @@ timerDecimales = 0
 timerUnites = 0
 
 stepQueue = []
-timerStepsInterval = 1000
+timerStepsInterval = 100
 // 1 update / sec (1000)
 timerSteps = '';
 
-minAcceleration = 1
+minAcceleration = 0.1
+maxAcceleration = 1.3
 // +1 posX/sec at 100 Hz
 
 howmanyBonhommes = 0
@@ -290,7 +291,11 @@ if (Meteor.isServer) {
 
       for (var i = 0; i < stepQueue.length; i++) {
         console.log("check dat posTable ", posTable[stepQueue[i]], "posT : ", posTable, "stepqueeueu : ", stepQueue[i])
-        posTable[stepQueue[i]][1]++
+        if(posTable[stepQueue[i]][1]<maxAcceleration){
+          posTable[stepQueue[i]][1]=posTable[stepQueue[i]][1]+0.1
+        }else{
+          posTable[stepQueue[i]][1]=maxAcceleration
+        }
       }
 
       stepQueue = []
@@ -300,10 +305,12 @@ if (Meteor.isServer) {
       for (var i = 0; i < allGuysId.length; i++) {
         if(posTable[allGuysId[i]][1]>minAcceleration){
           // if someone is already at minimum acceleration, don't slow him down
-          posTable[allGuysId[i]][1]--;
+          posTable[allGuysId[i]][1]=posTable[allGuysId[i]][1]-0.05;
+        }else{
+          posTable[allGuysId[i]][1]=minAcceleration
         }
         // go through the posTable and calculate the posX offset
-        posTable[allGuysId[i]][0]=posTable[allGuysId[i]][0]+posTable[allGuysId[i]][1]*0.1
+        // posTable[allGuysId[i]][0]=posTable[allGuysId[i]][0]+posTable[allGuysId[i]][1]*0.1
       }
 
 
@@ -343,6 +350,7 @@ if (Meteor.isServer) {
     killBonhommes:function(){
       Bonhomme.remove({})
       posTable = {}
+      stepQueue = {}
     },
 
     forceRefresh:function(){
