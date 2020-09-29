@@ -1,0 +1,127 @@
+<head>
+  <title>JACKY</title>
+  <meta charset="utf-8">
+</head>
+
+<template name="raceTrack">
+	<!-- 	#
+	# HERE IS
+	# THE ADMIN'S INTERFACE
+	# -->
+	<div id="lazyStartup">
+			Streamer
+			<input type="button" name="startTimerSteps" value="startTimerSteps" onclick="Meteor.call('startTimerSteps')">
+			<input type="button" name="killTimerSteps" value="killTimerSteps" onclick="Meteor.call('killTimerSteps')">
+
+			Autorun
+			<input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
+			<input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
+
+			Admin
+			<input type="button" name="resetPosition" value="resetPosition" onclick="Meteor.call('resetPosition')">
+			<input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
+			<input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
+			<input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
+		</div>
+
+		<div id="sav"> vous pensiez qui c'était vous qui aviez gagné?
+			<input type="button" name="oui" value="oui" onclick="thinksHeWon(playerId, 'oui')">
+			<input type="button" name="non" value="non" onclick="thinksHeWon(playerId, 'non')">
+		</div>
+
+	 <div id="runnersGrid">
+
+	 	<div id="sam">
+	 		<div class="personne">
+				<div class="spriteSam"></div>
+	 		</div>
+
+			<div id="victory" style="opacity:{{winnerOnOff}}">
+			{{#each winner}}
+				<div id="winner">
+					VICTOIRE DE <br/>
+					<div> {{commune}} </div>
+					<div> {{pseudo}} </div>
+					<div> {{score}} </div>
+				</div>
+			{{/each}}
+			</div>
+
+		 </div>
+		<div id="the_track">
+
+	      <div class="mark mark-0"></div>
+	      <div class="mark mark-10"></div>
+	      <div class="mark mark-20"></div>
+	      <div class="mark mark-30"></div>
+	      <div class="mark mark-40"></div>
+	      <div class="mark mark-50"></div>
+	      <div class="mark mark-60"></div>
+	      <div class="mark mark-70"></div>
+	      <div class="mark mark-80"></div>
+	      <div class="mark mark-90"></div>
+	      <div class="mark mark-100"></div>
+
+	      <div id="players">
+			{{#each bonhomme}}
+			    <div id="player{{_id}}" class="wordcontainer {{vous}}">
+			      <div class="brasARR">
+			        <div class="spriteback1"></div>
+			        <div class="spriteback2"></div>
+			        <div class="spriteback3"></div>
+			        <div class="spriteback4"></div>
+			        <div class="spriteback5"></div>
+			        <div class="spriteback6"></div>
+			        <div class="spriteback7"></div>
+			        <div class="spriteback8"></div>
+			        <div class="spriteback9"></div>
+			        <div class="spriteback10"></div>
+			        <div class="spriteback11"></div>
+			        <div class="spriteback12"></div>
+			      </div>
+
+			      player{{@index}}
+
+			      <div class="brasAVT">
+			        <div class="spritefront1"></div>
+			        <div class="spritefront2"></div>
+			        <div class="spritefront3"></div>
+			        <div class="spritefront4"></div>
+			        <div class="spritefront5"></div>
+			        <div class="spritefront6"></div>
+			        <div class="spritefront7"></div>
+			        <div class="spritefront8"></div>
+			        <div class="spritefront9"></div>
+			        <div class="spritefront10"></div>
+			        <div class="spritefront11"></div>
+			        <div class="spritefront12"></div>
+			      </div>
+			    </div>
+			{{/each}}
+		</div>
+		</div>
+	</div>
+
+		<div id="halloffame">
+			<table>
+				<tr>
+					<th>Course:</th>
+					<th>Commune:</th>
+					<th>Pseudo:</th>
+					<th>Time(ms):</th>
+				</tr>
+				{{#each HallOfFameList}}
+				<tr>
+					<th>{{whichCourse}}</th>
+					<th>{{commune}}</th>
+					<th>{{pseudo}}</th>
+					<th>{{score}}</th>
+				</tr>
+				{{/each}}
+			</table>
+		</div>
+
+	  {{> screen}}
+</template>
+
+	

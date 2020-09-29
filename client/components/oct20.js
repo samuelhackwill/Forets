@@ -8,6 +8,11 @@ timelineTrack = gsap.timeline({id:'track'});
 isBeforeFinish = false;
 // booleenne pour stopper la camera de chaque joueur
 
+isItReaderTime = false;
+isItDownTime = false;
+isItRaceTime = true;
+isItScoreTime = false;
+
 
 
 var caughtUp = false;
@@ -23,26 +28,13 @@ randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
 communes = ["Aiguebelette","Attignat-Oncin","Ayn","Domessin","Dullin","Gerbaix","La Bridoire","Le Pont-de-Beauvoisin","Lépin-le-lac","Lépin-Village","Nances","Novalaise","Saint-Alban de Montbel","Saint-Béron","Saint-Genix-sur-guiers","Saint-Jean-de-Chevelu","Sainte-Marie-D'Alvey","Verel","Yenne"]
 randomcommune= communes[Math.floor(Math.random() * communes.length)];
 
-// testSpeed = [50, 52, 56, 60, 61, 65, 105, 107, 130, 134, 200, 250]
-// hmmm quand les appels à la DB sont trop proches les uns des autres pour
-// deux clients ça fout grave la merde mammen.
-// il faut que je pose la question à un specialiste de meteor.
-// meteor boards ou stack overflow
-
-// ça marchait mieux quand j'avais que quatre valeurs dans le tableau je crois
-// ou peut être c'est lié au fait que je faisais moins d'appels à la DB? hm
-// testSpeed = [50, 100, 150, 200]
-
-
-// randomTestSpeed = testSpeed[Math.floor(Math.random() * testSpeed.length)];
-
 compteurAnim=1;
 
 animationRate = 20;
 // en fait 80 c'est pas mal
 
 
-Template.covid19.onCreated(function() {
+Template.raceTrack.onCreated(function() {
 
   //subscribe à la collection representations
   this.autorun(() => {
@@ -80,12 +72,12 @@ Template.covid19.onCreated(function() {
 
 
 
-Template.covid19.onRendered(function () {
+Template.raceTrack.onRendered(function () {
 
   this.autorun(() => {
   });
 
-  $(document.body).addClass('covid19');
+  $(document.body).addClass('oct20');
 
   em.addListener("stopRunServer", function(){
     clearInterval(timer);
@@ -146,8 +138,7 @@ Template.covid19.onRendered(function () {
 
 });
 
-Template.covid19.helpers({
-
+Template.raceTrack.helpers({
   // pseudo(){
   //   return randompseudo
   // },
