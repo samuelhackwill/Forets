@@ -394,6 +394,7 @@ next = function(){
         // il sautait deux lignes au lieu d'une
         compteur+=1;
         next();
+        return;
       }
     }
 
