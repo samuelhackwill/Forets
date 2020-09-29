@@ -394,6 +394,10 @@ body.covid19 #victory{
 	transition: transform .5s;
 }
 
+body.covid19 .mySprite{
+	border-color:red !important;
+}
+
 
 body.covid19 .spriteback1{width:inherit;height:inherit;position:absolute;top:inherit;
 background-image: url('img/back 1.png');animation: mymove1 1s infinite linear; background-size: 200%; background-position:center;

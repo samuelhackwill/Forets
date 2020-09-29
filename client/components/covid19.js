@@ -177,7 +177,7 @@ Template.covid19.helpers({
 
   vous(){
     if(playerId===this._id){
-      return "V"
+      return "mySprite"
     }else{
       return
     }
