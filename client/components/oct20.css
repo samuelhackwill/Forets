@@ -410,7 +410,8 @@ body.oct20 .mySprite{
 	border-color:red !important;
 }
 
-
+/*back arm
+*/
 body.oct20 .spriteback1{width:inherit;height:inherit;position:absolute;top:inherit;
 background-image: url('img/back 1.png');animation: mymove1 1s infinite linear; background-size: 200%; background-position:center;
 }
@@ -449,10 +450,8 @@ background-image: url('img/back 12.png');animation: mymove12 1s infinite linear;
 }
 
 
-
-
-
-
+/*front arm
+*/
 body.oct20 .spritefront1{width:inherit;height:inherit;position:absolute;top:inherit;
 background-image: url('img/front 1.png');animation: mymove1 1s infinite linear; background-size: 200%; background-position:center;
 }
@@ -489,6 +488,71 @@ background-image: url('img/front 11.png');animation: mymove11 1s infinite linear
 body.oct20 .spritefront12{width:inherit;height:inherit;position:absolute;top:inherit;
 background-image: url('img/front 12.png');animation: mymove12 1s infinite linear; background-size: 200%; background-position:center;
 }
+
+/*loading runner
+*/
+
+#def2{
+	font-style: italic;
+	font-size:10;
+	color:blue;
+}
+
+#loadingWidgetDialog{
+	background-color:white;
+	border-style: solid;
+	border-color: grey;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+#phalanct{
+	transform: translateY(-3px);
+	width: 20px;
+	height: 20px;
+	float: right;
+}
+
+#loadingWidgetRunner{
+	height: 100px;
+	width: 100px;
+	float: right;
+}
+
+#loadingWidget{
+	transition: opacity 1s;
+	opacity: 0;
+	right: 0px;
+	bottom :0px;
+	position:absolute;
+	margin: 50px;
+}
+
+.loadingSprite1{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-1.png'); opacity:0;
+}
+.loadingSprite2{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-2.png'); opacity:1;
+}
+.loadingSprite3{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-3.png'); opacity:0;
+}
+.loadingSprite4{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-4.png'); opacity:0;
+}
+.loadingSprite5{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-5.png'); opacity:0;
+}
+.loadingSprite6{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-6.png'); opacity:0;
+}
+.loadingSprite7{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-7.png'); opacity:0;
+}
+.loadingSprite8{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-8.png'); opacity:0;
+}
+.loadingSprite9{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-9.png'); opacity:0;
+}
+.loadingSprite10{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-10.png'); opacity:0;
+}
+.loadingSprite11{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-11.png'); opacity:0;
+}
+.loadingSprite12{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;background-image: url('img/running guy-12.png'); opacity:0;
+}
+
 
 @keyframes upndown {
   0%, 100%  {transform: translateY(5px);}

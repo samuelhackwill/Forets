@@ -8,13 +8,25 @@ timelineTrack = gsap.timeline({id:'track'});
 isBeforeFinish = false;
 // booleenne pour stopper la camera de chaque joueur
 
+throttle = false;
+// booleenne pour empecher le triple click lors du choix du mot
+
 var caughtUp = false;
 var intervalReload;
 Session.set("localName", "");
 yeecount = 1;
 zob = ""
 playerHasWonLocaly = false;
+
+// timeintervals
 timer = ""
+loading =""
+
+// le truc qui permet de faire cycler le texte lol
+loadingDialogCycle = 0
+
+
+playerId = ""
 
 pseudos = ["ant", "mar", "cam", "tom", "ale", "jea", "ali", "jul", "XXX", "zor", "GRO", "zob"]
 randompseudo= pseudos[Math.floor(Math.random() * pseudos.length)];
@@ -28,12 +40,28 @@ animationRate = 20;
 
 Template.loading.onCreated(function(){
 	Session.set("dynamicRender", "reader")
+  Session.set("whichRace", "none")
+
+  poules = ["lents", "rapides"]
+  randomPoule = poules[Math.floor(Math.random() * poules.length)];
+
+  // insère un nouveau player dans la db
+  playerId = Bonhomme.insert({word : "", arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", score:{"firstRun":0, "soloRun":0, "ffaRun":0, "pouleRun":0, "finals":0} })
+
+  // insère ta posx dans le tableau de vérité
+  Meteor.call("addGuyToPosTable", playerId, (error, result)=>{
+    if (error) {
+      console.log("error ",error)
+    }else{
+      console.log("result ",result)
+    }
+  })
 })
 
 Template.reader.onCreated(function(){
-    compteur=0;
     Session.set("spaceBarEffect", 1)
-})
+    Session.set("whichRace", "firstRun")
+});
 
 Template.reader.onRendered(function(){
 
@@ -72,14 +100,128 @@ Template.reader.onRendered(function(){
     gotobookmark(what.bookmark);
   }); 
 
-  em.addListener('goToRace', function(){
-  	console.log("go to race event")
-    Blaze.render("raceTrack");
-  })
+  em.addListener("remoteClickWord", function(what){
+
+    console.log(what.params)
+
+    document.getElementById(what.params).style.pointerEvents="none";
+    document.getElementById(what.params).style.color="darkgrey";
+  });
+
+  em.addListener("remoteGoToRaceTrack", function(){
+
+    clearInterval(loading)
+    document.getElementById("loadingWidgetDialog").innerHTML="Ah ça y est tout le monde a choisi un mot! <br/> L'écran va devenir tout noir, pas de panique."
+
+    setTimeout(function(){
+      document.body.style.opacity="0"
+    },4500)
+
+    setTimeout(function(){
+      Session.set("dynamicRender", "raceTrack")
+    },5500)
+
+  });
 })
 
+Template.reader.events({
+
+// le trigger span span est bug prone faudrait le changer un jour
+
+  'mouseenter span span' : function(e){
+    document.getElementById("zouifTitle").innerHTML = e.target.innerHTML
+    document.getElementById("zouifBody").innerHTML = "<span id='def1'>"+wordsDef[e.target.innerHTML+"1"]+"</span><br/><br/><span id='def2'>"+wordsDef[e.target.innerHTML+"2"]+"<span>"
+    document.getElementById("zouif").style.opacity = "1"
+   },
+
+  'mouseleave span span' : function(e){
+  document.getElementById("zouif").style.opacity = "0"
+ },
+
+  'click span span' : function(e){
+    var loadingTxt = ["chargement .","chargement ..","chargement ..."]
+    var t = '';
+    console.log("CLICK ", e.target.innerHTML, " ", e.target.id)
+
+    // make all span spans unclickable
+    $('span > span').each(function() {
+      var $this = $(this);
+      $this.addClass("unclickable")
+    });
+
+    // send message to server
+    em.setClient({ params: e.target.id });
+    em.emit("salmClickWord")
+
+    // change background color
+    setTimeout(function(){
+      document.body.style.backgroundColor="black"
+    },500)
+
+    // show loading widget
+    document.getElementById("loadingWidget").style.opacity = "1"
+
+    // make widget run
+    loading = setInterval(function(){
+      var insertText = ""
+      imageCycler("loadingWidgetRunner")
+
+      switch(loadingDialogCycle){
+        case 0:
+        case 1:
+        case 6:
+        case 7:
+          insertText="chargement."
+        break;
+        case 2:
+        case 3:
+        case 8:
+        case 9:
+          insertText="chargement.."
+        break;
+        case 4:
+        case 5:
+        case 10:
+        case 11:
+          insertText ="chargement..."
+        break;
+        default:
+          insertText ="on attend encore "+Bonhomme.find({"word":""}).fetch().length + " personne(s)"
+        break;
+      }   
+
+      document.getElementById("loadingWidgetDialog").innerHTML=insertText
+
+      if (loadingDialogCycle<23) {
+        loadingDialogCycle++
+      }else{
+        loadingDialogCycle=0
+      }
+
+    },250)
+
+    // change spacebar effect
+    Session.set("spaceBarEffect", 2)
+
+    // tell the DB i have chosen a word!
+    Bonhomme.update(playerId, {$set:{"word":e.target.innerHTML},})
+
+    // check if i'm the last one, and if it's the case ask for the server to change 
+    // everyone's dynamic render
+    stillWaitingForTheOthers = Bonhomme.find({"word":""}).fetch().length
+    if (!stillWaitingForTheOthers) {
+        em.emit("everybodyChoseTheWord")
+    }else{
+      console.log("still waiting for "+Bonhomme.find({"word":""}).fetch().length+" people.")
+    }
+
+  },
+});
 
 Template.raceTrack.onCreated(function() {
+
+  Session.set("whichRace", "soloRun")
+  Session.set("spaceBarEffect", 3)
 
   //subscribe à la collection representations
   this.autorun(() => {
@@ -94,23 +236,6 @@ Template.raceTrack.onCreated(function() {
   $(window).bind('beforeunload', function() {
         closingWindow();
     });
-  // ici toute la logique cookies & id blublu
-
-  poules = ["lents", "rapides"]
-  randomPoule = poules[Math.floor(Math.random() * poules.length)];
-
-  // insère un nouveau player dans la db
-  playerId = Bonhomme.insert({arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", score:{"firstRun":0, "pouleRun":0, "ffaRun":0} })
-
-  // insère ta posx dans le tableau de vérité
-  Meteor.call("addGuyToPosTable", playerId, (error, result)=>{
-    if (error) {
-      console.log("error ",error)
-    }else{
-      console.log("result ",result)
-    }
-  })
-
 });
 
 
@@ -121,6 +246,8 @@ Template.raceTrack.onRendered(function () {
   });
 
   $(document.body).addClass('oct20');
+
+  document.body.style.opacity = "1"
 
   em.addListener("stopRunServer", function(){
     clearInterval(timer);
@@ -313,6 +440,7 @@ var spaceBarPress = function(e){
 
     case 2:
       console.log("make widget run!")
+      imageCycler("loadingWidgetRunner")
     break;  
 
     case 3:
@@ -338,25 +466,24 @@ imageCycler = function(who){
   // mais pas avec un set timeout tout laid
 
 
-  domelements = document.getElementById(who).children[0]
-  console.log("domelements ", domelements)
+  domelements = document.getElementById(who).children
   // domelements2 = domelements[0].children
   // console.log("domelements2 ", domelements2)
 
 
     // console.log(yeecount+1, "YEE hide this guy")
-  domelements.children[yeecount+1].style.opacity=0
+  domelements[yeecount].style.opacity=0
 
 
     // console.log(yeecount+2, "YEE show this guy")
-  domelements.children[yeecount+2].style.opacity=1
+  domelements[yeecount+1].style.opacity=1
 
 
 
-  if(yeecount<11){
+  if(yeecount<10){
     if(yeecount==1){
       // console.log(13 + "YEE hide this guy also ")
-      domelements.children[13].style.opacity=0
+      domelements[11].style.opacity=0
     }
     yeecount ++
   }else{
@@ -432,9 +559,9 @@ next = function(){
     }
   };
 
-emitGoToRace = function(){
-	Blaze.render("raceTrack", document.body)
-}
+$(document).mousemove(function(e){
+  $("#zouif").css({left:e.pageX+10, top:e.pageY+10});
+});
 
 closingWindow = function(){
   Bonhomme.remove({_id:playerId})

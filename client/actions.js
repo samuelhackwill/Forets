@@ -114,6 +114,18 @@ rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","
 
 action = function(type, params){
   switch(type){
+    case "chooseWord":
+    switchToChooseWordMode();
+    break
+
+    case "changeView":
+    Session.set("dynamicRender", params)
+    break
+
+    case "printScore":
+    printScore();
+    break
+
     case "showHud":
     __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
     superGlobals.update(__id, {$set:{"isItVictoryYet":false},})
@@ -126,8 +138,8 @@ action = function(type, params){
 
     case "bolos":
       if(localName){
-        console.log("name already found")
-        return
+      console.log("name already found")
+      return
       }else{
       var uuid = guid();
       logName(uuid)
@@ -155,8 +167,9 @@ action = function(type, params){
     case "logScore":
     // superMegaInterrupt=true
     speedScore = dateFinish - dateStart
-    console.log("speedScore", speedScore)
-    // Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
+    SecondsTwoDecimal = (speedScore/1000).toFixed(2)
+    console.log("speedScore", SecondsTwoDecimal)
+    Meteor.call('logScore', {speed: SecondsTwoDecimal, _id:playerId, whichRace:Session.get("whichRace")});
     break
 
     case "startRace":
@@ -259,6 +272,34 @@ action = function(type, params){
     fullscreen();
     break;
   }
+}
+
+switchToChooseWordMode = function(){
+  interrupt = true;
+  document.getElementById("srt").style.overflow = "hidden"
+
+  // make every word an individual span 
+  // so we can have a mouseover on them
+  $('span').each(function() {
+    var $this = $(this);
+    $this.html($this.text().replace(/([A-zÀ-ú']+)/g, "<span>$1</span>"));
+  });
+
+  idAddR = 0
+
+  $('span > span').each(function() {
+    var $this = $(this);
+    $this.attr('id', 'sspan'+idAddR);
+    idAddR += 1
+  });
+}
+
+
+
+printScore = function(){
+  $('#srt').append($('<span/>').html("vous avez mis "+Bonhomme.findOne({_id:playerId}).score.firstRun+" secondes à parcourir le texte."))
+  $('#srt').append($('<br/>'))
+  $('#srt').scrollTop($('#srt')[0].scrollHeight);
 }
 
 treesReady = function(){

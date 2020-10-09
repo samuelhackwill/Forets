@@ -114,6 +114,13 @@ if (Meteor.isServer) {
 
   // UserStatus.events.on("connectionLogin", function(fields) { console.log("connectionLogin", fields); });
 
+  em.addListener('salmClickWord', function(params){
+    em.emit('remoteClickWord', params)
+  });
+
+  em.addListener("everybodyChoseTheWord", function(){
+    em.emit('remoteGoToRaceTrack')
+  });
 
   em.addListener('showScoreAdmin', function(params){
     console.log("show who won the speed contest MF")
@@ -368,15 +375,26 @@ if (Meteor.isServer) {
 
 
     logScore:function(obj){
-      console.log("pseudo ,", obj.pseudo)
-      console.log("speed ,", obj.speed)
-      console.log("money ,", obj.money)
 
-      if(obj.speed==0||undefined){
+      // on va plutôt le mettre dans le bonhommelo
+      // Bonhomme.update(obj.who, {$set:{haswonpoule:true},})
+
+      // which course is it?
+      console.log("pseudo ,", obj._id)
+      console.log("speed ,", obj.speed)
+      console.log("which race? ,", obj.whichRace)
+      _whichRace = obj.whichRace
+
+      var t = obj.whichRace
+      var field_name = "score." + t
+      var update = { "$set" : { } }
+      update["$set"][field_name] = obj.speed
+
+      if(obj.speed==0||obj.speed==undefined||obj._id==undefined){
         return
       }else{
-        score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});
-        score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});
+        Bonhomme.update(obj._id, update)
+        // score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});
       }
 
     },

@@ -8,6 +8,43 @@
   src: url('mplus-2m-regular.ttf') format('opentype');
 }
 
+.unclickable{
+  pointer-events: none;
+}
+
+
+#zouif{
+  transition: opacity .5s;
+  opacity: 0;
+
+  padding: 10px;
+  position:absolute;
+  z-index: 2;
+  background-color:white;
+  border-style: solid;
+  border-color:black;
+  max-width: 350px;
+
+}
+
+span > span{
+  color:black;
+  transition: color 2s;
+  cursor: pointer;
+}
+
+#zouifBody{
+  float: right;
+}
+
+#zouifTitle{
+  float: left;
+  text-transform: capitalize;
+  font-family: serif;
+  font-size:46px;
+  text-decoration: underline;
+}
+
   #srt span em{
     font-style: italic;
     color:grey;
@@ -23,6 +60,8 @@
 }
 
   body{
+    opacity: 1;
+    transition: background-color 4s, opacity 1s;
     background-color: darkgrey;
     overflow: hidden;
     font-family: "typo", sans-serif;
@@ -269,20 +308,17 @@
     z-index: 2;
     
     color: black;
-
-    background-color: darkgrey;
-
     font-size:25px;
 
     margin-top: 30px;
     padding-left: 90px;
 
-    -webkit-touch-callout: none; 
+/*    -webkit-touch-callout: none; 
     -webkit-user-select: none;   
     -khtml-user-select: none;    
     -moz-user-select: none;      
     -ms-user-select: none;      
-
+*/
     -webkit-transition: background-color .3s ease-in-out;
     -moz-transition: background-color .3s ease-in-out;
     -o-transition: background-color .3s ease-in-out;
@@ -385,7 +421,7 @@ div.login input {
   75%{transform:matrix(0.2774, 0, 0.9608, -0.2774, 436.1777, 318.1248);}
 }*/
 
-
+/*
 #OMD1{
 animation:ombreOMD1 150s linear;
 animation-iteration-count: infinite;
@@ -1368,4 +1404,4 @@ animation-iteration-count: infinite;
 45%{opacity:.6;}
 75%{opacity:.6; transform:matrix(0.2774, 0, 0.9608, -0.2774, 595.6524, 3935.1086);}
 85%{opacity:0;}
-}
+}*/
