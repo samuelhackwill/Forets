@@ -26,58 +26,81 @@ leftSteps = ["left1.mp3","left2.mp3","left3.mp3","left4.mp3","left5.mp3","left6.
 rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","right6.mp3","right7.mp3","right8.mp3"]
 
 
-// alors là pour le délire j'ai tout mis dans game.js
-// comme ça VP.js peut avoir son propre nextttt
-// chacun son next
+next = function(){
 
-// next = function(){
-//   console.log('next', compteur, data[compteur]);
-//   var currentData = data[compteur]
-//   var type = currentData["type"]
-//   var params = currentData["text"]
+  console.log('next', compteur, data[compteur]);
+  var currentData = data[compteur]
+  var type = currentData["type"]
+  var params = currentData["text"]
 
-//   while(data[compteur]["type"]!="text"){
-//       // tant que data[compteur] est une balise, ben continue à executer les instructions s'il te plaît
-//       action(type, params)
-//       if((data[compteur]["type"]!="text")||(data[compteur]["text"]=="")){
-//         // euh alors ça je sais pas pourquoi ça marche mais ça permet d'éviter des situations où, arrivé à un bookmark
-//         // il sautait deux lignes au lieu d'une
-//         compteur+=1;
-//         next();
-//       }
-//     }
+  while(data[compteur]["type"]!="text"){
+      // tant que data[compteur] est une balise, ben continue à executer les instructions s'il te plaît
+      action(type, params)
+      if((data[compteur]["type"]!="text")||(data[compteur]["text"]=="")){
+        // euh alors ça je sais pas pourquoi ça marche mais ça permet d'éviter des situations où, arrivé à un bookmark
+        // il sautait deux lignes au lieu d'une
+        compteur+=1;
+        next();
+      }
+    }
 
-//     if((type=="text")&&(params!="")){
-//       //document.getElementById("srt").innerHTML = params
-//         if(params=="***"){
-//         // ça c'est pour caler des blancs
-//         //document.getElementById("srt").innerHTML = ""
+    if((type=="text")&&(params!="")){
+      //document.getElementById("srt").innerHTML = params
+        if(params=="***"){
+        // ça c'est pour caler des blancs
+        //document.getElementById("srt").innerHTML = ""
 
-//        // VERSION MTL MON GARS
-//         //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
-//         //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
-//         // }else{
-//         //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
-//         //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
-//         // }
-//        // END MTL
+       // VERSION MTL MON GARS
+        //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ "))
+        //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        // }else{
+        //   $('#srt').append($('<ul/>').html("<small class='index'>"+ compteur + "</small>\ \ \ \ \ \ \ \ " + params))
+        //   $('#srt').scrollTop($('#srt')[0].scrollHeight);
+        // }
+       // END MTL
 
-//           // version game hédé
-//           // $('#srt').append($('<ul/>').html(params))
-//           // $('#srt').scrollTop($('#srt')[0].scrollHeight);
+          // version game hédé
+          // $('#srt').append($('<ul/>').html(params))
+          // $('#srt').scrollTop($('#srt')[0].scrollHeight);
 
-//           // version avignon du cul mon gars
-//           $('#srt').append($('<ul/>').html("\ \ \ \ \ "))
-//           $('#srt').scrollTop($('#srt')[0].scrollHeight);
-//         }else{
-//           $('#srt').append($('<ul/>').html(params))
-//           $('#srt').scrollTop($('#srt')[0].scrollHeight);
-//         }
-//         // }
-//       // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
-//       // bon ben c'est ici qu'il faudrait faire un truc
-//     }
-//   }
+          // version avignon du cul mon gars
+          $('#srt').html("\ \ \ \ \ ")
+        }else{
+          $('#srt').html(params)
+        }
+        // }
+      // pis si la balise c'est pas une action et pas une balise de texte vide, met a jour le texte
+      // bon ben c'est ici qu'il faudrait faire un truc
+        if (Router.current().route.getName()=="admin") {
+    return
+  }else{
+      compteur+=1;
+    }
+    }
+  }
+
+// var nextEvent = function(){
+
+//   // var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
+//   var isItPowerToThePeople = getSuperGlobal("powerToThePeople", true);
+//   console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople);
+//   if(compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true){
+//     window.clearTimeout(autonextcontainer)
+//     compteur +=1
+//     next();
+//     console.log("keyup, ", compteur)
+
+//     __id = PosRunner.find({name:Session.get("localName")}).fetch()[0]._id
+//     _posX = PosRunner.find({name:Session.get("localName")}).fetch()[0].posX
+//     // _cycle = PosRunner.find({name:Session.get("localName")}).fetch()[0].cycle
+
+//     // if(_cycle<12){
+//     //   _cycle = _cycle+1
+//     // }else{
+//     //   _cycle = 1
+//     // }
+
+
 
   randonnee = function(foot){
 
@@ -115,8 +138,21 @@ rightSteps = ["right1.mp3","right2.mp3","right3.mp3","right4.mp3","right5.mp3","
 action = function(type, params){
   switch(type){
     case "showHud":
+    interrupt=false;
+    console.log("SHOW HUD!")
+    Session.set("spaceBarEffect", 1);
+    // change status of SpaceBar
     __id = superGlobals.findOne({ isItVictoryYet: { $exists: true}})._id
     superGlobals.update(__id, {$set:{"isItVictoryYet":false},})
+    document.body.style.backgroundColor="white";
+    document.getElementById("runnersGrid").style.opacity="1";
+    break
+
+    case "logScore":
+    // superMegaInterrupt=true
+    speedScore = dateFinish - dateStart
+    console.log("speedScore", speedScore)
+    // Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
     break
 
     case "fukinlogscore":
@@ -150,13 +186,6 @@ action = function(type, params){
         // document.getElementById("")
         // lol c'est quoi ça
     }
-    break
-
-    case "logScore":
-    // superMegaInterrupt=true
-    speedScore = dateFinish - dateStart
-    console.log("speedScore", speedScore)
-    // Meteor.call('logScore', {speed: speedScore, money: fragCount, pseudo:localName});
     break
 
     case "startRace":
@@ -453,20 +482,20 @@ showFormCall = function(){
 }
 
 focusOnOff = function(clickTarget){
-  if (newGUI) return
+  // if (newGUI) return
 
-  if (clickTarget=="formulaire") {
-    $("#srt").css("background-color", "#333")
-    $(".index").css("color", "black")
-    $("#formulaire").css("background-color", "white")
-  }else{
-    $("#srt").css("background-color", "darkgrey")
-    $(".index").css("color", "grey")
-    $("#formulaire").css("background-color", "darkgrey")
-      if ($("#formulaire").val()!=""){
-        $("#formulaire").val("")
-    }
-  }
+  // if (clickTarget=="formulaire") {
+  //   $("#srt").css("background-color", "#333")
+  //   $(".index").css("color", "black")
+  //   $("#formulaire").css("background-color", "white")
+  // }else{
+  //   $("#srt").css("background-color", "darkgrey")
+  //   $(".index").css("color", "grey")
+  //   $("#formulaire").css("background-color", "darkgrey")
+  //     if ($("#formulaire").val()!=""){
+  //       $("#formulaire").val("")
+  //   }
+  // }
 }
 
 timer = function(){

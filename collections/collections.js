@@ -1,7 +1,5 @@
 superGlobals = new Meteor.Collection('superGlobals');
 
-FukinScore = new Meteor.Collection("fukinScore");
-
 Postit = new Mongo.Collection("postits")
 
 ContenusEcran = new Meteor.Collection('contenusEcran');
@@ -17,6 +15,8 @@ Timer = new Meteor.Collection("timer");
 ViewSwitcher = new Meteor.Collection("viewSwitcher");
 
 Bonhomme = new Meteor.Collection("bonhomme");
+
+FukinScore = new Meteor.Collection("fukinScore");
 
 var Schemas = {};
 
@@ -225,18 +225,6 @@ ContenusEcran.allow({
   }
 });
 
-FukinScore.allow({
-  insert:function(){
-    return true;
-  },
-  update:function(){
-    return true;
-  },
-  remove:function(){
-    return true;
-  }
-});
-
 superGlobals.allow({
   insert: function () {
 
@@ -347,6 +335,19 @@ Meteor.users.allow({
     if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
       throw new Meteor.Error(403, "Access denied")
     }
+    return true;
+  }
+});
+
+
+FukinScore.allow({
+  insert:function(){
+    return true;
+  },
+  update:function(){
+    return true;
+  },
+  remove:function(){
     return true;
   }
 });

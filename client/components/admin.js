@@ -333,13 +333,13 @@ Template.admin.onRendered(function () {
     // Session.update("compteur", compteur);
     // if(compteur < data.length-1){
       window.clearTimeout(autonextcontainer)
-      compteur +=1
+      // compteur +=1
     console.log('adminNext3', compteur);
       var modeSpectacle = getSuperGlobal("modeSpectacle");
       var isItPowerToThePeople = getSuperGlobal("powerToThePeople");
       var compteurAdmin = getSuperGlobal("compteurAdmin");
       console.log("adminNext modeSpectacle?", modeSpectacle, "isItPowerToThePeople?", isItPowerToThePeople, "compteurAdmin", compteurAdmin);
-      if(modeSpectacle && !isItPowerToThePeople && parseInt(compteurAdmin) != compteur) {
+      if(!isItPowerToThePeople && parseInt(compteurAdmin) != compteur) {
         console.log("admin next compteur set compteurAdmin", compteur)
         // cookies.set('compteurAdmin', compteur);
         Meteor.call('setSuperGlobal', {name: 'compteurAdmin', value: parseInt(compteur)});
@@ -496,7 +496,6 @@ Template.showtime.events({
     }
     console.log("second round", secondRound)
   },
-
 
   'click #scoreG' : function(){
     Meteor.call("scoreGAdmin")

@@ -1,0 +1,457 @@
+@font-face {
+    font-family: "runnerFont";
+    src:  url("runnerFont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body.covid19{
+	transition: background-color 1s;
+	background-color: black;
+}
+
+
+ul.admin_menu {
+  list-style-type: none;
+  display: inline-block;
+}
+ul.admin_menu li {
+  float: left;
+}
+ul.admin_menu li:after {
+  content: "/";
+  margin-left: 1em;
+  margin-right: 1em;
+}
+ul.admin_menu li:last-child:after {
+  content: "";
+}
+
+/* covid19 */
+body.covid19 #srt {
+color: lightgrey !important;
+width:100% !important;
+font-size:65px !important;
+height:auto !important;
+margin: 0px !important;
+padding: 50px !important;
+top:170px !important;
+text-align:center;
+}
+
+#halloffame{
+	display:none;
+	background-color:beige;
+	overflow: scroll;
+	z-index:100000000;
+	position: fixed;
+	height: 500px;
+	width: 500px;
+	left:50%;
+	top:50%;
+	transform: translate(-50%, -50%)
+}
+
+.arr{
+	opacity: 0;
+}
+
+.arrV{
+width: 120px;
+	left: 80px;
+	position:absolute;
+	bottom:0vh;
+	opacity: 1;
+}
+
+table{
+	border-spacing: 15px;
+border-collapse: inherit;
+}
+
+#debuging{
+	position:absolute;
+	left:150px;
+}
+
+#vous{
+	position:absolute;
+	left:150px;
+	color:red;
+}
+
+
+#runnersGrid{
+/*	width: 99px;
+*/	
+	transition: 1s;
+	opacity: 0;
+	height:100vw;
+
+	display: grid;	
+	grid-template-columns: 33px 33px 80vw 33px 33px;
+	grid-auto-rows: 2.5vh;
+
+}
+
+#blabla{
+	position: fixed;
+	left: 130px;
+	width:300px;
+}
+
+#sam{
+	width:100px;
+	height:97px;
+}
+
+@keyframes mymove1 {
+ 0.00%,	8.40%{opacity: 1;}
+ 8.41%, 100%  {opacity:0;}
+}
+@keyframes mymove2 {
+  0%,8.39%,	16.81%, 100%  {opacity:0;}
+  8.40%, 16.80% {opacity: 1;}
+}
+@keyframes mymove3 {
+  0%, 16.79%,	25.21%, 100%  {opacity:0;}
+  16.80%,	25.20% {opacity: 1;}
+}
+@keyframes mymove4 {
+  0%, 25.19%,	33.61%, 100%  {opacity:0;}
+  25.20%,	33.60% {opacity: 1;}
+}
+@keyframes mymove5 {
+  0%, 33.59%,	42.01%, 100%  {opacity:0;}
+  33.60%,	42.00% {opacity: 1;}
+}
+@keyframes mymove6 {
+  0%, 41.99%,	50.41%, 100%  {opacity:0;}
+  42.00%,	50.40% {opacity: 1;}
+}
+@keyframes mymove7 {
+  0%, 50.39%,	58.81%, 100%  {opacity:0;}
+  50.40%,	58.80% {opacity: 1;}
+}
+@keyframes mymove8 {
+  0%, 58.79%,	67.21%, 100%  {opacity:0;}
+  58.80%,	67.20% {opacity: 1;}
+}
+@keyframes mymove9 {
+  0%, 67.19%,	75.61%, 100% {opacity:0;}
+  67.20%,	75.60% {opacity: 1;}
+}
+@keyframes mymove10 {
+  0%, 75.59%,	84.01%, 100%  {opacity:0;}
+  75.60%,	84.00% {opacity: 1;}
+}
+@keyframes mymove11 {
+  0%, 83.99%,	92.41%, 100% {opacity:0;}
+  84.00%,	92.40% {opacity: 1;}
+}
+@keyframes mymove12 {
+  0%, 92.40%  {opacity:0;}
+  92.41%,	100.00% {opacity: 1;}
+}
+
+#dominiquesRunners div:nth-of-type(1){
+	transform: translate(2px,-2px);
+}
+#dominiquesRunners div:nth-of-type(2){
+	transform: translate(4px,-4px);
+}
+#dominiquesRunners div:nth-of-type(3){
+	transform: translate(6px,-6px);
+}
+#dominiquesRunners div:nth-of-type(4){
+	transform: translate(8px,-8px);
+}
+
+#runnersGrid div:nth-of-type(17) {
+	grid-column: 2 / span 2;
+	grid-row: 1 / span 3;
+	z-index: 83;
+}
+#runnersGrid div:nth-of-type(16) {
+	grid-column: 1 / span 2;
+	grid-row: 3 / span 3;
+	z-index: 84;
+}
+#runnersGrid div:nth-of-type(15) {
+	grid-column: 2 / span 2;
+	grid-row: 5 / span 3;
+	z-index: 85;
+}
+#runnersGrid div:nth-of-type(14) {
+	grid-column: 1 / span 2;
+	grid-row: 7 / span 3;
+	z-index: 86;
+}
+#runnersGrid div:nth-of-type(13) {
+	grid-column: 2 / span 2;
+	grid-row: 9 / span 3;
+	z-index: 87;
+}
+#runnersGrid div:nth-of-type(12) {
+	grid-column: 1 / span 2;
+	grid-row: 11 / span 3;
+	z-index: 88;
+}
+#runnersGrid div:nth-of-type(11) {
+	grid-column: 2 / span 2;
+	grid-row: 13 / span 3;
+	z-index: 89;
+}
+#runnersGrid div:nth-of-type(10) {
+	grid-column: 1 / span 2;
+	grid-row: 15 / span 3;
+	z-index: 90;
+}
+#runnersGrid div:nth-of-type(9) {
+	grid-column: 2 / span 2;
+	grid-row: 17 / span 3;
+	z-index: 91;
+}
+#runnersGrid div:nth-of-type(8) {
+	grid-column: 1 / span 2;
+	grid-row: 19 / span 3;
+	z-index: 92;
+}
+#runnersGrid div:nth-of-type(7) {
+	grid-column: 2 / span 2;
+	grid-row: 21 / span 3;
+	z-index: 93;
+}
+
+#runnersGrid div:nth-of-type(6) {
+	grid-column: 1 / span 2;
+	grid-row: 23 / span 3;
+	z-index: 94;
+}
+#runnersGrid div:nth-of-type(5) {
+	grid-column: 2 / span 2;
+	grid-row: 25 / span 3;
+	z-index: 95;
+}
+#runnersGrid div:nth-of-type(4) {
+	grid-column: 1 / span 2;
+	grid-row: 27 / span 3;
+	z-index: 96;
+}
+#runnersGrid div:nth-of-type(3) {
+	grid-column: 2 / span 2;
+	grid-row: 29 / span 3;
+	z-index: 97;
+}
+
+/* sam */
+
+#runnersGrid div:nth-of-type(2) {
+	grid-column: 1 / span 2;
+	grid-row: 31 / span 3;
+	z-index: 98;
+}
+#runnersGrid div:nth-of-type(1) {
+	grid-column: 2 / span 2;
+	grid-row: 33 / span 3;
+	z-index: 99;
+}
+
+.personne{
+/*    -webkit-transition: transform .3s ease-out;
+    -moz-transition: transform .3s ease-out;
+    -o-transition: transform .3s ease-out;
+    transition: transform .3s ease-out;
+*/
+	width:100px;
+	height:100px;
+	position:relative;
+}
+
+.separator{
+	border-style: solid;
+	border-color: lightgrey;
+	border-width: 1px;
+	position:absolute;
+	top:100%!important;
+	width:90vw!important;
+	transform:translate(0px,0px,)!important;
+
+}
+
+.terrain{
+	position:relative;
+}
+
+.number{
+	position:absolute;
+	bottom:1vh;	
+	left:87vw!important;
+	color: lightgrey;
+	transform:skew(20deg,20deg);
+}
+
+#commune{
+z-index: 10000000 !important;
+background-color:white;
+border-style: solid;
+border-radius: 5px;
+width: max-content;
+padding-left: 2px;
+padding-right: 2px;
+font-size: 10px;
+left: 50%;
+position: absolute;
+transform: translate(-50%, -16px);
+border-width: 2px;
+}
+
+.commune{
+border-color: red;
+}
+
+.communeV{
+border-color: black;
+}
+
+#pseudo{
+border-color: transparent;
+border-style: solid;
+border-radius: 5px;
+width: max-content;
+padding-left: 2px;
+padding-right: 2px;
+font-size: 10px;
+left: 50%;
+position: absolute;
+transform: translate(-50%, -16px);
+border-width: 2px;
+}
+
+#commune:hover{
+opacity:0;
+}
+
+body.covid19 .spriteSam{
+	height: 100px;
+	width: 100px;
+	background-image: url('img/sam.gif');
+	background-size: contain;
+}
+
+body.covid19 #dominiquesRunners{
+	font-family: runnerFont;
+	line-height: initial;
+	position: absolute;
+}
+
+body.covid19 .dominiqueRunner{
+	position: inherit;
+	top: 0px;
+	left: 0px;
+}
+
+body.covid19 #dominiquesRace{
+	line-height: 50px;
+	padding: 50px;
+	margin-top:50px;
+}
+
+body.covid19 .sprite1{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-1.png');animation: mymove1 1s infinite linear;
+}
+body.covid19 .sprite2{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-2.png');animation: mymove2 1s infinite linear;
+}
+body.covid19 .sprite3{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-3.png');animation: mymove3 1s infinite linear;
+}
+body.covid19 .sprite4{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-4.png');animation: mymove4 1s infinite linear;
+}
+body.covid19 .sprite5{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-5.png');animation: mymove5 1s infinite linear;
+}
+body.covid19 .sprite6{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-6.png');animation: mymove6 1s infinite linear;
+}
+body.covid19 .sprite7{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-7.png');animation: mymove7 1s infinite linear;
+}
+body.covid19 .sprite8{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-8.png');animation: mymove8 1s infinite linear;
+}
+body.covid19 .sprite9{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-9.png');animation: mymove9 1s infinite linear;
+}
+body.covid19 .sprite10{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-10.png');animation: mymove10 1s infinite linear;
+}
+body.covid19 .sprite11{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-11.png');animation: mymove11 1s infinite linear;
+}
+body.covid19 .sprite12{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-12.png');animation: mymove12 1s infinite linear;
+}
+
+
+body.covid19 .spriteV1{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-1.png'); opacity: 0;
+}
+body.covid19 .spriteV2{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-2.png'); opacity: 1;
+}
+body.covid19 .spriteV3{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-3.png'); opacity: 0;
+}
+body.covid19 .spriteV4{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-4.png'); opacity: 0;
+}
+body.covid19 .spriteV5{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-5.png'); opacity: 0;
+}
+body.covid19 .spriteV6{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-6.png'); opacity: 0;
+}
+body.covid19 .spriteV7{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-7.png'); opacity: 0;
+}
+body.covid19 .spriteV8{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-8.png'); opacity: 0;
+}
+body.covid19 .spriteV9{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-9.png'); opacity: 0;
+}
+body.covid19 .spriteV10{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-10.png'); opacity: 0;
+}
+body.covid19 .spriteV11{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-11.png'); opacity: 0;
+}
+body.covid19 .spriteV12{width:inherit;height:inherit;position:absolute;top:inherit;left:inherit;
+background-image: url('img/running guy-12.png'); opacity: 0;
+}
+
+#sav{
+
+display:none;
+}
+
+body.covid19 #victory{
+	font-size: 60px;
+	opacity: 0;
+	color:black;
+	z-index:10000000;
+
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	
+	transform: translate(-50%,-50%);
+
+	/*width:300px;*/
+
+	transition: transform .5s;
+}
+
+

@@ -25,17 +25,16 @@ timerUnites = 0
 
 stepQueue = []
 timerStepsInterval = 100
-// 1 update / sec (1000)
 timerSteps = '';
-
-minAcceleration = 0.05
-maxAcceleration = 1.3
-// +1 posX/sec at 100 Hz
 
 howmanyBonhommes = 0
 
 Meteor.publish('allWinners', function(){
   return Winners.find();
+});
+
+Meteor.publish('allFukinScore', function(){
+  return FukinScore.find();
 });
 
 Meteor.publish('allTimer', function(){
@@ -186,6 +185,7 @@ if (Meteor.isServer) {
   em.addListener('adminnext', function(/* client */) {
     // console.log('ADMIN NEXT', _.toArray(arguments), arguments[0]);
     // em.setClient({ reponse: arguments[0].reponse });
+    console.log("ADMINNEXT SERVER ", arguments[0].compteur)
     var args = arguments[0];
     if(args) {
       em.emit('salmnext', args);
@@ -240,8 +240,8 @@ if (Meteor.isServer) {
     }
   });
 
-
-
+  
+  
   // This code only runs on the server
   Meteor.publish('superGlobals', function tasksPublication() {
     return superGlobals.find();
@@ -249,27 +249,38 @@ if (Meteor.isServer) {
 
   Meteor.methods({
 
+    scoreGAdmin:function(){
+      em.emit("scoreGServer")
+    },
+
+    scoreDAdmin:function(){
+      em.emit("scoreDServer")
+    },
+
+    noirDeFinAdmin:function(){
+      em.emit("noirFinal")
+    },
+
     removeOneGuy:function(who){
       delete posTable[who]
       streamer.emit('message', posTable);
     },
 
     addGuyToPosTable:function(who){
-      posTable[who]=[0,0]
-      // la première valeur est la posX, la seconde est l'accélération
+      posTable[who]=0
       streamer.emit('message', posTable);
     },
 
     requestStepServerSide: function(who){
+      // console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
       stepQueue.push(who);
-      console.log('requestStepServerSide who', who, 'stepQueue', stepQueue)
       // console.log('requestStepServerSide stepQueue 2 ', stepQueue)
 
     },
 
     killTimerSteps: function(){
       console.log("Streamer stopped.")
-      Meteor.clearInterval(timerSteps);
+      Meteor.clearInterval(timerSteps); 
     },
 
     startTimerSteps: function(){
@@ -285,44 +296,21 @@ if (Meteor.isServer) {
 
     // stepServerSide:function(who){
     stepServerSide:function(){
-
-    // First modify acceleration of all players
-      console.log(stepQueue)
-
+      // console.log("stepServerSide!")
+      // Bonhomme.update(who, {$inc:{"posX":1},})
+      // updates = 0;
       for (var i = 0; i < stepQueue.length; i++) {
-        console.log("check dat posTable ", posTable[stepQueue[i]], "posT : ", posTable, "stepqueeueu : ", stepQueue[i])
-        if(posTable[stepQueue[i]][1]<maxAcceleration){
-          posTable[stepQueue[i]][1]=posTable[stepQueue[i]][1]+0.1
-        }else{
-          posTable[stepQueue[i]][1]=maxAcceleration
-        }
+        stepQueue[i]
+        typeof posTable[stepQueue[i]] === 'undefined' ? posTable[stepQueue[i]] = 1 : posTable[stepQueue[i]]++;
+        // updates++;
       }
-
       stepQueue = []
-
-      // slow down everybody of 1, 10 times per second
-      allGuysId = Object.keys(posTable)
-      for (var i = 0; i < allGuysId.length; i++) {
-        if(posTable[allGuysId[i]][1]>minAcceleration){
-          // if someone is already at minimum acceleration, don't slow him down
-          posTable[allGuysId[i]][1]=posTable[allGuysId[i]][1]-0.05;
-        }else{
-          posTable[allGuysId[i]][1]=minAcceleration
-        }
-        // go through the posTable and calculate the posX offset
-        // posTable[allGuysId[i]][0]=posTable[allGuysId[i]][0]+posTable[allGuysId[i]][1]*0.1
-      }
-
-
-
-
-      console.log("posTable updated! ", posTable)
-
       streamer.emit('message', posTable);
+      // console.log("send message! "+updates+" positions updated")
     },
 
 // Tickets.update(
-//         {_id: ticketId},
+//         {_id: ticketId}, 
 //         { $set: {title: ticket.title, content: ticket.content}},
 //         { $inc: {counterEdit: 1 }}
 //         )
@@ -332,16 +320,15 @@ if (Meteor.isServer) {
       allGuysId = Object.keys(posTable)
 
       for (var i = allGuysId.length - 1; i >= 0; i--) {
-        posTable[allGuysId[i]] = [0,0]
+        posTable[allGuysId[i]] = 0
       }
       streamer.emit('message', posTable);
     },
 
 
     autoRun:function(){
-      console.log(posTable)
-      em.emit("autoRunAll", posTable)
-    },
+      em.emit("autoRunAll")
+    },    
 
     stopRun:function(){
       em.emit("stopRunServer")
@@ -350,7 +337,6 @@ if (Meteor.isServer) {
     killBonhommes:function(){
       Bonhomme.remove({})
       posTable = {}
-      stepQueue = {}
     },
 
     forceRefresh:function(){
@@ -363,7 +349,13 @@ if (Meteor.isServer) {
     },
 
     getRidOfWinners:function(){
+      FukinScore.remove({})
       Winners.remove({})
+    },
+
+
+    logScoreAdmin:function(){
+      em.emit("logScoreServer")
     },
 
 
@@ -375,8 +367,8 @@ if (Meteor.isServer) {
       if(obj.speed==0||undefined){
         return
       }else{
-        score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});
-        score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});
+        score.insert({pseudo: obj.pseudo, type: "speed", value: obj.speed});  
+        score.insert({pseudo: obj.pseudo, type: "money", value: obj.money});  
       }
 
     },
@@ -387,7 +379,7 @@ if (Meteor.isServer) {
 
     removeClicAdmin:function(){
       em.emit("removeClicEnd")
-    },
+    },  
 
     showLightCall:function(who){
       console.log("show light call ", who)
@@ -425,28 +417,21 @@ if (Meteor.isServer) {
   * @param {String} data Données du contenu écran
   */
 
-  endRace : function(obj){
+  endRace : function(whoWon){
 
-    console.log(" endRace ", obj.who.commune, obj.who.pseudo, " ", timerUnites, ":", timerDecimales, "conc ", (timerUnites*1000)+timerDecimales*10)
-    HallOfFame.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo, "whichCourse":obj.context, "score":(timerUnites*1000)+timerDecimales*10})
+    console.log("endRace" , whoWon)
 
-    howmanyBonhommes = howmanyBonhommes-1
-
-    if(howmanyBonhommes==0){
-      console.log("this was the last mf!")
-      Meteor.call("stopRun")
-      em.emit("endRaceAnimation")
-    }
-
-    em.emit("victoryAnimation")
-
-    // tout ce qui se passe en dessous n'advient qu'une foy
+    // console.log(" endRace ", obj.who.commune, obj.who.pseudo, " ", timerUnites, ":", timerDecimales, "conc ", (timerUnites*1000)+timerDecimales*10)
+    // HallOfFame.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo, "whichCourse":obj.context, "score":(timerUnites*1000)+timerDecimales*10})
 
     if (Winners.findOne()) {
       return
     }else{
-      Bonhomme.update(obj.who, {$set:{haswonpoule:true},})
-      Winners.insert({"commune":obj.who.commune, "pseudo":obj.who.pseudo})
+      Meteor.setTimeout(function(){
+        em.emit("endRaceAnimation")
+        Meteor.call("killTimerSteps")
+      }, 3000)
+      Winners.insert({"whoWon":whoWon})
     }
 },
 
@@ -459,35 +444,35 @@ if (Meteor.isServer) {
     //check si deja enregistré
     var data = tryParseJSON(obj.data);
     if(data) {
-
+    
       // console.log(typeof obj.name, obj.name);
-      // console.log('valid JSON?');
+      // console.log('valid JSON?'); 
       // console.log(typeof data);
       // console.log(data instanceof Object);
 
       var contenuEcran = ContenusEcran.findOne({name: obj.name});
       // console.log("contenuEcran existe ?", contenuEcran);
-
+      
       if(contenuEcran) {
         // console.log("contenuEcran existe. mise à jour.");
-        ContenusEcran.update(contenuEcran._id, {
+        ContenusEcran.update(contenuEcran._id, { 
           $set: {
-            name: obj.name,
-            data: data,
-            text: obj.text
+            name: obj.name, 
+            data: data, 
+            text: obj.text 
           }
         }, { filter: false });
       } else {
         // console.log("nouveau contenuEcran. insertion");
         // var copie = Object.assign({}, data);
-        // console.log('true Object?');
+        // console.log('true Object?'); 
         // console.log(typeof copie);
         // console.log(copie instanceof Object);
         // console.log(copie);
         // insertion du nouveau contenu écran
-        ContenusEcran.insert({name: obj.name, data: data, text: obj.text}, { filter: false });
+        ContenusEcran.insert({name: obj.name, data: data, text: obj.text}, { filter: false });  
       }
-
+      
     }
   },
   setSuperGlobal: function(obj) {
@@ -512,7 +497,7 @@ if (Meteor.isServer) {
             // superGlobals.upsert({powerToThePeople: obj.value}, { filter: false });
           }
           break;
-
+          
         case 'SUPERinterrupt':
           // console.log('SUPERinterrupt', obj.value);
           // if(typeof(obj.value) === "boolean") {
@@ -593,7 +578,7 @@ if (Meteor.isServer) {
         case 'compteurAdmin':
           console.log('compteurAdmin', obj.value);
           if(typeof(obj.value) === "number") { //check si c'est un number
-          // if( Object.prototype.toString.call( obj.value ) === '[object Array]' ) {
+          // if( Object.prototype.toString.call( obj.value ) === '[object Array]' ) { 
             console.log('compteurAdmin2', obj.value, superGlobals.findOne({ compteurAdmin: { $exists: true}}));
             var compteurAdmin = superGlobals.findOne({ compteurAdmin: { $exists: true}});
             if(compteurAdmin) {
@@ -638,7 +623,7 @@ if (Meteor.isServer) {
       throw new Meteor.Error(403, "Access denied")
     }
     console.log("editRepresentation", args);
-    representations.update(args._id,
+    representations.update(args._id, 
       { $set: args.obj },
       { filter: false }
     );
@@ -661,12 +646,12 @@ if (Meteor.isServer) {
         console.log("anonymous user", anonParticipants);
         if(anonParticipants) {
           representations.update(
-            { "_id": obj._id },
+            { "_id": obj._id }, 
             { $inc: { "anonymousParticipants": 1 }}
           );
         } else {
-          representations.updateOne(obj._id,
-            { "_id": obj._id, "participants.anonymous": {$exists: false}},
+          representations.updateOne(obj._id, 
+            { "_id": obj._id, "participants.anonymous": {$exists: false}}, 
             { $set: { "participants.anonymous": 1 }}, { filter: false }
           );
         }
@@ -675,7 +660,7 @@ if (Meteor.isServer) {
       if(obj.old_representation) {
         console.log("remove from old representation", obj.old_representation);
         representations.update(
-          { "_id": obj.old_representation },
+          { "_id": obj.old_representation }, 
           { $inc: { "anonymousParticipants": -1 }}
         );
       }
@@ -727,9 +712,9 @@ if (Meteor.isServer) {
       var lottery = loteries.findOne({_id: lotteryId});
       if(lottery){
         console.log("retrieveMessage lottery", lottery);
-        var theMessage = _.find(lottery.messages, function(message){
+        var theMessage = _.find(lottery.messages, function(message){ 
           console.log("message", message, userCookie in message);
-          return userCookie in message;
+          return userCookie in message; 
         });
         console.log('theMessage', theMessage);
         if(theMessage) {
@@ -737,7 +722,7 @@ if (Meteor.isServer) {
         }
         // if(lottery.messages[userCookie] && lottery.messages[userCookie] != "") {
 
-          // return
+          // return 
         // }
         // var messageToReturn = lottery.messages
       }

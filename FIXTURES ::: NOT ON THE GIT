@@ -1,0 +1,25 @@
+FIXTURES :
+
+// d'abord côté serveur :
+
+	PosRunner.insert({"name":"gauche"})
+	PosRunner.insert({"name":"droite"})
+
+	superGlobals.insert({"isItVictoryYet":false})
+
+
+// ensuite côté client :
+
+	Session.set("localName", "gauche");
+// sur l'ordi de gauche
+
+	Session.set("localName", "droite");
+// sur l'ordi de droite
+
+// y'a sans doutes d'autres collections à initialiser, chépu
+
+winners
+viewSwitcher 
+fukinScore
+
+et sans soute des superGlobales

@@ -23,7 +23,6 @@
 }
 
   body{
-    background-color: darkgrey;
     overflow: hidden;
     font-family: "typo", sans-serif;
     text-align: left;
@@ -260,23 +259,32 @@
   }
 
   #srt{
-    overflow: scroll;
-
-    width: 60vw;
-    height: 90vh;
-
     position: absolute;
     z-index: 2;
-    
     color: black;
+/*    width:75%;
+    height:65vh;
+*/
+    font-size:14px;
+/*
+    border-color: darkgrey;
+    border-width: 1px;
+    border-style: solid;*/
 
-    background-color: darkgrey;
+    padding-left: 4px;
+    padding-right:3px;
 
-    font-size:25px;
+    overflow-y: scroll;
 
-    margin-top: 30px;
-    padding-left: 90px;
+    margin-left:12.5%;
 
+/*    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    z-index:1000;
+*/
     -webkit-touch-callout: none; 
     -webkit-user-select: none;   
     -khtml-user-select: none;    
@@ -289,23 +297,6 @@
     transition: background-color .3s ease-in-out;
 
   }
-
-/*  // pour indenter on text wrap! stylé
-*/
-  #srt{
-    margin-left:1em;
-  }
-
-  #srt > span{
-    margin-left:-1em;
-  }
-
-  #srt > span:first-line{
-    margin-left:0;
-  }
-
-
-
 
 
 #stats {

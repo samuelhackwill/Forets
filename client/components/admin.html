@@ -70,17 +70,39 @@
         <span>noirPanic</span><br />
       </div>
       <br />
-     
+
+
+ <div id="lazyStartup">
+    Streamer
+    <input type="button" name="startTimerSteps" value="startTimerSteps" onclick="Meteor.call('startTimerSteps')">
+    <input type="button" name="killTimerSteps" value="killTimerSteps" onclick="Meteor.call('killTimerSteps')">
+
+    Autorun
+    <input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
+    <input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
+
+    Admin
+    <input type="button" name="resetPosition" value="resetPosition" onclick="Meteor.call('resetPosition')">
+    <input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
+    <input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
+    <input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
+  </div>
+
+     <!-- 
       <button id="next">next</button>
 
    <form>
     <input id="whoShowLight" type="form">
     <button type="button" id="whoShowLightButton">BIM</button> 
-  </form> 
+  </form>  -->
 
 </div>
 
 <div>
+
+<button id="scoreG"> SCOREG</button>
+<button id="scoreD"> SCORED</button>
+
   
 <!-- for each part in database
   make a reactive checkbox for the admin m
@@ -92,14 +114,6 @@
 <span class="checkmark"></span>
 </label>
 {{/each}}
-
-    <button id="removeClicAdmin">removeClicAdmin</button> 
-    <button id="logScoreAdmin">logScoreAdmin</button> 
-    <button class="winners">CALC WINNERS</button> 
-    <button id="armKeyboard"> ARM KEYBOARD</button>
-    <button id="noirDeFin"> NOIR DE FIN</button>
-    <button id="scoreG"> SCOREG</button>
-    <button id="scoreD"> SCORED</button>
 
 </div>
 

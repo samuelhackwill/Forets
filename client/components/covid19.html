@@ -1,0 +1,105 @@
+<head>
+  <title>JACKY</title>
+  <meta charset="utf-8">
+</head>
+
+<!-- 	#
+	# HERE IS
+	# THE ADMIN'S INTERFACE
+	# -->
+
+<template name="covid19">
+<!-- 	<div id="lazyStartup">
+		Streamer
+		<input type="button" name="startTimerSteps" value="startTimerSteps" onclick="Meteor.call('startTimerSteps')">
+		<input type="button" name="killTimerSteps" value="killTimerSteps" onclick="Meteor.call('killTimerSteps')">
+
+		Autorun
+		<input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
+		<input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
+
+		Admin
+		<input type="button" name="resetPosition" value="resetPosition" onclick="Meteor.call('resetPosition')">
+		<input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
+		<input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
+		<input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
+	</div>
+ -->
+
+<!-- 	#
+	# HERE IS
+	# THE FIRST LINEAR RACE
+	# -->
+
+ <div id="runnersGrid">
+
+ 	<div id="sam">
+<!--  		<div id="blabla">
+ 			mais bon vous aurez compris que c'était moi qui faisais défiler le texte
+ 		</div> -->
+
+		<div id="victory" style="opacity:{{winnerOnOff}}">
+		{{#each winner}}
+			<div id="winner">
+				🏁 personne de {{whoWon}} wins! 🏁
+			</div>
+		{{/each}}
+		</div>
+
+ </div>
+
+
+{{#each bonhomme}}
+	<div class="testRunner" id={{_id}} style="opacity: {{courseOnOff}}">
+		<div class="personne">
+			<div class="sprite{{vous}}1"></div>	
+			<div class="sprite{{vous}}2"></div>	
+			<div class="sprite{{vous}}3"></div>	
+			<div class="sprite{{vous}}4"></div>	
+			<div class="sprite{{vous}}5"></div>	
+			<div class="sprite{{vous}}6"></div>	
+			<div class="sprite{{vous}}7"></div>	
+			<div class="sprite{{vous}}8"></div>	
+			<div class="sprite{{vous}}9"></div>	
+			<div class="sprite{{vous}}10"></div>	
+			<div class="sprite{{vous}}11"></div>	
+			<div class="sprite{{vous}}12"></div>
+		</div>
+
+	 	<span id="arr{{@index}}" class="arr{{vous}}"> &larr; {{gauchedroite}}</span>
+
+<!-- 
+		<div class="terrain">
+			<div class="number">{{@index}}</div>
+			<div class="separator"></div>			
+		</div>
+ -->
+
+	</div>
+
+	{{/each}}
+
+</div>
+
+	<div id="halloffame">
+		<table>
+			<tr>
+				<th>Course:</th>
+				<th>Commune:</th>
+				<th>Pseudo:</th>
+				<th>Time(ms):</th>
+			</tr>
+			{{#each HallOfFameList}}
+			<tr>
+				<th>{{whichCourse}}</th>
+				<th>{{commune}}</th>
+				<th>{{pseudo}}</th>
+				<th>{{score}}</th>
+			</tr>	
+			{{/each}}
+		</table>
+	</div>
+
+  {{> screen}}
+
+</template>
