@@ -46,7 +46,11 @@ Template.loading.onCreated(function(){
   randomPoule = poules[Math.floor(Math.random() * poules.length)];
 
   // insère un nouveau player dans la db
-  playerId = Bonhomme.insert({word : "", arrivedAt : new Date(), posX : 0, posY : 0, pseudo : randompseudo, commune:randomcommune, poule : randomPoule, haswonpoule : "", score:{"firstRun":0, "soloRun":0, "ffaRun":0, "pouleRun":0, "finals":0} })
+  playerId = Bonhomme.insert({
+    word : "", arrivedAt : new Date(), posX : 0, posY : 0, 
+    pseudo : randompseudo, commune:randomcommune, 
+    poule : randomPoule, haswonpoule : "", 
+    score:{"firstRun":0, "soloRun":0, "ffaRun":0, "pouleRun":0, "finals":0} })
 
   // insère ta posx dans le tableau de vérité
   Meteor.call("addGuyToPosTable", playerId, (error, result)=>{
@@ -236,6 +240,8 @@ Template.raceTrack.onCreated(function() {
   $(window).bind('beforeunload', function() {
         closingWindow();
     });
+
+  $(document).off("mousemove")
 });
 
 
@@ -560,7 +566,33 @@ next = function(){
   };
 
 $(document).mousemove(function(e){
-  $("#zouif").css({left:e.pageX+10, top:e.pageY+10});
+
+  offset = 10
+
+  _zouif = document.getElementById("zouif")
+  divHeight = _zouif.clientHeight
+  windowHeight = document.body.clientHeight 
+
+  divWidth = _zouif.clientWidth
+  windowWidth = document.body.clientWidth
+
+  PosX= e.pageX + offset
+  PosY= e.pageY + offset
+  // define it first
+
+  if (PosY > windowHeight-divHeight) {
+    PosY = windowHeight-divHeight
+    console.log("OVERIDING POSX")
+    // overide POSX if it's bigger than viewport
+  }
+
+  if (PosX > windowWidth-divWidth) {
+    PosX = windowWidth-divWidth
+    console.log("OVERIDING POSY")
+    // overide POSY if it's bigger than viewport
+  }
+
+  $("#zouif").css({left:PosX, top:PosY});
 });
 
 closingWindow = function(){
