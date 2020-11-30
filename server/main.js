@@ -78,7 +78,16 @@ Meteor.publish( 'users', function() {
 });
 
 Meteor.startup(function () {
+  //superGlobals
+  console.log("superGlobals will be erased, inserting new")
+  superGlobals.remove({})
+  superGlobals.insert({"powerToThePeople": true})
+  superGlobals.insert({"SUPERinterrupt": []})
+  superGlobals.insert({"modeSpectacle": true})
+  superGlobals.insert({"compteurAdmin": -1})
+  superGlobals.insert({"isItVictoryYet": false})
 
+  //ViewSwitcher
   if(ViewSwitcher.findOne()===undefined){
     console.log("VIEWSWITCHER IS EMPTY, INSERTING NOW")
     ViewSwitcher.insert({"name":"noCourse", "activated":true})

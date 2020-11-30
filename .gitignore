@@ -2,3 +2,8 @@ settings.json
 /.deploy/
 /.deploy_dev/
 *.DS_Store
+.meteor
+/types
+/types/
+jsconfig.json
+node_modules
