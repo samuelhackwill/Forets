@@ -389,14 +389,14 @@ redrawPlayers=function(posTable){
       // choppe la vitesse d'execution de l'animation d'icelle
       var newTimeScale = timeScale+value[1]*0.1;
       // calcule la nouvelle timescale en ajoutant l'accélération
-      gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale});
+      gsap.to(timelinePlayer, 0.10, {timeScale: newTimeScale});
       // créée une animation secondaire qui lisse le changement de timescale
       if(isBeforeFinish) {
         timelineTrack.timeScale(0);
         // arrête l'animation quand tu arrives à la ligne d'arrivey
       } else {
         if(key == playerId) {
-          gsap.to(timelineTrack, 0.05, {timeScale: newTimeScale});
+          gsap.to(timelineTrack, 0.10, {timeScale: newTimeScale});
           // synchronise le mouvement de la piste sur le mouvement SEULEMENT du joueur (key = playerID)
         }
       }

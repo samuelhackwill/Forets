@@ -37,6 +37,8 @@ body.oct20 #the_scene {
   /* transform: scale(0.15) translateX(-25vw); */
 }
 body.oct20 #the_track {
+	background-image: url("fond.jpg");
+
 	border: 5px solid blue;
 	width: 1400vw;
 	height: 400vh;
