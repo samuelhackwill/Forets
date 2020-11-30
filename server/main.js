@@ -87,6 +87,10 @@ Meteor.startup(function () {
   superGlobals.insert({"compteurAdmin": -1})
   superGlobals.insert({"isItVictoryYet": false})
 
+  //Bonhomme
+  console.log("Bonhomme will be erased.")
+  Bonhomme.remove({})
+  
   //ViewSwitcher
   if(ViewSwitcher.findOne()===undefined){
     console.log("VIEWSWITCHER IS EMPTY, INSERTING NOW")
