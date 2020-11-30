@@ -70,6 +70,7 @@ Template.reader.onCreated(function(){
 Template.reader.onRendered(function(){
 
   this.autorun(() =>{
+    this.subscribe('allBonhommes');
     this.subscribe("allFukinScore");
     this.subscribe("allContenusEcran", {
       onReady: function () {     

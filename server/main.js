@@ -257,6 +257,8 @@ if (Meteor.isServer) {
   Meteor.methods({
 
     removeOneGuy:function(who){
+      console.log("REMOVE ONE GUY! ", who, " still ", Bonhomme.find({}).fetch().length, " bonhommes left.")
+      Bonhomme.remove({_id:who})
       delete posTable[who]
       streamer.emit('message', posTable);
     },
