@@ -209,16 +209,22 @@ Template.reader.events({
     Session.set("spaceBarEffect", 2)
 
     // tell the DB i have chosen a word!
-    Bonhomme.update(playerId, {$set:{"word":e.target.innerHTML},})
+    Bonhomme.update(playerId, {$set:{"word":e.target.innerHTML}}, function(err, res){
+			if(err) {
+				console.log("Bonhomme update error", err);
+			} else {
 
-    // check if i'm the last one, and if it's the case ask for the server to change
-    // everyone's dynamic render
-    stillWaitingForTheOthers = Bonhomme.find({"word":""}).fetch().length
-    if (!stillWaitingForTheOthers) {
-        em.emit("everybodyChoseTheWord")
-    }else{
-      console.log("still waiting for "+Bonhomme.find({"word":""}).fetch().length+" people.")
-    }
+				// check if i'm the last one, and if it's the case ask for the server to change
+				// everyone's dynamic render
+				stillWaitingForTheOthers = Bonhomme.find({"word":""}).fetch().length
+				if (!stillWaitingForTheOthers) {
+					em.emit("everybodyChoseTheWord")
+				}else{
+					console.log("still waiting for "+Bonhomme.find({"word":""}).fetch().length+" people.")
+				}
+			}
+		})
+
 
   },
 });
@@ -274,7 +280,8 @@ Template.raceTrack.onRendered(function () {
     console.log("AUTORUNALL ", allGuysId)
 		var defaultMinSpeed = 0.75
 
-    timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
+    // timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
+    timelineTrack.to($('#the_track'), {x: "-1000vw", duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
     // .to = définit l'animation (keyframes css genre)
     timelineTrack.addLabel('before_finish', 170);
     // ajoute un marqueur à un moment X
@@ -286,7 +293,7 @@ Template.raceTrack.onRendered(function () {
     for (var i = allGuysId.length - 1; i >= 0; i--) {
       var timelinePlayer = gsap.timeline({id:allGuysId[i]});
       // créé une timeline pour chaque joueur qui a le nom de l'id du guy
-      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
+      timelinePlayer.to($('#player'+allGuysId[i]), {x: "1000vw", duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
       // définit ton animation
       timeline.add(timelinePlayer, 0);
       // ajoute à la scène globale au temps 0
@@ -310,6 +317,7 @@ Template.raceTrack.onRendered(function () {
 
   em.addListener('salmrefreshpage', function(what) {
     console.log('salm refresh page!', what);
+		Meteor.call('killTimerSteps');
     location.reload();
   });
 
@@ -391,13 +399,13 @@ redrawPlayers=function(posTable){
       // choppe la timeline de chaque joueur
       var timeScale = timelinePlayer.timeScale();
       // choppe la vitesse d'execution de l'animation d'icelle
-      var newTimeScale = timeScale+(value[1]-minAcceleration)*0.1;
+      var newTimeScale = timeScale+(value[1]-minAcceleration)*0.2;
 			console.log('redrawPlayers timeScale', timeScale, 'newTimeScale', newTimeScale);
 			console.log('getTweensOf timelinePlayer', gsap.getTweensOf(timelinePlayer));
 			if(newTimeScale != timeScale) {
 				// calcule la nouvelle timescale en ajoutant l'accélération
 				gsap.killTweensOf(timelinePlayer)
-				gsap.to(timelinePlayer, 0.05, {timeScale: newTimeScale, ease:"none"});
+				gsap.to(timelinePlayer, 0.2, {timeScale: newTimeScale, ease:"none"});
 				// créée une animation secondaire qui lisse le changement de timescale
 				if(isBeforeFinish) {
 					timelineTrack.timeScale(0);
@@ -406,7 +414,7 @@ redrawPlayers=function(posTable){
 					if(key == playerId) {
 						console.log('getTweensOf timelineTrack', gsap.getTweensOf(timelineTrack));
 						gsap.killTweensOf(timelineTrack)
-						gsap.to(timelineTrack, 0.05, {timeScale: newTimeScale, ease:"none"});
+						gsap.to(timelineTrack, 0.2, {timeScale: newTimeScale, ease:"none"});
 						// synchronise le mouvement de la piste sur le mouvement SEULEMENT du joueur (key = playerID)
 					}
 				}
@@ -433,6 +441,9 @@ $(document.body).on('keyup', function(e) {
   e = e || window.event
   if(e.keyCode == '32') spaceBarPress(e);
 });
+
+var leftOrRightArm = true // true == left arm ; false == right arm
+
 
 var spaceBarPress = function(e){
 
@@ -462,6 +473,18 @@ var spaceBarPress = function(e){
 
     case 3:
       Meteor.call("requestStepServerSide", playerId)
+
+			var leftArm = $('#player'+playerId).find('.brasARR');
+			var rightArm = $('#player'+playerId).find('.brasAVT');
+
+
+			if(leftOrRightArm) {
+				leftArm.css('opacity', 1).fadeTo(200, 0)
+			} else {
+				rightArm.css('opacity', 1).fadeTo(200, 0)
+			}
+			leftOrRightArm = !leftOrRightArm;
+
     break;
 
     case 4:
