@@ -138,7 +138,8 @@ Template.admin.onRendered(function () {
     // data = ContenusEcran.findOne({name: "ce_jeudi_no_comment"}).data
     if(data.length == 0) {
       console.log('showtime retrieving data');
-      data = ContenusEcran.findOne({name: "data_test"}).data
+      // data = ContenusEcran.findOne({name: "data_test"}).data
+      data = ContenusEcran.findOne({name: "data"}).data
     }
     // console.log('showtime data ?', data);
     console.log('showtime ContenusEcran ?', ContenusEcran.find().fetch());
@@ -347,7 +348,7 @@ Template.admin.onRendered(function () {
       // $('#currentCompteur').text(compteur);
       em.setClient({ compteur: compteur });
       em.emit('adminnext');
-      next();
+      // next();
     // }
   }
 

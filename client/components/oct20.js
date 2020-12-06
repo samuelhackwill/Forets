@@ -75,7 +75,8 @@ Template.reader.onRendered(function(){
     this.subscribe("allContenusEcran", {
       onReady: function () {     
         let contnus = ContenusEcran.find().fetch();
-        data = ContenusEcran.findOne({name: "data_test"}).data
+        // data = ContenusEcran.findOne({name: "data_test"}).data
+        data = ContenusEcran.findOne({name: "data"}).data
         var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
         console.log("isItPowerToThePeople", isItPowerToThePeople);
        },
@@ -84,19 +85,18 @@ Template.reader.onRendered(function(){
   })
   em.addListener('salmnext', function(what) {
     console.log('salm next!', what);
-    // compteur = what.compteur;
-    var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
-    var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : [];
-    console.log("salm next : isSUPERinterrupt", isSUPERinterrupt);
-    var found = jQuery.inArray('salm', isSUPERinterrupt);
-    if (found >= 0) {
-      //ce role est dans le parking !
-    } else {
-      //ce role n'est pas dans le parking, faisons un next
-      console.log('pas dans le parking, faisons un next')
+    // var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
+    // var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : [];
+    // console.log("salm next : isSUPERinterrupt", isSUPERinterrupt);
+    // var found = jQuery.inArray('salm', isSUPERinterrupt);
+    // if (found >= 0) {
+    //   //ce role est dans le parking !
+    // } else {
+    //   //ce role n'est pas dans le parking, faisons un next
+    //   console.log('pas dans le parking, faisons un next')
       compteur = what.compteur;
       next();
-    } 
+    // } 
   }); 
 
   em.addListener('salmForceGoTo', function(what) {
@@ -515,6 +515,12 @@ var nextEvent = function(){
 
 next = function(){
 
+  if (Router.current().route.path()=="/admin") {
+    console.log("THIS IS ADMIN, NO NEXT!")
+    return
+  }
+
+
   console.log('next', compteur, data[compteur]);
   currentData = data[compteur]
   type = currentData["type"]
@@ -565,36 +571,6 @@ next = function(){
       // bon ben c'est ici qu'il faudrait faire un truc
     }
   };
-
-$(document).mousemove(function(e){
-
-  offset = 10
-
-  _zouif = document.getElementById("zouif")
-  divHeight = _zouif.clientHeight
-  windowHeight = document.body.clientHeight 
-
-  divWidth = _zouif.clientWidth
-  windowWidth = document.body.clientWidth
-
-  PosX= e.pageX + offset
-  PosY= e.pageY + offset
-  // define it first
-
-  if (PosY > windowHeight-divHeight) {
-    PosY = windowHeight-divHeight
-    console.log("OVERIDING POSX")
-    // overide POSX if it's bigger than viewport
-  }
-
-  if (PosX > windowWidth-divWidth) {
-    PosX = windowWidth-divWidth
-    console.log("OVERIDING POSY")
-    // overide POSY if it's bigger than viewport
-  }
-
-  $("#zouif").css({left:PosX, top:PosY});
-});
 
 closingWindow = function(){
   Bonhomme.remove({_id:playerId})

@@ -275,6 +275,38 @@ action = function(type, params){
 }
 
 switchToChooseWordMode = function(){
+
+  // ATTACH mousemove event
+  $(document).mousemove(function(e){
+    offset = 10
+
+    _zouif = document.getElementById("zouif")
+    divHeight = _zouif.clientHeight
+    windowHeight = document.body.clientHeight 
+
+    divWidth = _zouif.clientWidth
+    windowWidth = document.body.clientWidth
+
+    PosX= e.pageX + offset
+    PosY= e.pageY + offset
+    // define it first
+
+    if (PosY > windowHeight-divHeight) {
+      PosY = windowHeight-divHeight
+      console.log("OVERIDING POSX")
+      // overide POSX if it's bigger than viewport
+    }
+
+    if (PosX > windowWidth-divWidth) {
+      PosX = windowWidth-divWidth
+      console.log("OVERIDING POSY")
+      // overide POSY if it's bigger than viewport
+    }
+
+    $("#zouif").css({left:PosX, top:PosY});
+  });
+
+
   interrupt = true;
   document.getElementById("srt").style.overflow = "hidden"
 
