@@ -47,9 +47,9 @@ Template.loading.onCreated(function(){
 
   // insère un nouveau player dans la db
   playerId = Bonhomme.insert({
-    word : "", arrivedAt : new Date(), posX : 0, posY : 0, 
-    pseudo : randompseudo, commune:randomcommune, 
-    poule : randomPoule, haswonpoule : "", 
+    word : "", arrivedAt : new Date(), posX : 0, posY : 0,
+    pseudo : randompseudo, commune:randomcommune,
+    poule : randomPoule, haswonpoule : "",
     score:{"firstRun":0, "soloRun":0, "ffaRun":0, "pouleRun":0, "finals":0} })
 
   // insère ta posx dans le tableau de vérité
@@ -73,7 +73,7 @@ Template.reader.onRendered(function(){
     this.subscribe('allBonhommes');
     this.subscribe("allFukinScore");
     this.subscribe("allContenusEcran", {
-      onReady: function () {     
+      onReady: function () {
         let contnus = ContenusEcran.find().fetch();
         // data = ContenusEcran.findOne({name: "data_test"}).data
         data = ContenusEcran.findOne({name: "data"}).data
@@ -103,7 +103,7 @@ Template.reader.onRendered(function(){
     console.log('salm salmForceGoTo!', what);
     // compteur = what.compteur;
     gotobookmark(what.bookmark);
-  }); 
+  });
 
   em.addListener("remoteClickWord", function(what){
 
@@ -193,7 +193,7 @@ Template.reader.events({
         default:
           insertText ="on attend encore "+Bonhomme.find({"word":""}).fetch().length + " personne(s)"
         break;
-      }   
+      }
 
       document.getElementById("loadingWidgetDialog").innerHTML=insertText
 
@@ -209,16 +209,22 @@ Template.reader.events({
     Session.set("spaceBarEffect", 2)
 
     // tell the DB i have chosen a word!
-    Bonhomme.update(playerId, {$set:{"word":e.target.innerHTML},})
+    Bonhomme.update(playerId, {$set:{"word":e.target.innerHTML}}, function(err, res){
+			if(err) {
+				console.log("Bonhomme update error", err);
+			} else {
 
-    // check if i'm the last one, and if it's the case ask for the server to change 
-    // everyone's dynamic render
-    stillWaitingForTheOthers = Bonhomme.find({"word":""}).fetch().length
-    if (!stillWaitingForTheOthers) {
-        em.emit("everybodyChoseTheWord")
-    }else{
-      console.log("still waiting for "+Bonhomme.find({"word":""}).fetch().length+" people.")
-    }
+				// check if i'm the last one, and if it's the case ask for the server to change
+				// everyone's dynamic render
+				stillWaitingForTheOthers = Bonhomme.find({"word":""}).fetch().length
+				if (!stillWaitingForTheOthers) {
+					em.emit("everybodyChoseTheWord")
+				}else{
+					console.log("still waiting for "+Bonhomme.find({"word":""}).fetch().length+" people.")
+				}
+			}
+		})
+
 
   },
 });
@@ -272,8 +278,10 @@ Template.raceTrack.onRendered(function () {
     allGuysId = Object.keys(posTable)
 
     console.log("AUTORUNALL ", allGuysId)
+		var defaultMinSpeed = 0.75
 
-    timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180, ease: "linear"}).timeScale(0.1);
+    // timelineTrack.to($('#the_track'), {xPercent: -100, duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
+    timelineTrack.to($('#the_track'), {x: "-1000vw", duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
     // .to = définit l'animation (keyframes css genre)
     timelineTrack.addLabel('before_finish', 170);
     // ajoute un marqueur à un moment X
@@ -285,7 +293,7 @@ Template.raceTrack.onRendered(function () {
     for (var i = allGuysId.length - 1; i >= 0; i--) {
       var timelinePlayer = gsap.timeline({id:allGuysId[i]});
       // créé une timeline pour chaque joueur qui a le nom de l'id du guy
-      timelinePlayer.to($('#player'+allGuysId[i]), {left: "100%", duration: 180, ease: "linear"}).timeScale(0.1);
+      timelinePlayer.to($('#player'+allGuysId[i]), {x: "1000vw", duration: 180, ease: "linear"}).timeScale(defaultMinSpeed);
       // définit ton animation
       timeline.add(timelinePlayer, 0);
       // ajoute à la scène globale au temps 0
@@ -309,6 +317,7 @@ Template.raceTrack.onRendered(function () {
 
   em.addListener('salmrefreshpage', function(what) {
     console.log('salm refresh page!', what);
+		Meteor.call('killTimerSteps');
     location.reload();
   });
 
@@ -381,6 +390,8 @@ Template.raceTrack.helpers({
   }
 });
 
+// var tweenTLPlayerTimeScale = gsap.to(timelinePlayer, {duration: 0.10, paused: true})
+minAcceleration = 0.05
 
 redrawPlayers=function(posTable){
   $.each(posTable, function(key, value){
@@ -388,19 +399,26 @@ redrawPlayers=function(posTable){
       // choppe la timeline de chaque joueur
       var timeScale = timelinePlayer.timeScale();
       // choppe la vitesse d'execution de l'animation d'icelle
-      var newTimeScale = timeScale+value[1]*0.1;
-      // calcule la nouvelle timescale en ajoutant l'accélération
-      gsap.to(timelinePlayer, 0.10, {timeScale: newTimeScale});
-      // créée une animation secondaire qui lisse le changement de timescale
-      if(isBeforeFinish) {
-        timelineTrack.timeScale(0);
-        // arrête l'animation quand tu arrives à la ligne d'arrivey
-      } else {
-        if(key == playerId) {
-          gsap.to(timelineTrack, 0.10, {timeScale: newTimeScale});
-          // synchronise le mouvement de la piste sur le mouvement SEULEMENT du joueur (key = playerID)
-        }
-      }
+      var newTimeScale = timeScale+(value[1]-minAcceleration)*0.2;
+			console.log('redrawPlayers timeScale', timeScale, 'newTimeScale', newTimeScale);
+			console.log('getTweensOf timelinePlayer', gsap.getTweensOf(timelinePlayer));
+			if(newTimeScale != timeScale) {
+				// calcule la nouvelle timescale en ajoutant l'accélération
+				gsap.killTweensOf(timelinePlayer)
+				gsap.to(timelinePlayer, 0.2, {timeScale: newTimeScale, ease:"none"});
+				// créée une animation secondaire qui lisse le changement de timescale
+				if(isBeforeFinish) {
+					timelineTrack.timeScale(0);
+					// arrête l'animation quand tu arrives à la ligne d'arrivey
+				} else {
+					if(key == playerId) {
+						console.log('getTweensOf timelineTrack', gsap.getTweensOf(timelineTrack));
+						gsap.killTweensOf(timelineTrack)
+						gsap.to(timelineTrack, 0.2, {timeScale: newTimeScale, ease:"none"});
+						// synchronise le mouvement de la piste sur le mouvement SEULEMENT du joueur (key = playerID)
+					}
+				}
+			}
   })
 };
 
@@ -424,18 +442,21 @@ $(document.body).on('keyup', function(e) {
   if(e.keyCode == '32') spaceBarPress(e);
 });
 
+var leftOrRightArm = true // true == left arm ; false == right arm
+
+
 var spaceBarPress = function(e){
 
   console.log("space bar press ", Session.get("spaceBarEffect"))
 
   // en fonction de où t'es, fais des choses différentes
-  
+
   // Session.set("spaceBarEffect", 0) = do nothing
   // Session.set("spaceBarEffect", 1) = reader text next
   // Session.set("spaceBarEffect", 2) = make loading widget run
   // Session.set("spaceBarEffect", 3) = make word run (for raceTrack)
   // Session.set("spaceBarEffect", 4) = public applause!
-  
+
   switch(Session.get("spaceBarEffect")){
     case 0 :
     return
@@ -448,10 +469,22 @@ var spaceBarPress = function(e){
     case 2:
       console.log("make widget run!")
       imageCycler("loadingWidgetRunner")
-    break;  
+    break;
 
     case 3:
       Meteor.call("requestStepServerSide", playerId)
+
+			var leftArm = $('#player'+playerId).find('.brasARR');
+			var rightArm = $('#player'+playerId).find('.brasAVT');
+
+
+			if(leftOrRightArm) {
+				leftArm.css('opacity', 1).fadeTo(200, 0)
+			} else {
+				rightArm.css('opacity', 1).fadeTo(200, 0)
+			}
+			leftOrRightArm = !leftOrRightArm;
+
     break;
 
     case 4:

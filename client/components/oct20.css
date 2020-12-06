@@ -37,10 +37,10 @@ body.oct20 #the_scene {
   /* transform: scale(0.15) translateX(-25vw); */
 }
 body.oct20 #the_track {
-	background-image: url("fond.jpg");
+	/* background-image: url("fond.jpg"); */
 
 	border: 5px solid blue;
-	width: 1400vw;
+	width: 1000vw;
 	height: 400vh;
 	position: fixed;
 	left: 0;
@@ -49,6 +49,7 @@ body.oct20 #the_track {
 	padding-right: 5vw;
 	box-sizing: border-box;
 	margin-left: 50vw;
+  will-change: transform;
 }
 
 body.oct20 .mark {
@@ -143,6 +144,7 @@ body.oct20 .wordcontainer{
 	width: min-content;
 	clear:both;
 	border: 1px solid green;
+  will-change: transform;
 }
 body.oct20 .wordcontainer:nth-child(1) { top: 0; }
 body.oct20 .wordcontainer:nth-child(2) { top: 10vh; }

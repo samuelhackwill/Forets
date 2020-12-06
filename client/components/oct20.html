@@ -8,6 +8,25 @@
 </template>
 
 <template name="reader">
+	<!-- 	#
+	# HERE IS
+	# THE ADMIN'S INTERFACE
+	# -->
+	<div id="lazyStartup">
+		Streamer
+		<input type="button" name="startTimerSteps" value="startTimerSteps" onclick="Meteor.call('startTimerSteps')">
+		<input type="button" name="killTimerSteps" value="killTimerSteps" onclick="Meteor.call('killTimerSteps')">
+
+		Autorun
+		<input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
+		<input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
+
+		Admin
+		<input type="button" name="resetPosition" value="resetPosition" onclick="Meteor.call('resetPosition')">
+		<input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
+		<input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
+		<input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
+	</div>
 	<div id="container">
 		<div id="srt">
 		</div>
@@ -26,17 +45,17 @@
 			</div>
 
 			<div id="loadingWidgetRunner">
-				<div class="loadingSprite1"></div>	
-				<div class="loadingSprite2"></div>	
-				<div class="loadingSprite3"></div>	
-				<div class="loadingSprite4"></div>	
-				<div class="loadingSprite5"></div>	
-				<div class="loadingSprite6"></div>	
-				<div class="loadingSprite7"></div>	
-				<div class="loadingSprite8"></div>	
-				<div class="loadingSprite9"></div>	
-				<div class="loadingSprite10"></div>	
-				<div class="loadingSprite11"></div>	
+				<div class="loadingSprite1"></div>
+				<div class="loadingSprite2"></div>
+				<div class="loadingSprite3"></div>
+				<div class="loadingSprite4"></div>
+				<div class="loadingSprite5"></div>
+				<div class="loadingSprite6"></div>
+				<div class="loadingSprite7"></div>
+				<div class="loadingSprite8"></div>
+				<div class="loadingSprite9"></div>
+				<div class="loadingSprite10"></div>
+				<div class="loadingSprite11"></div>
 				<div class="loadingSprite12"></div>
 			</div>
 		</div>
@@ -66,20 +85,20 @@
 	# THE ADMIN'S INTERFACE
 	# -->
 	<div id="lazyStartup">
-			Streamer
-			<input type="button" name="startTimerSteps" value="startTimerSteps" onclick="Meteor.call('startTimerSteps')">
-			<input type="button" name="killTimerSteps" value="killTimerSteps" onclick="Meteor.call('killTimerSteps')">
+		Streamer
+		<input type="button" name="startTimerSteps" value="startTimerSteps" onclick="Meteor.call('startTimerSteps')">
+		<input type="button" name="killTimerSteps" value="killTimerSteps" onclick="Meteor.call('killTimerSteps')">
 
-			Autorun
-			<input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
-			<input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
+		Autorun
+		<input type="button" name="autoRun" value="autoRun" onclick="Meteor.call('autoRun')">
+		<input type="button" name="stopRun" value="stopRun" onclick="Meteor.call('stopRun')">
 
-			Admin
-			<input type="button" name="resetPosition" value="resetPosition" onclick="Meteor.call('resetPosition')">
-			<input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
-			<input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
-			<input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
-		</div>
+		Admin
+		<input type="button" name="resetPosition" value="resetPosition" onclick="Meteor.call('resetPosition')">
+		<input type="button" name="getRidOfWinners" value="getRidOfWinners" onclick="Meteor.call('getRidOfWinners')">
+		<input type="button" name="killBonhommes" value="killBonhommes" onclick="Meteor.call('killBonhommes')">
+		<input type="button" name="forceRefresh" value="forceRefresh" onclick="Meteor.call('forceRefresh')">
+	</div>
 
 		<div id="sav"> vous pensiez qui c'était vous qui aviez gagné?
 			<input type="button" name="oui" value="oui" onclick="thinksHeWon(playerId, 'oui')">
@@ -105,6 +124,8 @@
 			</div>
 
 		 </div>
+     <div class="the_timeScale">
+       </div>
 		<div id="the_track">
 
 	      <div class="mark mark-0"></div>
@@ -158,7 +179,7 @@
 		</div>
 		</div>
 	</div>
-<!-- 
+<!--
 		<div id="halloffame">
 			<table>
 				<tr>
@@ -179,5 +200,3 @@
 		</div>
 
  --></template>
-
-	

@@ -24,7 +24,7 @@ timerDecimales = 0
 timerUnites = 0
 
 stepQueue = []
-timerStepsInterval = 100
+timerStepsInterval = 200
 // 1 update / sec (1000)
 timerSteps = '';
 
@@ -86,6 +86,10 @@ Meteor.startup(function () {
   superGlobals.insert({"modeSpectacle": true})
   superGlobals.insert({"compteurAdmin": -1})
   superGlobals.insert({"isItVictoryYet": false})
+
+  //Bonhomme
+  console.log("Bonhomme will be erased.")
+  Bonhomme.remove({})
 
   //ViewSwitcher
   if(ViewSwitcher.findOne()===undefined){
