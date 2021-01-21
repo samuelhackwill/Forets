@@ -374,7 +374,7 @@ Template.admin.onRendered(function () {
     if(!isItPowerToThePeople) {
       if(e.keyCode =='78' && compteur < data.length-1){
         // window.clearTimeout(autonextcontainer)
-        // compteur +=1
+        compteur +=1
         adminNext();
         console.log("keyup, ", compteur)
         // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand

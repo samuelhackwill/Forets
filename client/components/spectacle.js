@@ -79,27 +79,27 @@ Template.spectacle.onRendered(function () {
   }); 
 
 
-  $(document.body).on('keyup', function(e) {
+  // $(document.body).on('keyup', function(e) {
 
 
-    e = e || window.event
-    // KEYCODE 32 IS SPACEBAR
-    // KEYCIODE 78 IS "n"
-    var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
-    var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
-    var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : false
-    console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople, 'isSUPERinterrupt = ', isSUPERinterrupt);
+  //   e = e || window.event
+  //   // KEYCODE 32 IS SPACEBAR
+  //   // KEYCIODE 78 IS "n"
+  //   var isItPowerToThePeople = superGlobals.findOne({ powerToThePeople: { $exists: true}}).powerToThePeople;
+  //   var SUPERinterrupt = superGlobals.findOne({ SUPERinterrupt: { $exists: true}});
+  //   var isSUPERinterrupt = (SUPERinterrupt) ? SUPERinterrupt.SUPERinterrupt : false
+  //   console.log('spectacle keyup compteur = ', compteur, 'interrupt = ', interrupt, 'isItPowerToThePeople = ', isItPowerToThePeople, 'isSUPERinterrupt = ', isSUPERinterrupt);
       
-    if(e.keyCode =='32' && compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true && isSUPERinterrupt == false){
-      window.clearTimeout(autonextcontainer)
-      compteur +=1
-      next();
-      console.log("keyup, ", compteur)
-      // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
-      // ça avance tout seul avec un délai)
-    }
+  //   if(e.keyCode =='32' && compteur < data.length-1 && interrupt==false && isItPowerToThePeople == true && isSUPERinterrupt == false){
+  //     window.clearTimeout(autonextcontainer)
+  //     compteur +=1
+  //     next();
+  //     console.log("keyup, ", compteur)
+  //     // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
+  //     // ça avance tout seul avec un délai)
+  //   }
 
-  });
+  // });
 
 
   em.addListener('salmstartstream', startTheStream);

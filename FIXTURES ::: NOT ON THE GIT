@@ -7,6 +7,10 @@ FIXTURES :
 
 	superGlobals.insert({"isItVictoryYet":false})
 
+// faut virer les bonhommes
+
+	Bonhomme.remove({})
+
 
 // ensuite côté client :
 
@@ -18,8 +22,11 @@ FIXTURES :
 
 // y'a sans doutes d'autres collections à initialiser, chépu
 
+	FukinScore.insert({"name":"gauche"})
+	FukinScore.insert({"name":"droite"})
+
 winners
 viewSwitcher 
-fukinScore
+
 
 et sans soute des superGlobales

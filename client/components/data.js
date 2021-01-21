@@ -52,30 +52,30 @@ Template.data.onRendered(function () {
     }
   });*/
 
-  $(document.body).on('keyup', function(e) {
+  // $(document.body).on('keyup', function(e) {
 
-    e = e || window.event
+  //   e = e || window.event
 
-    // KEYCODE 32 IS SPACEBAR
-    // KEYCIODE 78 IS "n"
+  //   // KEYCODE 32 IS SPACEBAR
+  //   // KEYCIODE 78 IS "n"
 
-    if(e.keyCode =='78' && compteur < data.length-1 && interrupt==false){
-      window.clearTimeout(autonextcontainer)
-      compteur +=1
-      next();
-      $('#displayDemoCompteur').val(compteur);
-      console.log("keyup, ", compteur)
-      // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
-      // ça avance tout seul avec un délai)
-    }
-  });
+  //   if(e.keyCode =='78' && compteur < data.length-1 && interrupt==false){
+  //     window.clearTimeout(autonextcontainer)
+  //     compteur +=1
+  //     next();
+  //     $('#displayDemoCompteur').val(compteur);
+  //     console.log("keyup, ", compteur)
+  //     // ça c'est pour virer le autonext si il y en avait un en cours (c'est quand
+  //     // ça avance tout seul avec un délai)
+  //   }
+  // });
 
-  $('#displayDemoCompteur').on('keyup', function(e){
-    if(e.keyCode =='13' && $('#displayDemoCompteur').val() <= demoData.length){
-      demoCompteur = $('#displayDemoCompteur').val()-1;
-      demoNext();
-    }
-  });
+  // $('#displayDemoCompteur').on('keyup', function(e){
+  //   if(e.keyCode =='13' && $('#displayDemoCompteur').val() <= demoData.length){
+  //     demoCompteur = $('#displayDemoCompteur').val()-1;
+  //     demoNext();
+  //   }
+  // });
 
 });
 
