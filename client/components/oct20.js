@@ -69,6 +69,8 @@ Template.reader.onCreated(function(){
 
 Template.reader.onRendered(function(){
 
+  $(document.body).addClass('oct20');
+
   this.autorun(() =>{
     this.subscribe('allBonhommes');
     this.subscribe("allFukinScore");
@@ -255,10 +257,10 @@ Template.raceTrack.onCreated(function() {
 
 Template.raceTrack.onRendered(function () {
 
+  $(document.body).addClass('oct20');
+
   this.autorun(() => {
   });
-
-  $(document.body).addClass('oct20');
 
   document.body.style.opacity = "1"
 

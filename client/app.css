@@ -64,7 +64,7 @@ span > span{
     transition: background-color 4s, opacity 1s;
     background-color: darkgrey;
     overflow: hidden;
-    font-family: "typo", sans-serif;
+    font-family: sans-serif;
     text-align: left;
     margin: 0px;
 /*    -webkit-transition: color 1s ease-in-out;
@@ -300,9 +300,12 @@ span > span{
 
   #srt{
     overflow: scroll;
+    overflow-x: hidden;
 
-    width: 60vw;
-    height: 90vh;
+    width: 55vw;
+    height: 69vh;
+
+    top:5vh;
 
     position: absolute;
     z-index: 2;

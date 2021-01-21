@@ -23,6 +23,7 @@ ul.admin_menu li:last-child:after {
 
 /* oct20 */
 body.oct20 #lazyStartup {
+  display: none;
   z-index: 1;
   position: relative;
 }
